@@ -306,3 +306,7 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2025-05-20 13:55:14,083 - uvicorn.access - INFO - 127.0.0.1:41010 - "POST /api/v1/oauth/token HTTP/1.1" 200
 2025-05-20 13:55:19,352 - uvicorn.access - INFO - 127.0.0.1:41020 - "GET /api/v1/health HTTP/1.1" 200
 2025-05-20 13:55:21,410 - uvicorn.access - INFO - 127.0.0.1:41020 - "GET /api/v1/users?skip=0&limit=100 HTTP/1.1" 200
+2025-05-20 13:58:24,404 - uvicorn.error - INFO - Shutting down
+2025-05-20 13:58:24,506 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 13:58:24,509 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 13:58:24,510 - uvicorn.error - INFO - Finished server process [140318]
