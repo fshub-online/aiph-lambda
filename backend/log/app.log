@@ -844,3 +844,147 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2025-05-20 18:58:09,648 - uvicorn.access - INFO - 127.0.0.1:59580 - "PATCH /api/v1/oauth/me HTTP/1.1" 200
 2025-05-20 18:58:22,267 - uvicorn.access - INFO - 127.0.0.1:33576 - "PATCH /api/v1/oauth/me HTTP/1.1" 200
 2025-05-20 19:01:04,406 - uvicorn.access - INFO - 127.0.0.1:54214 - "GET /api/v1/oauth/me HTTP/1.1" 200
+2025-05-20 19:04:48,999 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2025-05-20 19:04:49,000 - python_multipart.multipart - DEBUG - Calling on_field_name with data[0:8]
+2025-05-20 19:04:49,000 - python_multipart.multipart - DEBUG - Calling on_field_data with data[9:15]
+2025-05-20 19:04:49,000 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2025-05-20 19:04:49,000 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2025-05-20 19:04:49,000 - python_multipart.multipart - DEBUG - Calling on_field_name with data[16:24]
+2025-05-20 19:04:49,001 - python_multipart.multipart - DEBUG - Calling on_field_data with data[25:33]
+2025-05-20 19:04:49,001 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2025-05-20 19:04:49,001 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2025-05-20 19:04:49,001 - python_multipart.multipart - DEBUG - Calling on_field_name with data[34:44]
+2025-05-20 19:04:49,001 - python_multipart.multipart - DEBUG - Calling on_field_data with data[45:53]
+2025-05-20 19:04:49,001 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2025-05-20 19:04:49,002 - python_multipart.multipart - DEBUG - Calling on_end with no data
+2025-05-20 19:04:49,194 - uvicorn.access - INFO - 127.0.0.1:49540 - "POST /api/v1/oauth/token HTTP/1.1" 200
+2025-05-20 19:04:49,201 - uvicorn.access - INFO - 127.0.0.1:49540 - "GET /api/v1/oauth/me HTTP/1.1" 200
+2025-05-20 19:04:56,853 - uvicorn.access - INFO - 127.0.0.1:35326 - "PATCH /api/v1/oauth/me HTTP/1.1" 200
+2025-05-20 19:05:32,304 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2025-05-20 19:05:32,304 - python_multipart.multipart - DEBUG - Calling on_field_name with data[0:8]
+2025-05-20 19:05:32,305 - python_multipart.multipart - DEBUG - Calling on_field_data with data[9:15]
+2025-05-20 19:05:32,305 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2025-05-20 19:05:32,305 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2025-05-20 19:05:32,305 - python_multipart.multipart - DEBUG - Calling on_field_name with data[16:24]
+2025-05-20 19:05:32,305 - python_multipart.multipart - DEBUG - Calling on_field_data with data[25:33]
+2025-05-20 19:05:32,305 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2025-05-20 19:05:32,306 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2025-05-20 19:05:32,306 - python_multipart.multipart - DEBUG - Calling on_field_name with data[34:44]
+2025-05-20 19:05:32,306 - python_multipart.multipart - DEBUG - Calling on_field_data with data[45:53]
+2025-05-20 19:05:32,306 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2025-05-20 19:05:32,306 - python_multipart.multipart - DEBUG - Calling on_end with no data
+2025-05-20 19:05:32,501 - uvicorn.access - INFO - 127.0.0.1:41966 - "POST /api/v1/oauth/token HTTP/1.1" 200
+2025-05-20 19:05:32,509 - uvicorn.access - INFO - 127.0.0.1:41966 - "GET /api/v1/oauth/me HTTP/1.1" 200
+2025-05-20 19:08:35,231 - uvicorn.error - INFO - Shutting down
+2025-05-20 19:08:35,331 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 19:08:35,332 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 19:08:35,332 - uvicorn.error - INFO - Finished server process [264902]
+2025-05-20 19:08:35,909 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2025-05-20 19:08:35,910 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2025-05-20 19:08:35,911 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2025-05-20 19:08:35,913 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2025-05-20 19:08:36,004 - uvicorn.error - INFO - Started server process [314711]
+2025-05-20 19:08:36,004 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 19:08:36,020 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 19:09:12,391 - uvicorn.error - INFO - Shutting down
+2025-05-20 19:09:12,492 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 19:09:12,492 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 19:09:12,492 - uvicorn.error - INFO - Finished server process [314711]
+2025-05-20 19:09:13,060 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2025-05-20 19:09:13,061 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2025-05-20 19:09:13,062 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2025-05-20 19:09:13,064 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2025-05-20 19:09:13,157 - uvicorn.error - INFO - Started server process [315168]
+2025-05-20 19:09:13,158 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 19:09:13,173 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 19:10:21,116 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2025-05-20 19:10:21,116 - python_multipart.multipart - DEBUG - Calling on_field_name with data[0:8]
+2025-05-20 19:10:21,117 - python_multipart.multipart - DEBUG - Calling on_field_data with data[9:15]
+2025-05-20 19:10:21,117 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2025-05-20 19:10:21,117 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2025-05-20 19:10:21,117 - python_multipart.multipart - DEBUG - Calling on_field_name with data[16:24]
+2025-05-20 19:10:21,117 - python_multipart.multipart - DEBUG - Calling on_field_data with data[25:33]
+2025-05-20 19:10:21,117 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2025-05-20 19:10:21,118 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2025-05-20 19:10:21,118 - python_multipart.multipart - DEBUG - Calling on_field_name with data[34:44]
+2025-05-20 19:10:21,118 - python_multipart.multipart - DEBUG - Calling on_field_data with data[45:53]
+2025-05-20 19:10:21,118 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2025-05-20 19:10:21,118 - python_multipart.multipart - DEBUG - Calling on_end with no data
+2025-05-20 19:10:21,127 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/home/radekzitek/Code/fshub-online/aiph-lambda/.venv/lib/python3.12/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-05-20 19:10:21,129 - passlib.handlers.bcrypt - DEBUG - detected 'bcrypt' backend, version '<unknown>'
+2025-05-20 19:10:21,130 - passlib.handlers.bcrypt - DEBUG - 'bcrypt' backend lacks $2$ support, enabling workaround
+2025-05-20 19:10:21,332 - uvicorn.access - INFO - 127.0.0.1:35828 - "POST /api/v1/oauth/token HTTP/1.1" 200
+2025-05-20 19:10:21,335 - uvicorn.access - INFO - 127.0.0.1:35828 - "OPTIONS /api/v1/oauth/me HTTP/1.1" 200
+2025-05-20 19:10:21,341 - uvicorn.access - INFO - 127.0.0.1:35832 - "GET /api/v1/oauth/me HTTP/1.1" 200
+2025-05-20 19:13:31,790 - uvicorn.error - INFO - Shutting down
+2025-05-20 19:13:31,891 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 19:13:31,892 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 19:13:31,892 - uvicorn.error - INFO - Finished server process [315168]
+2025-05-20 19:13:32,499 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2025-05-20 19:13:32,501 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2025-05-20 19:13:32,502 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2025-05-20 19:13:32,505 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2025-05-20 19:13:32,613 - uvicorn.error - INFO - Started server process [318344]
+2025-05-20 19:13:32,614 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 19:13:32,636 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 19:13:34,741 - uvicorn.error - INFO - Shutting down
+2025-05-20 19:13:34,842 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 19:13:34,842 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 19:13:34,842 - uvicorn.error - INFO - Finished server process [318344]
+2025-05-20 19:13:35,450 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2025-05-20 19:13:35,451 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2025-05-20 19:13:35,452 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2025-05-20 19:13:35,454 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2025-05-20 19:13:36,456 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2025-05-20 19:13:36,457 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2025-05-20 19:13:36,458 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2025-05-20 19:13:36,460 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2025-05-20 19:13:37,962 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2025-05-20 19:13:37,963 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2025-05-20 19:13:37,964 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2025-05-20 19:13:37,966 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2025-05-20 19:13:38,965 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2025-05-20 19:13:38,967 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2025-05-20 19:13:38,967 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2025-05-20 19:13:38,970 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2025-05-20 19:13:42,968 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2025-05-20 19:13:42,969 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2025-05-20 19:13:42,969 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2025-05-20 19:13:42,972 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2025-05-20 19:13:43,070 - uvicorn.error - INFO - Started server process [318563]
+2025-05-20 19:13:43,071 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 19:13:43,097 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 19:14:14,158 - uvicorn.error - INFO - Shutting down
+2025-05-20 19:14:14,258 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 19:14:14,259 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 19:14:14,259 - uvicorn.error - INFO - Finished server process [318563]
+2025-05-20 19:14:14,856 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2025-05-20 19:14:14,857 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2025-05-20 19:14:14,858 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2025-05-20 19:14:14,860 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2025-05-20 19:14:19,378 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2025-05-20 19:14:19,379 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2025-05-20 19:14:19,380 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2025-05-20 19:14:19,384 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2025-05-20 19:14:19,490 - uvicorn.error - INFO - Started server process [319112]
+2025-05-20 19:14:19,490 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 19:14:19,508 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 19:20:45,328 - uvicorn.access - INFO - 127.0.0.1:51312 - "OPTIONS /api/v1/oauth/me HTTP/1.1" 200
+2025-05-20 19:20:45,343 - uvicorn.access - INFO - 127.0.0.1:51324 - "GET /api/v1/oauth/me HTTP/1.1" 200
+2025-05-20 19:21:21,211 - uvicorn.access - INFO - 127.0.0.1:54414 - "GET /api/v1/oauth/me HTTP/1.1" 200
+2025-05-20 19:21:49,725 - uvicorn.access - INFO - 127.0.0.1:41384 - "GET /api/v1/oauth/me HTTP/1.1" 200
+2025-05-20 19:21:57,875 - uvicorn.access - INFO - 127.0.0.1:59298 - "GET /api/v1/oauth/me HTTP/1.1" 200
+2025-05-20 19:22:36,322 - uvicorn.access - INFO - 127.0.0.1:52694 - "GET /api/v1/oauth/me HTTP/1.1" 200
+2025-05-20 19:23:12,518 - uvicorn.access - INFO - 127.0.0.1:48350 - "GET /api/v1/oauth/me HTTP/1.1" 200
+2025-05-20 19:23:24,562 - uvicorn.access - INFO - 127.0.0.1:54318 - "GET /api/v1/oauth/me HTTP/1.1" 200
+2025-05-20 19:25:10,207 - uvicorn.access - INFO - 127.0.0.1:56964 - "GET /api/v1/oauth/me HTTP/1.1" 200
+2025-05-20 19:25:26,356 - uvicorn.access - INFO - 127.0.0.1:56826 - "GET /api/v1/oauth/me HTTP/1.1" 200
+2025-05-20 19:25:39,323 - uvicorn.access - INFO - 127.0.0.1:58452 - "GET /api/v1/oauth/me HTTP/1.1" 200
+2025-05-20 19:26:07,988 - uvicorn.access - INFO - 127.0.0.1:45108 - "GET /api/v1/oauth/me HTTP/1.1" 200
+2025-05-20 19:26:23,605 - uvicorn.access - INFO - 127.0.0.1:36690 - "GET /api/v1/oauth/me HTTP/1.1" 200
+2025-05-20 19:26:52,331 - uvicorn.access - INFO - 127.0.0.1:56962 - "GET /api/v1/oauth/me HTTP/1.1" 200

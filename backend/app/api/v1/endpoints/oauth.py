@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Response, Cookie
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from datetime import timedelta, datetime
@@ -14,6 +14,7 @@ router = APIRouter()
 SECRET_KEY = settings.SECRET_KEY
 ALGORITHM = settings.ALGORITHM
 ACCESS_TOKEN_EXPIRE_MINUTES = settings.ACCESS_TOKEN_EXPIRE_MINUTES
+REFRESH_TOKEN_EXPIRE_MINUTES = settings.REFRESH_TOKEN_EXPIRE_MINUTES
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl=settings.OAUTH2_TOKEN_URL)
@@ -45,6 +46,17 @@ def create_access_token(data: dict, expires_delta: timedelta = None):
     return encoded_jwt
 
 
+def create_refresh_token(data: dict, expires_delta: timedelta = None):
+    to_encode = data.copy()
+    if expires_delta:
+        expire = datetime.utcnow() + expires_delta
+    else:
+        expire = datetime.utcnow() + timedelta(days=7)  # 7 days default
+    to_encode.update({"exp": expire, "type": "refresh"})
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
+
+
 @router.post(
     "/oauth/token",
     summary="Obtain access token",
@@ -52,6 +64,7 @@ def create_access_token(data: dict, expires_delta: timedelta = None):
     response_description="JWT access token"
 )
 def login_for_access_token(
+    response: Response,
     form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)
 ):
     """
@@ -67,6 +80,17 @@ def login_for_access_token(
             headers={"WWW-Authenticate": "Bearer"},
         )
     access_token = create_access_token(data={"sub": user.user_name})
+    refresh_token = create_refresh_token(data={"sub": user.user_name})
+    # Set refresh token as HTTP-only cookie
+    response.set_cookie(
+        key="refresh_token",
+        value=refresh_token,
+        httponly=True,
+        secure=True,
+        samesite="lax",
+        max_age=REFRESH_TOKEN_EXPIRE_MINUTES,
+        path="/api/v1/oauth/refresh"
+    )
     return {"access_token": access_token, "token_type": "bearer"}
 
 
@@ -76,9 +100,11 @@ def login_for_access_token(
     tags=["OAuth2"],
     response_description="New JWT access token"
 )
-def refresh_access_token(token: str = Depends(oauth2_scheme)):
+def refresh_access_token(
+    refresh_token: str = Cookie(None),
+):
     """
-    Refresh the JWT access token using a valid token.
+    Refresh the JWT access token using a valid refresh token (from cookie).
     - **Returns**: new access token and token type
     - **Raises**: 401 if token is invalid or expired
     """
@@ -87,14 +113,17 @@ def refresh_access_token(token: str = Depends(oauth2_scheme)):
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
+    if not refresh_token:
+        raise credentials_exception
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        payload = jwt.decode(refresh_token, SECRET_KEY, algorithms=[ALGORITHM])
         user_name: str = payload.get("sub")
-        if user_name is None:
+        token_type: str = payload.get("type")
+        if user_name is None or token_type != "refresh":
             raise credentials_exception
     except JWTError:
         raise credentials_exception
-    # Issue a new token with a fresh expiration
+    # Issue a new access token
     new_token = create_access_token(data={"sub": user_name})
     return {"access_token": new_token, "token_type": "bearer"}
 

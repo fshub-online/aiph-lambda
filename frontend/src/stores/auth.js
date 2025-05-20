@@ -1,16 +1,7 @@
 // User authentication store with Pinia
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
-import axios from 'axios';
-
-// Create axios instance with default config
-const api = axios.create({
-  baseURL: 'http://localhost:8000/api/v1',
-  timeout: 10000,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+import api from '@/api';
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref(null);
@@ -28,6 +19,11 @@ export const useAuthStore = defineStore('auth', () => {
     } else {
       localStorage.removeItem('token');
     }
+  }
+
+  function logout () {
+    setUser(null);
+    setToken(null);
   }
 
   async function login (credentials) {
@@ -108,11 +104,6 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  function logout () {
-    setUser(null);
-    setToken(null);
-  }
-
   // Check if there's a token and get user info on startup
   async function initialize () {
     if (token.value) {
@@ -134,5 +125,7 @@ export const useAuthStore = defineStore('auth', () => {
     initialize,
     changePassword,
     updateProfile,
+    setToken, // expose for api.js
+    setUser, // expose for api.js (if needed)
   };
 });
