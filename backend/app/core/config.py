@@ -2,7 +2,6 @@ from pydantic import EmailStr, field_validator
 from pydantic_settings import BaseSettings
 from typing import Optional, List, Union
 
-
 class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
     SECRET_KEY: str = "supersecretkey"
@@ -17,15 +16,17 @@ class Settings(BaseSettings):
     SERVER_PORT: int = 8000
     BACKEND_CORS_ORIGINS: Union[str, List[str]] = "*"
 
-    POSTGRES_HOST: str = "db"
-    POSTGRES_PORT: int = 5432
-    POSTGRES_USER: str = "postgres"
-    POSTGRES_PASSWORD: str = "postgres"
-    POSTGRES_DB: str = "db"
+    PG_HOST: str = "localhost"
+    PG_PORT: int = 5432
+    PG_USER: str = "postgres"
+    PG_PASSWORD: str = "postgres"
+    PG_DB: str = "db"
     SQLALCHEMY_DATABASE_URI: Optional[str] = None
 
     PGADMIN_DEFAULT_EMAIL: Optional[EmailStr] = None
     PGADMIN_DEFAULT_PASSWORD: Optional[str] = None
+
+    LOGFIRE_WRITE_TOKEN: Optional[str] = None
 
     class Config:
         case_sensitive = True
@@ -43,7 +44,7 @@ class Settings(BaseSettings):
     def assemble_db_connection(self) -> str:
         if self.SQLALCHEMY_DATABASE_URI:
             return self.SQLALCHEMY_DATABASE_URI
-        return f"postgresql://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
+        return f"postgresql://{self.PG_USER}:{self.PG_PASSWORD}@{self.PG_HOST}:{self.PG_PORT}/{self.PG_DB}"
 
 
 settings = Settings()

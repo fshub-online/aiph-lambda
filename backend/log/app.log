@@ -1,0 +1,308 @@
++++++++2025-05-20 13:14:30,303 - uvicorn.error - INFO - Started server process [108743]
+2025-05-20 13:14:30,304 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 13:14:30,322 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 13:17:00,289 - uvicorn.error - INFO - Shutting down
+2025-05-20 13:17:00,392 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 13:17:00,393 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 13:17:00,393 - uvicorn.error - INFO - Finished server process [108743]
+2025-05-20 13:17:02,930 - uvicorn.error - INFO - Started server process [110772]
+2025-05-20 13:17:02,931 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 13:17:02,951 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 13:17:02,992 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): logfire-eu.pydantic.dev:443
+2025-05-20 13:17:03,060 - urllib3.connectionpool - DEBUG - https://logfire-eu.pydantic.dev:443 "GET /v1/info HTTP/1.1" 200 None
+2025-05-20 13:17:03,100 - urllib3.connectionpool - DEBUG - https://logfire-eu.pydantic.dev:443 "POST /v1/traces HTTP/1.1" 200 0
+2025-05-20 13:17:03,553 - urllib3.connectionpool - DEBUG - https://logfire-eu.pydantic.dev:443 "POST /v1/traces HTTP/1.1" 200 0
+2025-05-20 13:18:03,007 - urllib3.connectionpool - DEBUG - https://logfire-eu.pydantic.dev:443 "POST /v1/metrics HTTP/1.1" 200 2
+2025-05-20 13:19:03,108 - urllib3.connectionpool - DEBUG - https://logfire-eu.pydantic.dev:443 "POST /v1/metrics HTTP/1.1" 200 2
+2025-05-20 13:20:03,230 - urllib3.connectionpool - DEBUG - https://logfire-eu.pydantic.dev:443 "POST /v1/metrics HTTP/1.1" 200 2
+2025-05-20 13:21:03,336 - urllib3.connectionpool - DEBUG - https://logfire-eu.pydantic.dev:443 "POST /v1/metrics HTTP/1.1" 200 2
+2025-05-20 13:21:20,994 - uvicorn.access - INFO - 127.0.0.1:49138 - "GET /api/v1/health HTTP/1.1" 200
+2025-05-20 13:21:21,183 - urllib3.connectionpool - DEBUG - https://logfire-eu.pydantic.dev:443 "POST /v1/traces HTTP/1.1" 200 0
+2025-05-20 13:21:27,176 - uvicorn.access - INFO - 127.0.0.1:54034 - "GET /api/v1/users?skip=0&limit=100 HTTP/1.1" 200
+2025-05-20 13:21:27,683 - urllib3.connectionpool - DEBUG - https://logfire-eu.pydantic.dev:443 "POST /v1/traces HTTP/1.1" 200 0
+2025-05-20 13:21:38,281 - uvicorn.access - INFO - 127.0.0.1:52470 - "GET /api/v1/users/2 HTTP/1.1" 401
+2025-05-20 13:21:38,646 - urllib3.connectionpool - DEBUG - https://logfire-eu.pydantic.dev:443 "POST /v1/traces HTTP/1.1" 200 0
+2025-05-20 13:22:00,386 - uvicorn.access - INFO - 127.0.0.1:58100 - "GET /api/v1/users/1 HTTP/1.1" 401
+2025-05-20 13:22:00,649 - urllib3.connectionpool - DEBUG - https://logfire-eu.pydantic.dev:443 "POST /v1/traces HTTP/1.1" 200 0
+2025-05-20 13:22:03,401 - urllib3.connectionpool - DEBUG - https://logfire-eu.pydantic.dev:443 "POST /v1/metrics HTTP/1.1" 200 2
+2025-05-20 13:23:03,522 - urllib3.connectionpool - DEBUG - https://logfire-eu.pydantic.dev:443 "POST /v1/metrics HTTP/1.1" 200 2
+2025-05-20 13:23:17,327 - uvicorn.access - INFO - 127.0.0.1:33702 - "GET /api/v1/users?skip=0&limit=100 HTTP/1.1" 401
+2025-05-20 13:23:17,720 - urllib3.connectionpool - DEBUG - https://logfire-eu.pydantic.dev:443 "POST /v1/traces HTTP/1.1" 200 0
+2025-05-20 13:23:33,689 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2025-05-20 13:23:33,690 - python_multipart.multipart - DEBUG - Calling on_field_name with data[0:10]
+2025-05-20 13:23:33,691 - python_multipart.multipart - DEBUG - Calling on_field_data with data[11:19]
+2025-05-20 13:23:33,693 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2025-05-20 13:23:33,694 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2025-05-20 13:23:33,695 - python_multipart.multipart - DEBUG - Calling on_field_name with data[20:28]
+2025-05-20 13:23:33,696 - python_multipart.multipart - DEBUG - Calling on_field_data with data[29:35]
+2025-05-20 13:23:33,697 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2025-05-20 13:23:33,697 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2025-05-20 13:23:33,698 - python_multipart.multipart - DEBUG - Calling on_field_name with data[36:44]
+2025-05-20 13:23:33,699 - python_multipart.multipart - DEBUG - Calling on_field_data with data[45:53]
+2025-05-20 13:23:33,699 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2025-05-20 13:23:33,700 - python_multipart.multipart - DEBUG - Calling on_end with no data
+2025-05-20 13:23:33,718 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/home/radekzitek/Code/fshub-online/aiph-lambda/.venv/lib/python3.12/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-05-20 13:23:33,743 - passlib.handlers.bcrypt - DEBUG - detected 'bcrypt' backend, version '<unknown>'
+2025-05-20 13:23:33,744 - passlib.handlers.bcrypt - DEBUG - 'bcrypt' backend lacks $2$ support, enabling workaround
+2025-05-20 13:23:33,941 - uvicorn.access - INFO - 127.0.0.1:60092 - "POST /api/v1/oauth/token HTTP/1.1" 200
+2025-05-20 13:23:34,235 - urllib3.connectionpool - DEBUG - https://logfire-eu.pydantic.dev:443 "POST /v1/traces HTTP/1.1" 200 0
+2025-05-20 13:23:52,014 - uvicorn.access - INFO - 127.0.0.1:43968 - "GET /api/v1/users?skip=0&limit=100 HTTP/1.1" 200
+2025-05-20 13:23:52,240 - urllib3.connectionpool - DEBUG - https://logfire-eu.pydantic.dev:443 "POST /v1/traces HTTP/1.1" 200 0
+2025-05-20 13:24:03,595 - urllib3.connectionpool - DEBUG - https://logfire-eu.pydantic.dev:443 "POST /v1/metrics HTTP/1.1" 200 2
+2025-05-20 13:25:03,709 - urllib3.connectionpool - DEBUG - https://logfire-eu.pydantic.dev:443 "POST /v1/metrics HTTP/1.1" 200 2
+2025-05-20 13:26:03,813 - urllib3.connectionpool - DEBUG - https://logfire-eu.pydantic.dev:443 "POST /v1/metrics HTTP/1.1" 200 2
+2025-05-20 13:26:35,786 - uvicorn.access - INFO - 127.0.0.1:35312 - "GET /api/v1/users/3 HTTP/1.1" 200
+2025-05-20 13:26:36,297 - urllib3.connectionpool - DEBUG - https://logfire-eu.pydantic.dev:443 "POST /v1/traces HTTP/1.1" 200 0
+2025-05-20 13:26:53,421 - uvicorn.access - INFO - 127.0.0.1:53842 - "GET /api/v1/users/2 HTTP/1.1" 404
+2025-05-20 13:26:53,790 - urllib3.connectionpool - DEBUG - https://logfire-eu.pydantic.dev:443 "POST /v1/traces HTTP/1.1" 200 0
+2025-05-20 13:26:58,733 - uvicorn.access - INFO - 127.0.0.1:53844 - "GET /api/v1/users/3 HTTP/1.1" 200
+2025-05-20 13:26:59,255 - urllib3.connectionpool - DEBUG - https://logfire-eu.pydantic.dev:443 "POST /v1/traces HTTP/1.1" 200 0
+2025-05-20 13:27:03,877 - urllib3.connectionpool - DEBUG - https://logfire-eu.pydantic.dev:443 "POST /v1/metrics HTTP/1.1" 200 2
+2025-05-20 13:28:03,999 - urllib3.connectionpool - DEBUG - https://logfire-eu.pydantic.dev:443 "POST /v1/metrics HTTP/1.1" 200 2
+2025-05-20 13:28:42,656 - uvicorn.error - INFO - Shutting down
+2025-05-20 13:28:42,758 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 13:28:42,762 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 13:28:42,764 - uvicorn.error - INFO - Finished server process [110772]
+2025-05-20 13:28:43,607 - uvicorn.error - INFO - Started server process [119986]
+2025-05-20 13:28:43,608 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 13:28:43,629 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 13:29:27,822 - uvicorn.access - INFO - 127.0.0.1:51144 - "GET /api/v1/users/3 HTTP/1.1" 200
+2025-05-20 13:31:33,602 - uvicorn.error - INFO - Shutting down
+2025-05-20 13:31:33,703 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 13:31:33,704 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 13:31:33,705 - uvicorn.error - INFO - Finished server process [119986]
+2025-05-20 13:31:38,779 - uvicorn.error - INFO - Started server process [122244]
+2025-05-20 13:31:38,779 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 13:31:38,794 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 13:31:43,510 - uvicorn.error - INFO - Shutting down
+2025-05-20 13:31:43,612 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 13:31:43,614 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 13:31:43,616 - uvicorn.error - INFO - Finished server process [122244]
+2025-05-20 13:31:45,344 - uvicorn.error - INFO - Started server process [122375]
+2025-05-20 13:31:45,345 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 13:31:45,360 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 13:31:48,924 - uvicorn.access - INFO - 127.0.0.1:46368 - "GET /api/v1/users/3 HTTP/1.1" 200
+2025-05-20 13:31:49,933 - uvicorn.access - INFO - 127.0.0.1:46368 - "GET /api/v1/users/3 HTTP/1.1" 200
+2025-05-20 13:32:04,599 - uvicorn.access - INFO - 127.0.0.1:56260 - "GET /api/v1/users?skip=0&limit=100 HTTP/1.1" 200
+2025-05-20 13:32:54,978 - uvicorn.error - INFO - Shutting down
+2025-05-20 13:32:55,079 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 13:32:55,081 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 13:32:55,082 - uvicorn.error - INFO - Finished server process [122375]
+2025-05-20 13:43:19,491 - uvicorn.error - INFO - Started server process [131140]
+2025-05-20 13:43:19,492 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 13:43:19,508 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 13:43:21,714 - uvicorn.error - INFO - Shutting down
+2025-05-20 13:43:21,816 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 13:43:21,817 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 13:43:21,818 - uvicorn.error - INFO - Finished server process [131140]
+2025-05-20 13:43:22,636 - uvicorn.error - INFO - Started server process [131243]
+2025-05-20 13:43:22,637 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 13:43:22,652 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 13:43:26,566 - uvicorn.error - INFO - Shutting down
+2025-05-20 13:43:26,668 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 13:43:26,671 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 13:43:26,671 - uvicorn.error - INFO - Finished server process [131243]
+2025-05-20 13:43:28,375 - uvicorn.error - INFO - Started server process [131334]
+2025-05-20 13:43:28,375 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 13:43:28,390 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 13:43:33,651 - uvicorn.access - INFO - 127.0.0.1:53546 - "GET /api/v1/users?skip=0&limit=100 HTTP/1.1" 200
+2025-05-20 13:46:13,208 - uvicorn.error - INFO - Shutting down
+2025-05-20 13:46:13,309 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 13:46:13,310 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 13:46:13,310 - uvicorn.error - INFO - Finished server process [131334]
+2025-05-20 13:46:14,184 - uvicorn.error - INFO - Started server process [133459]
+2025-05-20 13:46:14,184 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 13:46:14,201 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 13:47:06,661 - uvicorn.error - INFO - Shutting down
+2025-05-20 13:47:06,762 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 13:47:06,763 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 13:47:06,764 - uvicorn.error - INFO - Finished server process [133459]
+2025-05-20 13:47:08,679 - uvicorn.error - INFO - Started server process [134158]
+2025-05-20 13:47:08,680 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 13:47:08,696 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 13:48:18,902 - uvicorn.error - INFO - Shutting down
+2025-05-20 13:48:19,004 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 13:48:19,006 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 13:48:19,007 - uvicorn.error - INFO - Finished server process [134158]
+2025-05-20 13:48:19,856 - uvicorn.error - INFO - Started server process [135110]
+2025-05-20 13:48:19,856 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 13:48:19,872 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 13:49:17,252 - uvicorn.error - INFO - Shutting down
+2025-05-20 13:49:17,353 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 13:49:17,354 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 13:49:17,354 - uvicorn.error - INFO - Finished server process [135110]
+2025-05-20 13:49:18,101 - uvicorn.error - INFO - Started server process [136004]
+2025-05-20 13:49:18,101 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 13:49:18,117 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 13:49:20,725 - uvicorn.error - INFO - Shutting down
+2025-05-20 13:49:20,826 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 13:49:20,828 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 13:49:20,829 - uvicorn.error - INFO - Finished server process [136004]
+2025-05-20 13:49:21,600 - uvicorn.error - INFO - Started server process [136107]
+2025-05-20 13:49:21,601 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 13:49:21,616 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 13:49:22,118 - uvicorn.error - INFO - Shutting down
+2025-05-20 13:49:22,219 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 13:49:22,219 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 13:49:22,220 - uvicorn.error - INFO - Finished server process [136107]
+2025-05-20 13:49:23,010 - uvicorn.error - INFO - Started server process [136143]
+2025-05-20 13:49:23,010 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 13:49:23,026 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 13:49:43,589 - uvicorn.error - INFO - Shutting down
+2025-05-20 13:49:43,691 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 13:49:43,693 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 13:49:43,694 - uvicorn.error - INFO - Finished server process [136143]
+2025-05-20 13:49:44,475 - uvicorn.error - INFO - Started server process [136445]
+2025-05-20 13:49:44,475 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 13:49:44,492 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 13:49:51,111 - uvicorn.error - INFO - Shutting down
+2025-05-20 13:49:51,212 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 13:49:51,213 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 13:49:51,213 - uvicorn.error - INFO - Finished server process [136445]
+2025-05-20 13:49:52,016 - uvicorn.error - INFO - Started server process [136613]
+2025-05-20 13:49:52,017 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 13:49:52,033 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 13:49:53,337 - uvicorn.error - INFO - Shutting down
+2025-05-20 13:49:53,438 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 13:49:53,439 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 13:49:53,440 - uvicorn.error - INFO - Finished server process [136613]
+2025-05-20 13:49:54,229 - uvicorn.error - INFO - Started server process [136646]
+2025-05-20 13:49:54,229 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 13:49:54,244 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 13:49:55,247 - uvicorn.error - INFO - Shutting down
+2025-05-20 13:49:55,348 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 13:49:55,349 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 13:49:55,349 - uvicorn.error - INFO - Finished server process [136646]
+2025-05-20 13:49:56,116 - uvicorn.error - INFO - Started server process [136686]
+2025-05-20 13:49:56,116 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 13:49:56,134 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 13:50:00,445 - uvicorn.error - INFO - Shutting down
+2025-05-20 13:50:00,546 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 13:50:00,546 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 13:50:00,547 - uvicorn.error - INFO - Finished server process [136686]
+2025-05-20 13:50:01,391 - uvicorn.error - INFO - Started server process [136805]
+2025-05-20 13:50:01,391 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 13:50:01,406 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 13:50:04,917 - uvicorn.error - INFO - Shutting down
+2025-05-20 13:50:05,019 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 13:50:05,021 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 13:50:05,022 - uvicorn.error - INFO - Finished server process [136805]
+2025-05-20 13:50:05,815 - uvicorn.error - INFO - Started server process [136896]
+2025-05-20 13:50:05,815 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 13:50:05,831 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 13:50:52,271 - uvicorn.error - INFO - Shutting down
+2025-05-20 13:50:52,372 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 13:50:52,374 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 13:50:52,376 - uvicorn.error - INFO - Finished server process [136896]
+2025-05-20 13:50:53,227 - uvicorn.error - INFO - Started server process [137524]
+2025-05-20 13:50:53,227 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 13:50:53,243 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 13:51:04,872 - uvicorn.error - INFO - Shutting down
+2025-05-20 13:51:04,973 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 13:51:04,974 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 13:51:04,974 - uvicorn.error - INFO - Finished server process [137524]
+2025-05-20 13:51:05,808 - uvicorn.error - INFO - Started server process [137719]
+2025-05-20 13:51:05,809 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 13:51:05,825 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 13:51:18,162 - uvicorn.error - INFO - Shutting down
+2025-05-20 13:51:18,263 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 13:51:18,263 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 13:51:18,263 - uvicorn.error - INFO - Finished server process [137719]
+2025-05-20 13:51:19,094 - uvicorn.error - INFO - Started server process [137932]
+2025-05-20 13:51:19,095 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 13:51:19,110 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 13:52:27,226 - uvicorn.error - INFO - Shutting down
+2025-05-20 13:52:27,327 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 13:52:27,330 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 13:52:27,331 - uvicorn.error - INFO - Finished server process [137932]
+2025-05-20 13:52:28,254 - uvicorn.error - INFO - Started server process [138852]
+2025-05-20 13:52:28,255 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 13:52:28,272 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 13:52:37,078 - uvicorn.access - INFO - 127.0.0.1:56914 - "GET /api/v1/users?skip=0&limit=100 HTTP/1.1" 200
+2025-05-20 13:52:38,936 - uvicorn.access - INFO - 127.0.0.1:56914 - "GET /api/v1/users?skip=0&limit=100 HTTP/1.1" 200
+2025-05-20 13:52:39,472 - uvicorn.access - INFO - 127.0.0.1:56914 - "GET /api/v1/users?skip=0&limit=100 HTTP/1.1" 200
+2025-05-20 13:53:24,256 - uvicorn.error - INFO - Shutting down
+2025-05-20 13:53:24,358 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 13:53:24,361 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 13:53:24,362 - uvicorn.error - INFO - Finished server process [138852]
+2025-05-20 13:53:25,205 - uvicorn.error - INFO - Started server process [139665]
+2025-05-20 13:53:25,205 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 13:53:25,221 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 13:53:26,425 - uvicorn.error - INFO - Shutting down
+2025-05-20 13:53:26,526 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 13:53:26,526 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 13:53:26,526 - uvicorn.error - INFO - Finished server process [139665]
+2025-05-20 13:53:27,329 - uvicorn.error - INFO - Started server process [139722]
+2025-05-20 13:53:27,330 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 13:53:27,346 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 13:54:00,753 - uvicorn.error - INFO - Shutting down
+2025-05-20 13:54:00,854 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 13:54:00,857 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 13:54:00,858 - uvicorn.error - INFO - Finished server process [139722]
+2025-05-20 13:54:01,506 - uvicorn.error - INFO - Started server process [140198]
+2025-05-20 13:54:01,506 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 13:54:01,521 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 13:54:02,423 - uvicorn.error - INFO - Shutting down
+2025-05-20 13:54:02,525 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 13:54:02,528 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 13:54:02,529 - uvicorn.error - INFO - Finished server process [140198]
+2025-05-20 13:54:03,076 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2025-05-20 13:54:03,077 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2025-05-20 13:54:03,077 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2025-05-20 13:54:03,079 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2025-05-20 13:54:03,167 - uvicorn.error - INFO - Started server process [140242]
+2025-05-20 13:54:03,168 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 13:54:03,183 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 13:54:05,691 - uvicorn.error - INFO - Shutting down
+2025-05-20 13:54:05,791 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 13:54:05,792 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 13:54:05,793 - uvicorn.error - INFO - Finished server process [140242]
+2025-05-20 13:54:06,340 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2025-05-20 13:54:06,341 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2025-05-20 13:54:06,342 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2025-05-20 13:54:06,343 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2025-05-20 13:54:06,423 - uvicorn.error - INFO - Started server process [140290]
+2025-05-20 13:54:06,423 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 13:54:06,439 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 13:54:06,640 - uvicorn.error - INFO - Shutting down
+2025-05-20 13:54:06,741 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-20 13:54:06,742 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-20 13:54:06,742 - uvicorn.error - INFO - Finished server process [140290]
+2025-05-20 13:54:07,292 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2025-05-20 13:54:07,294 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2025-05-20 13:54:07,294 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2025-05-20 13:54:07,296 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2025-05-20 13:54:07,380 - uvicorn.error - INFO - Started server process [140318]
+2025-05-20 13:54:07,380 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-20 13:54:07,395 - uvicorn.error - INFO - Application startup complete.
+2025-05-20 13:54:39,407 - uvicorn.access - INFO - 127.0.0.1:43088 - "GET /api/v1/users?skip=0&limit=100 HTTP/1.1" 401
+2025-05-20 13:55:01,694 - uvicorn.access - INFO - 127.0.0.1:47802 - "GET /api/v1/users?skip=0&limit=100 HTTP/1.1" 401
+2025-05-20 13:55:13,850 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2025-05-20 13:55:13,851 - python_multipart.multipart - DEBUG - Calling on_field_name with data[0:10]
+2025-05-20 13:55:13,852 - python_multipart.multipart - DEBUG - Calling on_field_data with data[11:19]
+2025-05-20 13:55:13,853 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2025-05-20 13:55:13,854 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2025-05-20 13:55:13,855 - python_multipart.multipart - DEBUG - Calling on_field_name with data[20:28]
+2025-05-20 13:55:13,856 - python_multipart.multipart - DEBUG - Calling on_field_data with data[29:35]
+2025-05-20 13:55:13,857 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2025-05-20 13:55:13,858 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2025-05-20 13:55:13,859 - python_multipart.multipart - DEBUG - Calling on_field_name with data[36:44]
+2025-05-20 13:55:13,860 - python_multipart.multipart - DEBUG - Calling on_field_data with data[45:53]
+2025-05-20 13:55:13,861 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2025-05-20 13:55:13,862 - python_multipart.multipart - DEBUG - Calling on_end with no data
+2025-05-20 13:55:13,884 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/home/radekzitek/Code/fshub-online/aiph-lambda/.venv/lib/python3.12/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-05-20 13:55:13,886 - passlib.handlers.bcrypt - DEBUG - detected 'bcrypt' backend, version '<unknown>'
+2025-05-20 13:55:13,886 - passlib.handlers.bcrypt - DEBUG - 'bcrypt' backend lacks $2$ support, enabling workaround
+2025-05-20 13:55:14,083 - uvicorn.access - INFO - 127.0.0.1:41010 - "POST /api/v1/oauth/token HTTP/1.1" 200
+2025-05-20 13:55:19,352 - uvicorn.access - INFO - 127.0.0.1:41020 - "GET /api/v1/health HTTP/1.1" 200
+2025-05-20 13:55:21,410 - uvicorn.access - INFO - 127.0.0.1:41020 - "GET /api/v1/users?skip=0&limit=100 HTTP/1.1" 200

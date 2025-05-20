@@ -1,9 +1,17 @@
 from logging.config import fileConfig
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'app')))
 
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
+
+from app.core.config import settings
+from app.db.base import Base
+from app.models import user
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -18,7 +26,13 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = None
+
+# Set up target_metadata for autogenerate
+# Import all models here so Alembic can detect them
+target_metadata = Base.metadata
+
+# Set SQLAlchemy URL from app config
+config.set_main_option("sqlalchemy.url", settings.assemble_db_connection())
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

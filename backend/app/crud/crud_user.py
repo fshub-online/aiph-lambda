@@ -27,7 +27,6 @@ def create_user(db: Session, user_in: UserCreate) -> User:
         user_name=user_in.user_name,
         first_name=user_in.first_name,
         last_name=user_in.last_name,
-        position=user_in.position,
         notes=user_in.notes,
         email=user_in.email,
         phone=user_in.phone,
