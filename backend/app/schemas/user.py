@@ -33,6 +33,10 @@ class UserInDBBase(UserBase):
             datetime: lambda v: v.isoformat(),
         }
 
+class UserPasswordChange(BaseModel):
+    current_password: str
+    new_password: str
+
 class User(UserInDBBase):
     pass
 

@@ -2,11 +2,13 @@ import logfire
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
+from fastapi.middleware.cors import CORSMiddleware
 from app.api.v1 import api_v1_router
 from app.db.session import engine, SessionLocal
 import secrets
 from app.schemas.user import UserCreate
 from app.core.logfire_instance import instrument_all
+from app.core.config import settings
 
 app = FastAPI(
     title="FastAPI backend for project Lambda",
@@ -38,6 +40,17 @@ app = FastAPI(
         "url": "https://www.fshub.online",
         "email": "radek.zitek@proton.me",
     },
+)
+
+
+
+# CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.get_cors_origins(),
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # configure logfire

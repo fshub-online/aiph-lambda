@@ -47,4 +47,13 @@ class Settings(BaseSettings):
         return f"postgresql://{self.PG_USER}:{self.PG_PASSWORD}@{self.PG_HOST}:{self.PG_PORT}/{self.PG_DB}"
 
 
+    # Parse BACKEND_CORS_ORIGINS env var (comma-separated string)
+    def get_cors_origins(self) -> List[str]:
+        origins = self.BACKEND_CORS_ORIGINS
+        if not origins:
+            return ["*"]
+        if isinstance(origins, str):
+            return [o.strip() for o in origins.split(",") if o.strip()]
+        return origins
+
 settings = Settings()

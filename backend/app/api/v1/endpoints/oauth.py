@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from datetime import timedelta, datetime
 from app.db.session import get_db
 from app.crud import crud_user
-from app.schemas.user import User as UserSchema
+from app.schemas.user import User as UserSchema, UserPasswordChange
 from app.core.config import settings
 from jose import JWTError, jwt
 from passlib.context import CryptContext
@@ -132,3 +132,68 @@ def read_users_me(token: str = Depends(oauth2_scheme), db: Session = Depends(get
     if user is None:
         raise credentials_exception
     return user
+
+@router.patch(
+    "/oauth/me",
+    response_model=UserSchema,
+    summary="Update current user profile",
+    tags=["OAuth2"],
+    response_description="Updated user profile"
+)
+def update_own_profile(
+    user_update: dict, 
+    db: Session = Depends(get_db),
+    current_user: UserSchema = Depends(read_users_me)
+):
+    """
+    Update the profile of the currently authenticated user.
+    - **Requires authentication**
+    """
+    user_id = current_user.id
+    db_user = crud_user.get_user(db, user_id=user_id)
+    if not db_user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    # Convert dict to UserUpdate model
+    from app.schemas.user import UserUpdate
+    user_update_model = UserUpdate(**user_update)
+    
+    return crud_user.update_user(db, db_user=db_user, user_in=user_update_model)
+
+
+@router.post(
+    "/oauth/me/change-password",
+    status_code=status.HTTP_200_OK,
+    summary="Change current user password",
+    tags=["OAuth2"],
+    response_description="Password changed successfully"
+)
+def change_own_password(
+    password_data: UserPasswordChange,
+    db: Session = Depends(get_db),
+    current_user: UserSchema = Depends(read_users_me)
+):
+    """
+    Change the password of the currently authenticated user.
+    - **Requires authentication**
+    - **current_password must match the current password**
+    """
+    user_id = current_user.id
+    db_user = crud_user.get_user(db, user_id=user_id)
+    if not db_user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    # Verify current password
+    if not pwd_context.verify(password_data.current_password, db_user.hashed_password):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Incorrect current password"
+        )
+    
+    # Update password
+    hashed_password = pwd_context.hash(password_data.new_password)
+    db_user.hashed_password = hashed_password
+    db.commit()
+    db.refresh(db_user)
+    
+    return {"message": "Password updated successfully"}
