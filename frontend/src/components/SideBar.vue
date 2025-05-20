@@ -7,7 +7,47 @@
         title="Home"
         to="/"
       />
-      <!-- Add more navigation items here -->
+
+      <v-divider class="my-2" />
+
+      <v-list-item
+        prepend-icon="mdi-account-group"
+        router
+        title="Team Members"
+        to="/members"
+      />
+      <v-list-item
+        prepend-icon="mdi-bullseye-arrow"
+        router
+        title="Objectives"
+        to="/objectives"
+      />
+      <v-list-item
+        prepend-icon="mdi-account-hard-hat"
+        router
+        title="Key Results"
+        to="/results"
+      />
+      <v-list-item
+        prepend-icon="mdi-notebook"
+        router
+        title="Meetings"
+        to="/meetings"
+      />
+      <v-list-item
+        prepend-icon="mdi-certificate"
+        router
+        title="Evaluations"
+        to="/evaluations"
+      />
+
+      <v-divider class="my-2" />
+      <v-list-item
+        prepend-icon="mdi-shield-crown"
+        router
+        title="Administration"
+        to="/admin"
+      />
     </v-list>
   </v-navigation-drawer>
 </template>
