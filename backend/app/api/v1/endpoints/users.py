@@ -4,15 +4,9 @@ from typing import List
 from app import schemas
 from app.db.session import get_db
 from app.crud import crud_user
-from app.api.v1.endpoints.oauth import read_users_me
+from app.api.v1.deps import get_current_active_user
 
 router = APIRouter()
-
-def get_current_user(current_user: schemas.user.User = Depends(read_users_me)):
-    """
-    Dependency to get the current authenticated user.
-    """
-    return current_user
 
 @router.get(
     "/users",
@@ -21,7 +15,7 @@ def get_current_user(current_user: schemas.user.User = Depends(read_users_me)):
     tags=["Users"],
     response_description="List of users"
 )
-def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db), current_user: schemas.user.User = Depends(get_current_user)):
+def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db), current_user: schemas.user.User = Depends(get_current_active_user)):
     """
     Retrieve a list of users.
     - **skip**: Number of records to skip for pagination
@@ -39,7 +33,7 @@ def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db), c
     tags=["Users"],
     response_description="Created user"
 )
-def create_user(user_in: schemas.user.UserCreate, db: Session = Depends(get_db), current_user: schemas.user.User = Depends(get_current_user)):
+def create_user(user_in: schemas.user.UserCreate, db: Session = Depends(get_db), current_user: schemas.user.User = Depends(get_current_active_user)):
     """
     Create a new user.
     - **Requires authentication**
@@ -60,7 +54,7 @@ def create_user(user_in: schemas.user.UserCreate, db: Session = Depends(get_db),
     tags=["Users"],
     response_description="User details"
 )
-def read_user(user_id: int, db: Session = Depends(get_db), current_user: schemas.user.User = Depends(get_current_user)):
+def read_user(user_id: int, db: Session = Depends(get_db), current_user: schemas.user.User = Depends(get_current_active_user)):
     """
     Get a user by their ID.
     - **Requires authentication**
@@ -78,7 +72,7 @@ def read_user(user_id: int, db: Session = Depends(get_db), current_user: schemas
     tags=["Users"],
     response_description="Updated user"
 )
-def update_user(user_id: int, user_in: schemas.user.UserUpdate, db: Session = Depends(get_db), current_user: schemas.user.User = Depends(get_current_user)):
+def update_user(user_id: int, user_in: schemas.user.UserUpdate, db: Session = Depends(get_db), current_user: schemas.user.User = Depends(get_current_active_user)):
     """
     Update a user's information.
     - **Requires authentication**
@@ -96,7 +90,7 @@ def update_user(user_id: int, user_in: schemas.user.UserUpdate, db: Session = De
     tags=["Users"],
     response_description="User deleted"
 )
-def delete_user(user_id: int, db: Session = Depends(get_db), current_user: schemas.user.User = Depends(get_current_user)):
+def delete_user(user_id: int, db: Session = Depends(get_db), current_user: schemas.user.User = Depends(get_current_active_user)):
     """
     Delete a user by their ID.
     - **Requires authentication**

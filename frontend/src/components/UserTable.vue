@@ -34,9 +34,9 @@
         :items="filteredUsers"
         :loading="loading"
         loading-text="Loading users..."
+        multi-sort
         :search="search"
-        :sort-by="sortBy"
-        @update:sort-by="(val) => (sortBy.value = val)"
+        @update:sort-by="val => sortBy.value = val"
       >
         <template #item.actions="{ item }">
           <v-icon
@@ -50,11 +50,24 @@
             color="error"
             size="small"
             title="Delete user"
-            @click="emit('delete', item)"
+            @click="confirmDelete(item)"
           >mdi-delete</v-icon>
         </template>
       </v-data-table>
     </div>
+    <v-dialog v-model="deleteDialog" max-width="400">
+      <v-card>
+        <v-card-title class="text-h6">Confirm Deletion</v-card-title>
+        <v-card-text>
+          Are you sure you want to delete user <b>{{ userToDelete?.user_name }}</b>?
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn text @click="deleteDialog = false">Cancel</v-btn>
+          <v-btn color="error" :loading="deleteLoading" @click="deleteUser">Delete</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-card>
 </template>
 
@@ -67,9 +80,11 @@
   const users = ref([]);
   const loading = ref(false);
   const search = ref('');
-  // Vuetify 3 v-data-table expects sortBy as an array of objects
-  const sortBy = ref([{ key: 'user_name', order: 'asc' }]);
-  // Remove sortDesc, only use sortBy
+  const sortBy = ref([]);
+
+  const deleteDialog = ref(false);
+  const userToDelete = ref(null);
+  const deleteLoading = ref(false);
 
   const headers = [
     { title: 'User Name', value: 'user_name', sortable: true },
@@ -104,6 +119,28 @@
       users.value = [];
     } finally {
       loading.value = false;
+    }
+  }
+
+  function confirmDelete (user) {
+    userToDelete.value = user;
+    deleteDialog.value = true;
+  }
+
+  async function deleteUser () {
+    if (!userToDelete.value) return;
+    deleteLoading.value = true;
+    try {
+      await api.delete(`/users/${userToDelete.value.id || userToDelete.value.user_name}`);
+      deleteDialog.value = false;
+      userToDelete.value = null;
+      await fetchUsers();
+    } catch {
+      // Optionally show error snackbar
+      deleteDialog.value = false;
+      userToDelete.value = null;
+    } finally {
+      deleteLoading.value = false;
     }
   }
 

@@ -51,7 +51,7 @@ def create_refresh_token(data: dict, expires_delta: timedelta = None):
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
     else:
-        expire = datetime.utcnow() + timedelta(days=7)  # 7 days default
+        expire = datetime.utcnow() + timedelta(minutes=REFRESH_TOKEN_EXPIRE_MINUTES) 
     to_encode.update({"exp": expire, "type": "refresh"})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
@@ -86,10 +86,10 @@ def login_for_access_token(
         key="refresh_token",
         value=refresh_token,
         httponly=True,
-        secure=True,
-        samesite="lax",
+        secure=False,
+        samesite="none",
         max_age=REFRESH_TOKEN_EXPIRE_MINUTES,
-        path="/api/v1/oauth/refresh"
+        path="/"
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
