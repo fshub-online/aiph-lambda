@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status, Response, Cookie
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from datetime import timedelta, datetime
-from app.db.session import get_db
+from app.api.v1.deps import get_db
 from app.crud import crud_user
 from app.schemas.user import User as UserSchema, UserPasswordChange
 from app.core.config import settings

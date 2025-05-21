@@ -1618,3 +1618,310 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2025-05-21 05:31:58,595 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
 2025-05-21 05:31:58,596 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
 2025-05-21 05:31:58,598 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2025-05-21 06:16:48,493 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2025-05-21 06:16:48,495 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2025-05-21 06:16:48,496 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2025-05-21 06:16:48,503 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2025-05-21 06:18:49,480 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2025-05-21 06:18:49,482 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2025-05-21 06:18:49,483 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2025-05-21 06:18:49,487 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2025-05-21 06:23:29,461 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2025-05-21 06:23:29,463 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2025-05-21 06:23:29,464 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2025-05-21 06:23:29,466 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2025-05-21 06:23:29,659 - uvicorn.error - INFO - Started server process [33171]
+2025-05-21 06:23:29,660 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-21 06:23:29,813 - uvicorn.error - ERROR - Traceback (most recent call last):
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/opentelemetry/instrumentation/psycopg2/__init__.py", line 322, in execute
+    return _cursor_tracer.traced_execution(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/opentelemetry/instrumentation/dbapi/__init__.py", line 593, in traced_execution
+    return query_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedTable: relation "user" does not exist
+LINE 2: FROM "user"
+             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/starlette/routing.py", line 692, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+  File "/home/codespace/.python/current/lib/python3.12/contextlib.py", line 210, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 133, in merged_lifespan
+    async with original_context(app) as maybe_original_state:
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/starlette/routing.py", line 569, in __aenter__
+    await self._router.startup()
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/starlette/routing.py", line 671, in startup
+    handler()
+  File "/workspaces/aiph-lambda/backend/app/main.py", line 78, in startup_event
+    result = session.execute(select(User))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/sqlalchemy/orm/context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1415, in execute
+    return meth(
+           ^^^^^
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/opentelemetry/instrumentation/psycopg2/__init__.py", line 322, in execute
+    return _cursor_tracer.traced_execution(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/opentelemetry/instrumentation/dbapi/__init__.py", line 593, in traced_execution
+    return query_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation "user" does not exist
+LINE 2: FROM "user"
+             ^
+
+[SQL: SELECT "user".user_name, "user".first_name, "user".last_name, "user".notes, "user".email, "user".phone, "user".hashed_password, "user".id, "user".created_at, "user".updated_at 
+FROM "user"]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+
+2025-05-21 06:23:29,814 - uvicorn.error - ERROR - Application startup failed. Exiting.
+2025-05-21 06:26:05,873 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2025-05-21 06:26:05,875 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2025-05-21 06:26:05,877 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2025-05-21 06:26:05,879 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2025-05-21 06:26:06,060 - uvicorn.error - INFO - Started server process [34516]
+2025-05-21 06:26:06,061 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-21 06:26:06,096 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-05-21 06:26:06,099 - passlib.handlers.bcrypt - DEBUG - detected 'bcrypt' backend, version '<unknown>'
+2025-05-21 06:26:06,100 - passlib.handlers.bcrypt - DEBUG - 'bcrypt' backend lacks $2$ support, enabling workaround
+2025-05-21 06:26:06,424 - uvicorn.error - INFO - Application startup complete.
+2025-05-21 06:26:37,351 - uvicorn.access - INFO - 82.100.40.3:0 - "GET / HTTP/1.1" 200
+2025-05-21 06:26:37,570 - uvicorn.access - INFO - 82.100.40.3:0 - "GET /favicon.ico HTTP/1.1" 200
+2025-05-21 06:26:51,330 - uvicorn.access - INFO - 82.100.40.3:0 - "GET /api/v1/docs HTTP/1.1" 200
+2025-05-21 06:26:51,744 - uvicorn.access - INFO - 82.100.40.3:0 - "GET /api/v1/openapi.json HTTP/1.1" 200
+2025-05-21 06:26:58,323 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2025-05-21 06:26:58,324 - python_multipart.multipart - DEBUG - Calling on_field_name with data[0:10]
+2025-05-21 06:26:58,324 - python_multipart.multipart - DEBUG - Calling on_field_data with data[11:19]
+2025-05-21 06:26:58,324 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2025-05-21 06:26:58,325 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2025-05-21 06:26:58,325 - python_multipart.multipart - DEBUG - Calling on_field_name with data[20:28]
+2025-05-21 06:26:58,325 - python_multipart.multipart - DEBUG - Calling on_field_data with data[29:34]
+2025-05-21 06:26:58,326 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2025-05-21 06:26:58,326 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2025-05-21 06:26:58,326 - python_multipart.multipart - DEBUG - Calling on_field_name with data[35:43]
+2025-05-21 06:26:58,327 - python_multipart.multipart - DEBUG - Calling on_field_data with data[44:66]
+2025-05-21 06:26:58,327 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2025-05-21 06:26:58,327 - python_multipart.multipart - DEBUG - Calling on_end with no data
+2025-05-21 06:26:58,590 - uvicorn.access - INFO - 82.100.40.3:0 - "POST /api/v1/oauth/token HTTP/1.1" 200
+2025-05-21 06:27:20,458 - uvicorn.access - INFO - 82.100.40.3:0 - "GET /api/v1/users?skip=0&limit=100 HTTP/1.1" 200
+2025-05-21 06:34:12,851 - uvicorn.error - INFO - Shutting down
+2025-05-21 06:34:12,954 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-21 06:34:12,955 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-21 06:34:12,956 - uvicorn.error - INFO - Finished server process [34516]
+2025-05-21 06:34:14,835 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2025-05-21 06:34:14,838 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2025-05-21 06:34:14,839 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2025-05-21 06:34:14,854 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2025-05-21 06:34:15,076 - uvicorn.error - INFO - Started server process [40948]
+2025-05-21 06:34:15,077 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-21 06:34:15,147 - uvicorn.error - INFO - Application startup complete.
+2025-05-21 06:34:21,885 - uvicorn.error - INFO - Shutting down
+2025-05-21 06:34:21,991 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-21 06:34:21,993 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-21 06:34:21,999 - uvicorn.error - INFO - Finished server process [40948]
+2025-05-21 06:34:23,286 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2025-05-21 06:34:23,288 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2025-05-21 06:34:23,289 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2025-05-21 06:34:23,292 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2025-05-21 06:34:23,449 - uvicorn.error - INFO - Started server process [41082]
+2025-05-21 06:34:23,450 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-21 06:34:23,471 - uvicorn.error - INFO - Application startup complete.
+2025-05-21 06:36:05,862 - uvicorn.error - INFO - Shutting down
+2025-05-21 06:36:05,967 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-21 06:36:05,969 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-21 06:36:05,973 - uvicorn.error - INFO - Finished server process [41082]
+2025-05-21 06:36:08,152 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2025-05-21 06:36:08,153 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2025-05-21 06:36:08,154 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2025-05-21 06:36:08,157 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2025-05-21 06:36:08,310 - uvicorn.error - INFO - Started server process [41872]
+2025-05-21 06:36:08,311 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-21 06:36:08,332 - uvicorn.error - INFO - Application startup complete.
+2025-05-21 06:36:15,250 - uvicorn.error - INFO - Shutting down
+2025-05-21 06:36:15,351 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-21 06:36:15,354 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-21 06:36:15,354 - uvicorn.error - INFO - Finished server process [41872]
+2025-05-21 06:36:16,257 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2025-05-21 06:36:16,259 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2025-05-21 06:36:16,260 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2025-05-21 06:36:16,263 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2025-05-21 06:36:16,408 - uvicorn.error - INFO - Started server process [41977]
+2025-05-21 06:36:16,409 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-21 06:36:16,430 - uvicorn.error - INFO - Application startup complete.
+2025-05-21 06:36:18,239 - uvicorn.access - INFO - 82.100.40.3:0 - "GET /api/v1/docs HTTP/1.1" 200
+2025-05-21 06:36:18,556 - uvicorn.access - INFO - 82.100.40.3:0 - "GET /api/v1/openapi.json HTTP/1.1" 200
+2025-05-21 06:36:27,759 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2025-05-21 06:36:27,760 - python_multipart.multipart - DEBUG - Calling on_field_name with data[0:10]
+2025-05-21 06:36:27,760 - python_multipart.multipart - DEBUG - Calling on_field_data with data[11:19]
+2025-05-21 06:36:27,760 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2025-05-21 06:36:27,761 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2025-05-21 06:36:27,761 - python_multipart.multipart - DEBUG - Calling on_field_name with data[20:28]
+2025-05-21 06:36:27,761 - python_multipart.multipart - DEBUG - Calling on_field_data with data[29:34]
+2025-05-21 06:36:27,762 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2025-05-21 06:36:27,762 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2025-05-21 06:36:27,762 - python_multipart.multipart - DEBUG - Calling on_field_name with data[35:43]
+2025-05-21 06:36:27,763 - python_multipart.multipart - DEBUG - Calling on_field_data with data[44:66]
+2025-05-21 06:36:27,763 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2025-05-21 06:36:27,763 - python_multipart.multipart - DEBUG - Calling on_end with no data
+2025-05-21 06:36:27,796 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-05-21 06:36:27,800 - passlib.handlers.bcrypt - DEBUG - detected 'bcrypt' backend, version '<unknown>'
+2025-05-21 06:36:27,801 - passlib.handlers.bcrypt - DEBUG - 'bcrypt' backend lacks $2$ support, enabling workaround
+2025-05-21 06:36:28,085 - uvicorn.access - INFO - 82.100.40.3:0 - "POST /api/v1/oauth/token HTTP/1.1" 200
+2025-05-21 06:37:42,190 - uvicorn.access - INFO - 82.100.40.3:0 - "POST /api/v1/messages HTTP/1.1" 500
+2025-05-21 06:37:42,191 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/opentelemetry/instrumentation/asgi/__init__.py", line 743, in __call__
+    await self.app(scope, otel_receive, otel_send)
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 327, in app
+    content = await serialize_response(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 176, in serialize_response
+    raise ResponseValidationError(
+fastapi.exceptions.ResponseValidationError: 2 validation errors:
+  {'type': 'missing', 'loc': ('response', 'created'), 'msg': 'Field required', 'input': <app.models.message.Message object at 0x76fb86738440>}
+  {'type': 'missing', 'loc': ('response', 'updated'), 'msg': 'Field required', 'input': <app.models.message.Message object at 0x76fb86738440>}
+
+2025-05-21 06:41:36,183 - uvicorn.error - INFO - Shutting down
+2025-05-21 06:41:36,292 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-21 06:41:36,294 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-21 06:41:36,302 - uvicorn.error - INFO - Finished server process [41977]
+2025-05-21 06:41:38,209 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2025-05-21 06:41:38,212 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2025-05-21 06:41:38,212 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2025-05-21 06:41:38,215 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2025-05-21 06:41:38,367 - uvicorn.error - INFO - Started server process [44360]
+2025-05-21 06:41:38,368 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-21 06:41:38,388 - uvicorn.error - INFO - Application startup complete.
+2025-05-21 06:41:43,502 - uvicorn.error - INFO - Shutting down
+2025-05-21 06:41:43,603 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-05-21 06:41:43,604 - uvicorn.error - INFO - Application shutdown complete.
+2025-05-21 06:41:43,605 - uvicorn.error - INFO - Finished server process [44360]
+2025-05-21 06:41:44,580 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2025-05-21 06:41:44,582 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2025-05-21 06:41:44,583 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2025-05-21 06:41:44,586 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2025-05-21 06:41:44,743 - uvicorn.error - INFO - Started server process [44451]
+2025-05-21 06:41:44,744 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-21 06:41:44,767 - uvicorn.error - INFO - Application startup complete.
+2025-05-21 06:41:54,960 - uvicorn.access - INFO - 82.100.40.3:0 - "POST /api/v1/messages HTTP/1.1" 201
+2025-05-21 06:42:05,228 - uvicorn.access - INFO - 82.100.40.3:0 - "GET /api/v1/messages HTTP/1.1" 200
+2025-05-21 06:42:21,727 - uvicorn.access - INFO - 82.100.40.3:0 - "DELETE /api/v1/messages/2 HTTP/1.1" 204
+2025-05-21 06:42:29,009 - uvicorn.access - INFO - 82.100.40.3:0 - "GET /api/v1/messages HTTP/1.1" 200
+2025-05-21 12:55:38,458 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2025-05-21 12:55:38,491 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2025-05-21 12:55:38,494 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2025-05-21 12:55:38,528 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2025-05-21 12:55:39,612 - uvicorn.error - INFO - Started server process [4428]
+2025-05-21 12:55:39,613 - uvicorn.error - INFO - Waiting for application startup.
+2025-05-21 12:55:40,694 - uvicorn.error - INFO - Application startup complete.
+2025-05-21 12:55:46,321 - uvicorn.access - INFO - 82.100.40.3:0 - "GET / HTTP/1.1" 200
+2025-05-21 12:55:59,983 - uvicorn.access - INFO - 82.100.40.3:0 - "GET /api/v1/docs HTTP/1.1" 200
+2025-05-21 12:56:00,379 - uvicorn.access - INFO - 82.100.40.3:0 - "GET /api/v1/openapi.json HTTP/1.1" 200
+2025-05-21 12:56:07,979 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2025-05-21 12:56:07,980 - python_multipart.multipart - DEBUG - Calling on_field_name with data[0:10]
+2025-05-21 12:56:07,980 - python_multipart.multipart - DEBUG - Calling on_field_data with data[11:19]
+2025-05-21 12:56:07,981 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2025-05-21 12:56:07,982 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2025-05-21 12:56:07,982 - python_multipart.multipart - DEBUG - Calling on_field_name with data[20:28]
+2025-05-21 12:56:07,983 - python_multipart.multipart - DEBUG - Calling on_field_data with data[29:34]
+2025-05-21 12:56:07,983 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2025-05-21 12:56:07,984 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2025-05-21 12:56:07,985 - python_multipart.multipart - DEBUG - Calling on_field_name with data[35:43]
+2025-05-21 12:56:07,985 - python_multipart.multipart - DEBUG - Calling on_field_data with data[44:66]
+2025-05-21 12:56:07,986 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2025-05-21 12:56:07,986 - python_multipart.multipart - DEBUG - Calling on_end with no data
+2025-05-21 12:56:08,086 - passlib.handlers.bcrypt - WARNING - (trapped) error reading bcrypt version
+Traceback (most recent call last):
+  File "/workspaces/aiph-lambda/.venv/lib/python3.12/site-packages/passlib/handlers/bcrypt.py", line 620, in _load_backend_mixin
+    version = _bcrypt.__about__.__version__
+              ^^^^^^^^^^^^^^^^^
+AttributeError: module 'bcrypt' has no attribute '__about__'
+2025-05-21 12:56:08,096 - passlib.handlers.bcrypt - DEBUG - detected 'bcrypt' backend, version '<unknown>'
+2025-05-21 12:56:08,096 - passlib.handlers.bcrypt - DEBUG - 'bcrypt' backend lacks $2$ support, enabling workaround
+2025-05-21 12:56:08,474 - uvicorn.access - INFO - 82.100.40.3:0 - "POST /api/v1/oauth/token HTTP/1.1" 200
+2025-05-21 12:56:20,288 - uvicorn.access - INFO - 82.100.40.3:0 - "GET /api/v1/messages HTTP/1.1" 200
+2025-05-21 12:57:21,498 - uvicorn.access - INFO - 82.100.40.3:0 - "GET /api/v1/messages/0 HTTP/1.1" 404
+2025-05-21 12:57:43,086 - uvicorn.access - INFO - 82.100.40.3:0 - "GET /api/v1/messages/1 HTTP/1.1" 200

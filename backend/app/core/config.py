@@ -2,6 +2,7 @@ from pydantic import EmailStr, field_validator
 from pydantic_settings import BaseSettings
 from typing import Optional, List, Union
 
+
 class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
     SECRET_KEY: str = "supersecretkey"
@@ -9,7 +10,7 @@ class Settings(BaseSettings):
     OAUTH2_SCHEME: str = "Bearer"
     OAUTH2_TOKEN_URL: str = "/api/v1/oauth/token"
     OAUTH2_JWT_URL: str = "/api/v1/oauth/jwt"
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 8  # 8 days
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60  # 60 minutes
     REFRESH_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 30  # 30 days
     SERVER_NAME: Optional[str] = None
     SERVER_HOST: str = "localhost"
@@ -46,8 +47,8 @@ class Settings(BaseSettings):
             return self.SQLALCHEMY_DATABASE_URI
         return f"postgresql://{self.PG_USER}:{self.PG_PASSWORD}@{self.PG_HOST}:{self.PG_PORT}/{self.PG_DB}"
 
-
     # Parse BACKEND_CORS_ORIGINS env var (comma-separated string)
+
     def get_cors_origins(self) -> List[str]:
         origins = self.BACKEND_CORS_ORIGINS
         if not origins:
@@ -55,5 +56,6 @@ class Settings(BaseSettings):
         if isinstance(origins, str):
             return [o.strip() for o in origins.split(",") if o.strip()]
         return origins
+
 
 settings = Settings()

@@ -11,7 +11,7 @@ from alembic import context
 
 from app.core.config import settings
 from app.db.base import Base
-# import app.models 
+import app.models  # Ensure all models are imported for Alembic autogeneration
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
