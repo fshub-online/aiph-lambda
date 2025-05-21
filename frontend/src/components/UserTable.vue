@@ -86,6 +86,8 @@
   const userToDelete = ref(null);
   const deleteLoading = ref(false);
 
+  const snackbar = ref({ show: false, text: '', color: 'error' });
+
   const headers = [
     { title: 'User Name', value: 'user_name', sortable: true },
     { title: 'First Name', value: 'first_name', sortable: true },
@@ -114,8 +116,12 @@
     try {
       const res = await api.get('/users');
       users.value = res.data;
-    } catch {
-      // Optionally show error snackbar
+    } catch (e) {
+      snackbar.value = {
+        show: true,
+        text: 'Failed to load users: ' + (e?.response?.data?.detail || e.message || String(e)),
+        color: 'error',
+      };
       users.value = [];
     } finally {
       loading.value = false;
@@ -135,8 +141,12 @@
       deleteDialog.value = false;
       userToDelete.value = null;
       await fetchUsers();
-    } catch {
-      // Optionally show error snackbar
+    } catch (e) {
+      snackbar.value = {
+        show: true,
+        text: 'Delete failed: ' + (e?.response?.data?.detail || e.message || String(e)),
+        color: 'error',
+      };
       deleteDialog.value = false;
       userToDelete.value = null;
     } finally {

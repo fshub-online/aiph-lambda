@@ -8,6 +8,7 @@
 import { createRouter, createWebHistory } from 'vue-router/auto'
 import { setupLayouts } from 'virtual:generated-layouts'
 import { routes } from 'vue-router/auto-routes'
+import { useAuthStore } from '@/stores/auth'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +27,33 @@ router.onError((err, to) => {
     }
   } else {
     console.error(err)
+  }
+})
+
+router.beforeEach((to, from, next) => {
+  const auth = useAuthStore()
+  // Allow access to index (home) for everyone
+  if (to.path === '/' || to.name === 'index') {
+    return next()
+  }
+  // If not authenticated, redirect to index and show warning
+  if (!auth.isAuthenticated) {
+    // Show warning after navigation
+    next({ path: '/', query: { authRequired: '1' } })
+    return
+  }
+  // Otherwise, allow navigation
+  next()
+})
+
+// Show warning snackbar on index if redirected due to auth
+router.afterEach(to => {
+  if (to.path === '/' && to.query.authRequired === '1') {
+    // Use a global event or store to trigger snackbar
+    setTimeout(() => {
+      const event = new CustomEvent('show-auth-warning')
+      window.dispatchEvent(event)
+    }, 100)
   }
 })
 

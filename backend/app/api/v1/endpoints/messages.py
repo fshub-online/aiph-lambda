@@ -5,6 +5,7 @@ from app.schemas.message import Message, MessageCreate, MessageUpdate
 from app.crud import crud_message
 from app.api.v1.deps import get_db
 from app.api.v1.endpoints.oauth import read_users_me
+from app.models.message_priority import MessagePriority
 
 router = APIRouter()
 
@@ -47,7 +48,7 @@ def create_message(
     return crud_message.create_message(db, message_in)
 
 
-@router.patch(
+@router.put(
     "/messages/{message_id}",
     response_model=Message,
     summary="Update message",
@@ -79,3 +80,11 @@ def delete_message(
         raise HTTPException(status_code=404, detail="Message not found")
     crud_message.delete_message(db, db_message)
     return None
+
+
+@router.get("/message-priorities", response_model=list[str], tags=["Messages"], summary="Get possible message priorities")
+def get_message_priorities():
+    """
+    Get all possible values for MessagePriority enum.
+    """
+    return [priority.value for priority in MessagePriority]
