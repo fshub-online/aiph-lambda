@@ -40,7 +40,9 @@ def get_message(message_id: int, db: Session = Depends(get_db)):
     tags=["Messages"],
 )
 def create_message(
-    message_in: MessageCreate, db: Session = Depends(get_db), current_user=Depends(read_users_me)
+    message_in: MessageCreate,
+    db: Session = Depends(get_db),
+    current_user=Depends(read_users_me),
 ):
     return crud_message.create_message(db, message_in)
 
@@ -52,7 +54,10 @@ def create_message(
     tags=["Messages"],
 )
 def update_message(
-    message_id: int, message_in: MessageUpdate, db: Session = Depends(get_db), current_user=Depends(read_users_me)
+    message_id: int,
+    message_in: MessageUpdate,
+    db: Session = Depends(get_db),
+    current_user=Depends(read_users_me),
 ):
     db_message = crud_message.get_message(db, message_id)
     if not db_message:
@@ -66,7 +71,9 @@ def update_message(
     summary="Delete message",
     tags=["Messages"],
 )
-def delete_message(message_id: int, db: Session = Depends(get_db), current_user=Depends(read_users_me)):
+def delete_message(
+    message_id: int, db: Session = Depends(get_db), current_user=Depends(read_users_me)
+):
     db_message = crud_message.get_message(db, message_id)
     if not db_message:
         raise HTTPException(status_code=404, detail="Message not found")

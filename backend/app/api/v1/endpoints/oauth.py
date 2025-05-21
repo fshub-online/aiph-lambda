@@ -51,7 +51,7 @@ def create_refresh_token(data: dict, expires_delta: timedelta = None):
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
     else:
-        expire = datetime.utcnow() + timedelta(minutes=REFRESH_TOKEN_EXPIRE_MINUTES) 
+        expire = datetime.utcnow() + timedelta(minutes=REFRESH_TOKEN_EXPIRE_MINUTES)
     to_encode.update({"exp": expire, "type": "refresh"})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
@@ -61,11 +61,12 @@ def create_refresh_token(data: dict, expires_delta: timedelta = None):
     "/oauth/token",
     summary="Obtain access token",
     tags=["OAuth2"],
-    response_description="JWT access token"
+    response_description="JWT access token",
 )
 def login_for_access_token(
     response: Response,
-    form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)
+    form_data: OAuth2PasswordRequestForm = Depends(),
+    db: Session = Depends(get_db),
 ):
     """
     Obtain a JWT access token by providing user credentials (user_name and password).
@@ -89,7 +90,7 @@ def login_for_access_token(
         secure=False,
         samesite="none",
         max_age=REFRESH_TOKEN_EXPIRE_MINUTES,
-        path="/"
+        path="/",
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
@@ -98,7 +99,7 @@ def login_for_access_token(
     "/oauth/refresh",
     summary="Refresh access token",
     tags=["OAuth2"],
-    response_description="New JWT access token"
+    response_description="New JWT access token",
 )
 def refresh_access_token(
     refresh_token: str = Cookie(None),
@@ -133,7 +134,7 @@ def refresh_access_token(
     response_model=UserSchema,
     summary="Get current user info",
     tags=["OAuth2"],
-    response_description="Current authenticated user info"
+    response_description="Current authenticated user info",
 )
 def read_users_me(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     """
@@ -162,17 +163,18 @@ def read_users_me(token: str = Depends(oauth2_scheme), db: Session = Depends(get
         raise credentials_exception
     return user
 
+
 @router.patch(
     "/oauth/me",
     response_model=UserSchema,
     summary="Update current user profile",
     tags=["OAuth2"],
-    response_description="Updated user profile"
+    response_description="Updated user profile",
 )
 def update_own_profile(
-    user_update: dict, 
+    user_update: dict,
     db: Session = Depends(get_db),
-    current_user: UserSchema = Depends(read_users_me)
+    current_user: UserSchema = Depends(read_users_me),
 ):
     """
     Update the profile of the currently authenticated user.
@@ -182,11 +184,12 @@ def update_own_profile(
     db_user = crud_user.get_user(db, user_id=user_id)
     if not db_user:
         raise HTTPException(status_code=404, detail="User not found")
-    
+
     # Convert dict to UserUpdate model
     from app.schemas.user import UserUpdate
+
     user_update_model = UserUpdate(**user_update)
-    
+
     return crud_user.update_user(db, db_user=db_user, user_in=user_update_model)
 
 
@@ -195,12 +198,12 @@ def update_own_profile(
     status_code=status.HTTP_200_OK,
     summary="Change current user password",
     tags=["OAuth2"],
-    response_description="Password changed successfully"
+    response_description="Password changed successfully",
 )
 def change_own_password(
     password_data: UserPasswordChange,
     db: Session = Depends(get_db),
-    current_user: UserSchema = Depends(read_users_me)
+    current_user: UserSchema = Depends(read_users_me),
 ):
     """
     Change the password of the currently authenticated user.
@@ -211,18 +214,17 @@ def change_own_password(
     db_user = crud_user.get_user(db, user_id=user_id)
     if not db_user:
         raise HTTPException(status_code=404, detail="User not found")
-    
+
     # Verify current password
     if not pwd_context.verify(password_data.current_password, db_user.hashed_password):
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Incorrect current password"
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Incorrect current password"
         )
-    
+
     # Update password
     hashed_password = pwd_context.hash(password_data.new_password)
     db_user.hashed_password = hashed_password
     db.commit()
     db.refresh(db_user)
-    
+
     return {"message": "Password updated successfully"}

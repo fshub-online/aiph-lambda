@@ -2,6 +2,7 @@ from pydantic import BaseModel, EmailStr
 from typing import Optional
 from datetime import datetime
 
+
 class UserBase(BaseModel):
     user_name: str
     first_name: str
@@ -10,8 +11,10 @@ class UserBase(BaseModel):
     email: EmailStr
     phone: Optional[str] = None
 
+
 class UserCreate(UserBase):
     password: str
+
 
 class UserUpdate(BaseModel):
     user_name: Optional[str] = None
@@ -21,6 +24,7 @@ class UserUpdate(BaseModel):
     email: Optional[EmailStr] = None
     phone: Optional[str] = None
     password: Optional[str] = None
+
 
 class UserInDBBase(UserBase):
     id: int
@@ -33,12 +37,15 @@ class UserInDBBase(UserBase):
             datetime: lambda v: v.isoformat(),
         }
 
+
 class UserPasswordChange(BaseModel):
     current_password: str
     new_password: str
 
+
 class User(UserInDBBase):
     pass
+
 
 class UserInDB(UserInDBBase):
     hashed_password: str
