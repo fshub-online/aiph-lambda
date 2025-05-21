@@ -57,6 +57,9 @@ api.interceptors.response.use(
         } catch (refreshError) {
           isRefreshing = false;
           authStore.logout();
+          if (refreshError.response && refreshError.response.status === 401) {
+            window.location.replace('/');
+          }
           return Promise.reject(refreshError);
         }
       }

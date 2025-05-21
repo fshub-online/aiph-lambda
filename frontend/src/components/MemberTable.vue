@@ -4,7 +4,7 @@
       Members
     </v-card-title>
     <v-card-subtitle>
-      Manage members in the system.
+      Manage team members in the system.
     </v-card-subtitle>
     <v-divider class="ml-4 mr-4 mb-4 mt-4" thickness="2" />
     <div class="d-flex align-center ml-4 mr-4 mb-2" style="gap: 12px;">
