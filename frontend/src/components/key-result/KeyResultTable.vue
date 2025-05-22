@@ -92,14 +92,24 @@
   const snackbar = ref({ show: false, text: '', color: 'error' })
 
   const headers = [
-    { title: 'Title', value: 'title', sortable: true },
-    { title: 'Priority', value: 'priority', sortable: true },
-    { title: 'Status', value: 'status', sortable: true },
-    { title: 'Complexity', value: 'complexity', sortable: true },
-    { title: 'Current Value', value: 'current_value', sortable: true },
-    { title: 'Target Value', value: 'target_value', sortable: true },
-    { title: 'Unit', value: 'unit', sortable: true },
-    { title: 'Actions', value: 'actions', sortable: false },
+    { title: 'Title', value: 'title', sortable: true, width: '30%' },
+    { title: 'Priority', value: 'priority', sortable: true, width: '10%' },
+    { title: 'Status', value: 'status', sortable: true, width: '10%' },
+    { title: 'Complexity', value: 'complexity', sortable: true, width: '10%' },
+    {
+      title: 'Current Value',
+      value: 'current_value',
+      sortable: true,
+      width: '10%',
+    },
+    {
+      title: 'Target Value',
+      value: 'target_value',
+      sortable: true,
+      width: '10%',
+    },
+    { title: 'Unit', value: 'unit', sortable: true, width: '10%' },
+    { title: 'Actions', value: 'actions', sortable: false, width: '10%' },
   ]
 
   const filteredKeyResults = computed(() => {

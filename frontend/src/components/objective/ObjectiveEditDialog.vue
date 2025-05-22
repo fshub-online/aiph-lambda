@@ -8,56 +8,76 @@
       </v-card-title>
       <v-card-text>
         <v-form ref="formRef" @submit.prevent="onSave">
-          <v-text-field v-model="form.title" label="Title" required />
+          <v-row>
+            <v-col cols="7">
+              <v-text-field v-model="form.title" label="Title" required />
+            </v-col>
+            <v-col cols="5">
+              <v-select
+                v-model="form.member_id"
+                clearable
+                item-title="label"
+                item-value="id"
+                :items="memberOptions"
+                label="Member"
+                :loading="loadingMembers"
+                required
+                return-object="false"
+              />
+            </v-col>
+          </v-row>
           <v-textarea v-model="form.description" label="Description" />
-          <v-select
-            v-model="form.member_id"
-            clearable
-            item-title="label"
-            item-value="id"
-            :items="memberOptions"
-            label="Member"
-            :loading="loadingMembers"
-            required
-            return-object="false"
-          />
-          <v-select
-            v-model="form.priority"
-            :items="priorityOptions"
-            label="Priority"
-            :loading="loadingEnums"
-            required
-          />
-          <v-select
-            v-model="form.status"
-            :items="statusOptions"
-            label="Status"
-            :loading="loadingEnums"
-            required
-          />
           <v-text-field
             v-model="form.measurable_target"
             label="Measurable Target"
           />
-          <v-text-field
-            v-model="form.progress"
-            label="Progress (%)"
-            max="100"
-            min="0"
-            type="number"
-          />
-          <v-text-field
-            v-model="form.start_date"
-            label="Start Date"
-            required
-            type="date"
-          />
-          <v-text-field
-            v-model="form.end_date"
-            label="End Date"
-            required
-            type="date"
-          />
+          <v-row>
+            <v-col cols="6">
+              <v-select
+                v-model="form.priority"
+                :items="priorityOptions"
+                label="Priority"
+                :loading="loadingEnums"
+                required
+              />
+            </v-col>
+            <v-col cols="6">
+              <v-select
+                v-model="form.status"
+                :items="statusOptions"
+                label="Status"
+                :loading="loadingEnums"
+                required
+              />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="4">
+              <v-text-field
+                v-model="form.progress"
+                label="Progress (%)"
+                max="100"
+                min="0"
+                type="number"
+              />
+            </v-col>
+            <v-col cols="4">
+              <v-text-field
+                v-model="form.start_date"
+                label="Start Date"
+                required
+                type="date"
+              />
+            </v-col>
+            <v-col cols="4">
+              <v-text-field
+                v-model="form.end_date"
+                label="End Date"
+                required
+                type="date"
+              />
+            </v-col>
+          </v-row>
           <v-select
             v-model="form.parent_id"
             clearable

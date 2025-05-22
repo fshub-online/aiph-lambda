@@ -32,6 +32,7 @@
         loading-text="Loading objectives..."
         multi-sort
         :search="search"
+        :style="{ tableLayout: 'fixed' }"
         @update:sort-by="(val) => (sortBy.value = val)"
       >
         <template #item.actions="{ item }">
@@ -92,12 +93,12 @@
   const snackbar = ref({ show: false, text: '', color: 'error' })
 
   const headers = [
-    { title: 'Title', value: 'title', sortable: true },
-    { title: 'Priority', value: 'priority', sortable: true },
-    { title: 'Status', value: 'status', sortable: true },
-    { title: 'Start Date', value: 'start_date', sortable: true },
-    { title: 'End Date', value: 'end_date', sortable: true },
-    { title: 'Actions', value: 'actions', sortable: false },
+    { title: 'Title', value: 'title', sortable: true, width: '30%' },
+    { title: 'Priority', value: 'priority', sortable: true, width: '15%' },
+    { title: 'Status', value: 'status', sortable: true, width: '15%' },
+    { title: 'Start Date', value: 'start_date', sortable: true, width: '15%' },
+    { title: 'End Date', value: 'end_date', sortable: true, width: '15%' },
+    { title: 'Actions', value: 'actions', sortable: false, width: '10%' },
   ]
 
   const filteredObjectives = computed(() => {
@@ -162,3 +163,26 @@
   onMounted(fetchObjectives)
   defineExpose({ fetchObjectives })
 </script>
+
+<style scoped>
+  .v-data-table th:nth-child(1),
+  .v-data-table td:nth-child(1) {
+    width: 30%;
+  }
+  .v-data-table th:nth-child(2),
+  .v-data-table td:nth-child(2) {
+    width: 20%;
+  }
+  .v-data-table th:nth-child(3),
+  .v-data-table td:nth-child(3) {
+    width: 20%;
+  }
+  .v-data-table th:nth-child(4),
+  .v-data-table td:nth-child(4) {
+    width: 20%;
+  }
+  .v-data-table th:nth-child(5),
+  .v-data-table td:nth-child(5) {
+    width: 10%;
+  }
+</style>
