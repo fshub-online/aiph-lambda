@@ -25,6 +25,3 @@ class KeyResultComplexity(enum.Enum):
     hard = "hard"
     extreme = "extreme"
 
-class KeyResultType(enum.Enum):
-    quantitative = "quantitative"
-    qualitative = "qualitative"
