@@ -1,10 +1,10 @@
 <template>
   <v-card elevation="8">
     <v-card-title>
-      System Users
+      Members
     </v-card-title>
     <v-card-subtitle>
-      Manage users in the system.
+      Manage team members in the system.
     </v-card-subtitle>
     <v-divider class="ml-4 mr-4 mb-4 mt-4" thickness="2" />
     <div class="d-flex align-center ml-4 mr-4 mb-2" style="gap: 12px;">
@@ -15,14 +15,14 @@
         style="height: 40px; min-width: 120px;"
         @click="emit('add')"
       >
-        Add User
+        Add Member
       </v-btn>
       <v-text-field
         v-model="search"
         class="flex-grow-1 elevation-2"
         clearable
         density="compact"
-        label="Search users"
+        label="Search members"
         prepend-inner-icon="mdi-magnify"
         style="height: 40px;"
       />
@@ -31,9 +31,9 @@
       <v-data-table
         class="elevation-2 ml-4 mr-4 mt-4 mb-4"
         :headers="headers"
-        :items="filteredUsers"
+        :items="filteredMembers"
         :loading="loading"
-        loading-text="Loading users..."
+        loading-text="Loading members..."
         multi-sort
         :search="search"
         @update:sort-by="val => sortBy.value = val"
@@ -43,13 +43,13 @@
             class="mr-2"
             color="primary"
             size="small"
-            title="Edit user"
+            title="Edit member"
             @click="emit('edit', item)"
           >mdi-pencil</v-icon>
           <v-icon
             color="error"
             size="small"
-            title="Delete user"
+            title="Delete member"
             @click="confirmDelete(item)"
           >mdi-delete</v-icon>
         </template>
@@ -59,15 +59,18 @@
       <v-card>
         <v-card-title class="text-h6">Confirm Deletion</v-card-title>
         <v-card-text>
-          Are you sure you want to delete user <b>{{ userToDelete?.user_name }}</b>?
+          Are you sure you want to delete member <b>{{ memberToDelete?.first_name }} {{ memberToDelete?.last_name }}</b>?
         </v-card-text>
         <v-card-actions>
           <v-spacer />
           <v-btn text @click="deleteDialog = false">Cancel</v-btn>
-          <v-btn color="error" :loading="deleteLoading" @click="deleteUser">Delete</v-btn>
+          <v-btn color="error" :loading="deleteLoading" @click="deleteMember">Delete</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-snackbar v-model="snackbar.show" :color="snackbar.color" timeout="5000">
+      {{ snackbar.text }}
+    </v-snackbar>
   </v-card>
 </template>
 
@@ -77,70 +80,69 @@
 
   const emit = defineEmits(['edit', 'delete', 'add']);
 
-  const users = ref([]);
+  const members = ref([]);
   const loading = ref(false);
   const search = ref('');
   const sortBy = ref([]);
 
   const deleteDialog = ref(false);
-  const userToDelete = ref(null);
+  const memberToDelete = ref(null);
   const deleteLoading = ref(false);
-
   const snackbar = ref({ show: false, text: '', color: 'error' });
 
   const headers = [
-    { title: 'User Name', value: 'user_name', sortable: true },
     { title: 'First Name', value: 'first_name', sortable: true },
     { title: 'Last Name', value: 'last_name', sortable: true },
-    { title: 'e-mail', value: 'email', sortable: true },
+    { title: 'Position', value: 'position', sortable: true },
+    { title: 'Email', value: 'email', sortable: true },
     { title: 'Phone', value: 'phone', sortable: true },
-    { title: 'Notes', value: 'notes', sortable: false },
     { title: 'Actions', value: 'actions', sortable: false },
   ];
 
-  const filteredUsers = computed(() => {
-    if (!search.value) return users.value;
+  const filteredMembers = computed(() => {
+    if (!search.value) return members.value;
     const s = search.value.toLowerCase();
-    return users.value.filter(
-      u =>
-        u.user_name?.toLowerCase().includes(s) ||
-        u.full_name?.toLowerCase().includes(s) ||
-        u.email?.toLowerCase().includes(s) ||
-        u.phone?.toLowerCase().includes(s) ||
-        u.notes?.toLowerCase().includes(s)
+    return members.value.filter(
+      m =>
+        m.first_name?.toLowerCase().includes(s) ||
+        m.last_name?.toLowerCase().includes(s) ||
+        m.position?.toLowerCase().includes(s) ||
+        m.email?.toLowerCase().includes(s) ||
+        m.phone?.toLowerCase().includes(s) ||
+        m.note?.toLowerCase().includes(s)
     );
   });
 
-  async function fetchUsers () {
+  async function fetchMembers () {
     loading.value = true;
     try {
-      const res = await api.get('/users');
-      users.value = res.data;
+      const res = await api.get('/members');
+      members.value = res.data;
     } catch (e) {
       snackbar.value = {
         show: true,
-        text: 'Failed to load users: ' + (e?.response?.data?.detail || e.message || String(e)),
+        text: 'Failed to load members: ' + (e?.response?.data?.detail || e.message || String(e)),
         color: 'error',
       };
-      users.value = [];
+      members.value = [];
     } finally {
       loading.value = false;
     }
   }
 
-  function confirmDelete (user) {
-    userToDelete.value = user;
+  function confirmDelete (member) {
+    memberToDelete.value = member;
     deleteDialog.value = true;
   }
 
-  async function deleteUser () {
-    if (!userToDelete.value) return;
+  async function deleteMember () {
+    if (!memberToDelete.value) return;
     deleteLoading.value = true;
     try {
-      await api.delete(`/users/${userToDelete.value.id || userToDelete.value.user_name}`);
+      await api.delete(`/members/${memberToDelete.value.id}`);
       deleteDialog.value = false;
-      userToDelete.value = null;
-      await fetchUsers();
+      memberToDelete.value = null;
+      await fetchMembers();
     } catch (e) {
       snackbar.value = {
         show: true,
@@ -148,14 +150,13 @@
         color: 'error',
       };
       deleteDialog.value = false;
-      userToDelete.value = null;
+      memberToDelete.value = null;
     } finally {
       deleteLoading.value = false;
     }
   }
 
-  onMounted(fetchUsers);
+  onMounted(fetchMembers);
 
-  // Expose fetchUsers for parent refresh
-  defineExpose({ fetchUsers });
+  defineExpose({ fetchMembers });
 </script>

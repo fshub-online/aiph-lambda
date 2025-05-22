@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from datetime import date, datetime
 from typing import Optional
+from app.models.message_priority import MessagePriority
 
 
 class MessageBase(BaseModel):
@@ -8,14 +9,19 @@ class MessageBase(BaseModel):
     display_end: Optional[date] = None
     title: str
     message: str
+    priority: MessagePriority
 
 
 class MessageCreate(MessageBase):
     pass
 
 
-class MessageUpdate(MessageBase):
-    pass
+class MessageUpdate(BaseModel):
+    display_start: Optional[date] = None
+    display_end: Optional[date] = None
+    title: Optional[str] = None
+    message: Optional[str] = None
+    priority: Optional[MessagePriority] = None
 
 
 class MessageInDBBase(MessageBase):
