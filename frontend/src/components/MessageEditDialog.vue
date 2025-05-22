@@ -82,7 +82,7 @@
 
   async function fetchPriorities () {
     try {
-      const res = await api.get('/message-priorities')
+      const res = await api.get('/message-enums/priorities')
       priorities.value = res.data
     } catch (e) {
       snackbar.value = { show: true, text: e?.response?.data?.detail || e.message || String(e) || 'Failed to load priorities', color: 'error' }

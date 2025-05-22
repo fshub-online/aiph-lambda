@@ -3,7 +3,7 @@ from sqlalchemy import Text, Date
 from datetime import date
 from app.db.base import Base
 from sqlalchemy import Enum
-from .message_priority import MessagePriority
+from app.models.message_enums import MessagePriority
 
 
 class Message(Base):
