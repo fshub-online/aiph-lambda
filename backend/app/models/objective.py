@@ -1,22 +1,7 @@
 from sqlalchemy import Integer, String, Text, Date, ForeignKey, Enum
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.db.base import Base
-import enum
-
-class ObjectivePriority(enum.Enum):
-    low = "low"
-    medium = "medium"
-    high = "high"
-    critical = "critical"
-
-class ObjectiveStatus(enum.Enum):
-    not_started = "not_started"
-    in_progress = "in_progress"
-    at_risk = "at_risk"
-    on_hold = "on_hold"
-    delayed = "delayed"
-    completed = "completed"
-    cancelled = "cancelled"
+from app.models.objective_enums import ObjectivePriority, ObjectiveStatus
 
 class Objective(Base):
     __tablename__ = "objective"
@@ -33,6 +18,6 @@ class Objective(Base):
     progress: Mapped[int] = mapped_column(Integer, nullable=False, default=0)  # percent complete
 
     # Relationships
-    parent = relationship("Objective", remote_side="Objective.id", backref="children")
-    member = relationship("Member", back_populates="objectives")
-    key_results = relationship("KeyResult", back_populates="objective")
+    parent = relationship("Objective", remote_side="Objective.id", backref="children", lazy="selectin")
+    member = relationship("Member", back_populates="objectives", lazy="selectin")
+    key_results = relationship("KeyResult", back_populates="objective", lazy="selectin")

@@ -13,7 +13,14 @@ class Member(Base):
     supervisor_id: Mapped[int | None] = mapped_column(Integer, ForeignKey("member.id"), nullable=True)
     user_id: Mapped[int | None] = mapped_column(Integer, ForeignKey("user.id"), nullable=True)
 
-    supervisor = relationship("Member", remote_side="Member.id", backref="subordinates")
-    user = relationship("User", backref="member_profile")
-    objectives = relationship("Objective", back_populates="member")
-    key_results = relationship("KeyResult", back_populates="member")
+    supervisor = relationship("Member", remote_side="Member.id", backref="subordinates", lazy="selectin")
+    user = relationship("User", backref="member_profile", lazy="selectin")
+    objectives = relationship("Objective", back_populates="member", lazy="selectin")
+    # key_results relationship will be set after KeyResult is defined
+
+# Set key_results relationship after KeyResult is defined to avoid circular import
+try:
+    from app.models.key_result import KeyResult
+    Member.key_results = relationship("KeyResult", back_populates="member", lazy="selectin")
+except ImportError:
+    pass

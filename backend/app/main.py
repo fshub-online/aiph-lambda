@@ -15,21 +15,10 @@ app = FastAPI(
     description="""
     This is a FastAPI backend for project Lambda.
     
-    ## Features
-    - User authentication (OAuth2, JWT)
-    - User CRUD operations
-    - Healthcheck endpoint
-    - PostgreSQL database integration
-    - Modular API versioning
-    
     ## Docs
     - [Swagger UI](/api/v1/docs)
     - [ReDoc](/api/v1/redoc)
-    
-    ## Contact
-    - Name: Radek Zítek
-    - Website: https://www.fshub.online
-    - Email: radek.zitek@proton.me
+    - [OpenAPI JSON](/api/v1/openapi.json)
     """,
     version="1.0.0",
     openapi_url="/api/v1/openapi.json",

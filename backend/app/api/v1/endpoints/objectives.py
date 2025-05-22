@@ -5,6 +5,7 @@ from app import schemas
 from app.api.v1.deps import get_db
 from app.crud import crud_objective
 from app.api.v1.endpoints.oauth import read_users_me
+from app.models.objective_enums import ObjectivePriority, ObjectiveStatus
 
 router = APIRouter()
 
@@ -85,3 +86,27 @@ def delete_objective(
         raise HTTPException(status_code=404, detail="Objective not found")
     crud_objective.delete_objective(db, db_obj=db_obj)
     return None
+
+@router.get(
+    "/objective-enums/priorities",
+    response_model=list[str],
+    tags=["Objectives"],
+    summary="Get possible objective priorities"
+)
+def get_objective_priorities():
+    """
+    Get all possible values for ObjectivePriority enum.
+    """
+    return [priority.value for priority in ObjectivePriority]
+
+@router.get(
+    "/objective-enums/statuses",
+    response_model=list[str],
+    tags=["Objectives"],
+    summary="Get possible objective statuses"
+)
+def get_objective_statuses():
+    """
+    Get all possible values for ObjectiveStatus enum.
+    """
+    return [status.value for status in ObjectiveStatus]

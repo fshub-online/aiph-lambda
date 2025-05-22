@@ -1,25 +1,7 @@
 from sqlalchemy import String, Text, Date, Float, ForeignKey, Enum
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.db.base import Base
-import enum
-
-class KeyResultStatus(enum.Enum):
-    current = "current"
-    planned = "planned"
-    past = "past"
-
-class KeyResultPriority(enum.Enum):
-    low = "low"
-    medium = "medium"
-    high = "high"
-    critical = "critical"
-
-class KeyResultComplexity(enum.Enum):
-    trivial = "trivial"
-    easy = "easy"
-    moderate = "moderate"
-    hard = "hard"
-    extreme = "extreme"
+from app.models.key_result_enums import KeyResultStatus, KeyResultPriority, KeyResultComplexity
 
 class KeyResult(Base):
     __tablename__ = "key_result"
@@ -39,5 +21,5 @@ class KeyResult(Base):
     start_date: Mapped[Date] = mapped_column(Date, nullable=True)
     end_date: Mapped[Date] = mapped_column(Date, nullable=True)
 
-    member = relationship("Member", back_populates="results")
-    objective = relationship("Objective", back_populates="results")
+    member = relationship("Member", back_populates="key_results", lazy="selectin")
+    objective = relationship("Objective", back_populates="key_results", lazy="selectin")

@@ -5,7 +5,7 @@ from app.schemas.message import Message, MessageCreate, MessageUpdate
 from app.crud import crud_message
 from app.api.v1.deps import get_db
 from app.api.v1.endpoints.oauth import read_users_me
-from app.models.message_priority import MessagePriority
+from app.models.message_enums import MessagePriority
 
 router = APIRouter()
 
@@ -82,7 +82,7 @@ def delete_message(
     return None
 
 
-@router.get("/message-priorities", response_model=list[str], tags=["Messages"], summary="Get possible message priorities")
+@router.get("/message-enums/priorities", response_model=list[str], tags=["Messages"], summary="Get possible message priorities")
 def get_message_priorities():
     """
     Get all possible values for MessagePriority enum.

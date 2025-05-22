@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from datetime import date, datetime
 from typing import Optional
-from app.models.message_priority import MessagePriority
+from app.models.message_enums import MessagePriority
 
 
 class MessageBase(BaseModel):
