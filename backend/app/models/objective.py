@@ -35,3 +35,4 @@ class Objective(Base):
     # Relationships
     parent = relationship("Objective", remote_side="Objective.id", backref="children")
     member = relationship("Member", back_populates="objectives")
+    key_results = relationship("KeyResult", back_populates="objective")

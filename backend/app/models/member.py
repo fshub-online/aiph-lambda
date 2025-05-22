@@ -16,3 +16,4 @@ class Member(Base):
     supervisor = relationship("Member", remote_side="Member.id", backref="subordinates")
     user = relationship("User", backref="member_profile")
     objectives = relationship("Objective", back_populates="member")
+    key_results = relationship("KeyResult", back_populates="member")
