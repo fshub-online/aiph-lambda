@@ -16,8 +16,12 @@ class MessageCreate(MessageBase):
     pass
 
 
-class MessageUpdate(MessageBase):
-    pass
+class MessageUpdate(BaseModel):
+    display_start: Optional[date] = None
+    display_end: Optional[date] = None
+    title: Optional[str] = None
+    message: Optional[str] = None
+    priority: Optional[MessagePriority] = None
 
 
 class MessageInDBBase(MessageBase):
