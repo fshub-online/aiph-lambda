@@ -17,8 +17,8 @@
 
 <script setup>
   import { ref } from 'vue'
-  import MemberTable from '@/components/MemberTable.vue'
-  import MemberEditDialog from '@/components/MemberEditDialog.vue'
+  import MemberTable from '@/components/member/MemberTable.vue'
+  import MemberEditDialog from '@/components/member/MemberEditDialog.vue'
 
   const editDialogOpen = ref(false)
   const editMemberId = ref(null)

@@ -67,7 +67,7 @@
   onMounted(async () => {
     try {
       // Load priorities first
-      const prioRes = await api.get('/message-priorities')
+      const prioRes = await api.get('/message-enums/priorities')
       priorities.value = prioRes.data
     } catch (e) {
       snackbar.value = {

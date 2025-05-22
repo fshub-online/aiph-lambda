@@ -49,11 +49,11 @@
 
 <script setup>
   import { defineEmits, defineProps, onMounted, ref } from 'vue';
-  import { useAuthStore } from '../stores/auth';
-  import LoginDialog from './LoginDialog.vue';
-  import UserMenu from './UserMenu.vue';
-  import UserProfileDialog from './UserProfileDialog.vue';
-  import ChangePasswordDialog from './ChangePasswordDialog.vue';
+  import { useAuthStore } from '@/stores/auth';
+  import LoginDialog from '@/components/user/LoginDialog.vue';
+  import UserMenu from '@/components/user/UserMenu.vue';
+  import UserProfileDialog from '@/components/user/UserProfileDialog.vue';
+  import ChangePasswordDialog from '@/components/user/ChangePasswordDialog.vue';
 
   defineProps({
     isDark: Boolean,

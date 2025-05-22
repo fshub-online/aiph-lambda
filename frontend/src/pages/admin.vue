@@ -30,10 +30,11 @@
 
 <script setup>
   import { ref } from 'vue';
-  import UserTable from '@/components/UserTable.vue';
-  import UserEditDialog from '@/components/UserEditDialog.vue';
-  import MessageTable from '@/components/MessageTable.vue';
-  import MessageEditDialog from '@/components/MessageEditDialog.vue';
+  import UserTable from '@/components/user/UserTable.vue';
+  import UserEditDialog from '@/components/user/UserEditDialog.vue';
+  import MessageTable from '@/components/message/MessageTable.vue';
+  import MessageEditDialog from '@/components/message/MessageEditDialog.vue';
+
 
   const editDialogOpen = ref(false);
   const editUserId = ref(null);
