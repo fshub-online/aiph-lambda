@@ -29,48 +29,47 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue';
-  import UserTable from '@/components/user/UserTable.vue';
-  import UserEditDialog from '@/components/user/UserEditDialog.vue';
-  import MessageTable from '@/components/message/MessageTable.vue';
-  import MessageEditDialog from '@/components/message/MessageEditDialog.vue';
+  import { ref } from 'vue'
+  import UserTable from '@/components/user/UserTable.vue'
+  import UserEditDialog from '@/components/user/UserEditDialog.vue'
+  import MessageTable from '@/components/message/MessageTable.vue'
+  import MessageEditDialog from '@/components/message/MessageEditDialog.vue'
 
+  const editDialogOpen = ref(false)
+  const editUserId = ref(null)
+  const userTableRef = ref(null)
 
-  const editDialogOpen = ref(false);
-  const editUserId = ref(null);
-  const userTableRef = ref(null);
+  const editMessageDialogOpen = ref(false)
+  const editMessageId = ref(null)
+  const messageTableRef = ref(null)
 
-  const editMessageDialogOpen = ref(false);
-  const editMessageId = ref(null);
-  const messageTableRef = ref(null);
-
-  function onEditUser (user) {
-    editUserId.value = user.id || user.user_name;
-    editDialogOpen.value = true;
+  function onEditUser(user) {
+    editUserId.value = user.id || user.user_name
+    editDialogOpen.value = true
   }
 
-  function onAddUser () {
-    editUserId.value = null;
-    editDialogOpen.value = true;
+  function onAddUser() {
+    editUserId.value = null
+    editDialogOpen.value = true
   }
 
-  function onUserSaved () {
-    editDialogOpen.value = false;
-    userTableRef.value?.fetchUsers?.();
+  function onUserSaved() {
+    editDialogOpen.value = false
+    userTableRef.value?.fetchUsers?.()
   }
 
-  function onEditMessage (message) {
-    editMessageId.value = message.id;
-    editMessageDialogOpen.value = true;
+  function onEditMessage(message) {
+    editMessageId.value = message.id
+    editMessageDialogOpen.value = true
   }
 
-  function onAddMessage () {
-    editMessageId.value = null;
-    editMessageDialogOpen.value = true;
+  function onAddMessage() {
+    editMessageId.value = null
+    editMessageDialogOpen.value = true
   }
 
-  function onMessageSaved () {
-    editMessageDialogOpen.value = false;
-    messageTableRef.value?.fetchMessages?.();
+  function onMessageSaved() {
+    editMessageDialogOpen.value = false
+    messageTableRef.value?.fetchMessages?.()
   }
 </script>

@@ -1,24 +1,24 @@
 <template>
   <v-card elevation="8">
-    <v-card-title> System Users </v-card-title>
-    <v-card-subtitle> Manage users in the system. </v-card-subtitle>
+    <v-card-title> Key Results </v-card-title>
+    <v-card-subtitle> Manage key results in the system. </v-card-subtitle>
     <v-divider class="ml-4 mr-4 mb-4 mt-4" thickness="2" />
     <div class="d-flex align-center ml-4 mr-4 mb-2" style="gap: 12px">
       <v-btn
         class="elevation-2"
         color="primary"
-        prepend-icon="mdi-account-plus"
+        prepend-icon="mdi-plus"
         style="height: 40px; min-width: 120px"
         @click="emit('add')"
       >
-        Add User
+        Add Key Result
       </v-btn>
       <v-text-field
         v-model="search"
         class="flex-grow-1 elevation-2"
         clearable
         density="compact"
-        label="Search users"
+        label="Search key results"
         prepend-inner-icon="mdi-magnify"
         style="height: 40px"
       />
@@ -27,9 +27,9 @@
       <v-data-table
         class="elevation-2 ml-4 mr-4 mt-4 mb-4"
         :headers="headers"
-        :items="filteredUsers"
+        :items="filteredKeyResults"
         :loading="loading"
-        loading-text="Loading users..."
+        loading-text="Loading key results..."
         multi-sort
         :search="search"
         @update:sort-by="(val) => (sortBy.value = val)"
@@ -39,14 +39,14 @@
             class="mr-2"
             color="primary"
             size="small"
-            title="Edit user"
+            title="Edit key result"
             @click="emit('edit', item)"
             >mdi-pencil</v-icon
           >
           <v-icon
             color="error"
             size="small"
-            title="Delete user"
+            title="Delete key result"
             @click="confirmDelete(item)"
             >mdi-delete</v-icon
           >
@@ -57,19 +57,22 @@
       <v-card>
         <v-card-title class="text-h6">Confirm Deletion</v-card-title>
         <v-card-text>
-          Are you sure you want to delete user
-          <b>{{ userToDelete?.user_name }}</b
+          Are you sure you want to delete key result
+          <b>{{ keyResultToDelete?.title }}</b
           >?
         </v-card-text>
         <v-card-actions>
           <v-spacer />
           <v-btn text @click="deleteDialog = false">Cancel</v-btn>
-          <v-btn color="error" :loading="deleteLoading" @click="deleteUser"
+          <v-btn color="error" :loading="deleteLoading" @click="deleteKeyResult"
             >Delete</v-btn
           >
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-snackbar v-model="snackbar.show" :color="snackbar.color" timeout="5000">
+      {{ snackbar.text }}
+    </v-snackbar>
   </v-card>
 </template>
 
@@ -78,75 +81,72 @@
   import api from '@/api'
 
   const emit = defineEmits(['edit', 'delete', 'add'])
-
-  const users = ref([])
+  const keyResults = ref([])
   const loading = ref(false)
   const search = ref('')
   const sortBy = ref([])
 
   const deleteDialog = ref(false)
-  const userToDelete = ref(null)
+  const keyResultToDelete = ref(null)
   const deleteLoading = ref(false)
-
   const snackbar = ref({ show: false, text: '', color: 'error' })
 
   const headers = [
-    { title: 'User Name', value: 'user_name', sortable: true },
-    { title: 'First Name', value: 'first_name', sortable: true },
-    { title: 'Last Name', value: 'last_name', sortable: true },
-    { title: 'e-mail', value: 'email', sortable: true },
-    { title: 'Phone', value: 'phone', sortable: true },
-    { title: 'Notes', value: 'notes', sortable: false },
+    { title: 'Title', value: 'title', sortable: true },
+    { title: 'Priority', value: 'priority', sortable: true },
+    { title: 'Status', value: 'status', sortable: true },
+    { title: 'Complexity', value: 'complexity', sortable: true },
+    { title: 'Current Value', value: 'current_value', sortable: true },
+    { title: 'Target Value', value: 'target_value', sortable: true },
+    { title: 'Unit', value: 'unit', sortable: true },
     { title: 'Actions', value: 'actions', sortable: false },
   ]
 
-  const filteredUsers = computed(() => {
-    if (!search.value) return users.value
+  const filteredKeyResults = computed(() => {
+    if (!search.value) return keyResults.value
     const s = search.value.toLowerCase()
-    return users.value.filter(
-      (u) =>
-        u.user_name?.toLowerCase().includes(s) ||
-        u.full_name?.toLowerCase().includes(s) ||
-        u.email?.toLowerCase().includes(s) ||
-        u.phone?.toLowerCase().includes(s) ||
-        u.notes?.toLowerCase().includes(s)
+    return keyResults.value.filter(
+      (k) =>
+        k.title?.toLowerCase().includes(s) ||
+        k.description?.toLowerCase().includes(s) ||
+        k.priority?.toLowerCase().includes(s) ||
+        k.status?.toLowerCase().includes(s) ||
+        k.complexity?.toLowerCase().includes(s)
     )
   })
 
-  async function fetchUsers() {
+  async function fetchKeyResults() {
     loading.value = true
     try {
-      const res = await api.get('/users')
-      users.value = res.data
+      const res = await api.get('/key-results')
+      keyResults.value = res.data
     } catch (e) {
       snackbar.value = {
         show: true,
         text:
-          'Failed to load users: ' +
+          'Failed to load key results: ' +
           (e?.response?.data?.detail || e.message || String(e)),
         color: 'error',
       }
-      users.value = []
+      keyResults.value = []
     } finally {
       loading.value = false
     }
   }
 
-  function confirmDelete(user) {
-    userToDelete.value = user
+  function confirmDelete(keyResult) {
+    keyResultToDelete.value = keyResult
     deleteDialog.value = true
   }
 
-  async function deleteUser() {
-    if (!userToDelete.value) return
+  async function deleteKeyResult() {
+    if (!keyResultToDelete.value) return
     deleteLoading.value = true
     try {
-      await api.delete(
-        `/users/${userToDelete.value.id || userToDelete.value.user_name}`
-      )
+      await api.delete(`/key-results/${keyResultToDelete.value.id}`)
       deleteDialog.value = false
-      userToDelete.value = null
-      await fetchUsers()
+      keyResultToDelete.value = null
+      await fetchKeyResults()
     } catch (e) {
       snackbar.value = {
         show: true,
@@ -156,14 +156,12 @@
         color: 'error',
       }
       deleteDialog.value = false
-      userToDelete.value = null
+      keyResultToDelete.value = null
     } finally {
       deleteLoading.value = false
     }
   }
 
-  onMounted(fetchUsers)
-
-  // Expose fetchUsers for parent refresh
-  defineExpose({ fetchUsers })
+  onMounted(fetchKeyResults)
+  defineExpose({ fetchKeyResults })
 </script>

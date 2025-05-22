@@ -21,7 +21,10 @@
             :disabled="isLoading"
             label="New Password"
             required
-            :rules="[v => !!v || 'Password is required', v => v.length >= 8 || 'Password must be at least 8 characters']"
+            :rules="[
+              (v) => !!v || 'Password is required',
+              (v) => v.length >= 8 || 'Password must be at least 8 characters',
+            ]"
             type="password"
           />
           <v-text-field
@@ -30,7 +33,7 @@
             :disabled="isLoading"
             label="Confirm New Password"
             required
-            :rules="[v => v === newPassword || 'Passwords do not match']"
+            :rules="[(v) => v === newPassword || 'Passwords do not match']"
             type="password"
           />
         </v-form>
@@ -59,87 +62,92 @@
 </template>
 
 <script setup>
-  import { computed, ref, watch } from 'vue';
-  import { useAuthStore } from '@/stores/auth';
+  import { computed, ref, watch } from 'vue'
+  import { useAuthStore } from '@/stores/auth'
 
   const props = defineProps({
     modelValue: Boolean,
-  });
+  })
 
-  const emit = defineEmits(['update:modelValue']);
+  const emit = defineEmits(['update:modelValue'])
 
   // Local dialog visibility state synced with prop
-  const dialogVisible = ref(props.modelValue);
+  const dialogVisible = ref(props.modelValue)
 
-  watch(() => props.modelValue, val => {
-    dialogVisible.value = val;
-  });
+  watch(
+    () => props.modelValue,
+    (val) => {
+      dialogVisible.value = val
+    }
+  )
 
-  watch(dialogVisible, val => {
+  watch(dialogVisible, (val) => {
     if (val !== props.modelValue) {
-      emit('update:modelValue', val);
+      emit('update:modelValue', val)
     }
     if (val) {
-      error.value = '';
-      success.value = '';
-      snackbar.value = false;
-      snackbarMessage.value = '';
-      snackbarColor.value = 'error';
+      error.value = ''
+      success.value = ''
+      snackbar.value = false
+      snackbarMessage.value = ''
+      snackbarColor.value = 'error'
     }
-  });
+  })
 
   // Setup store and form refs
-  const authStore = useAuthStore();
-  const form = ref(null);
-  const currentPassword = ref('');
-  const newPassword = ref('');
-  const confirmPassword = ref('');
-  const error = ref('');
-  const success = ref('');
-  const isLoading = ref(false);
-  const snackbar = ref(false);
-  const snackbarMessage = ref('');
-  const snackbarColor = ref('error');
+  const authStore = useAuthStore()
+  const form = ref(null)
+  const currentPassword = ref('')
+  const newPassword = ref('')
+  const confirmPassword = ref('')
+  const error = ref('')
+  const success = ref('')
+  const isLoading = ref(false)
+  const snackbar = ref(false)
+  const snackbarMessage = ref('')
+  const snackbarColor = ref('error')
 
   // Validate form fields
   const canSubmit = computed(() => {
-    return currentPassword.value &&
+    return (
+      currentPassword.value &&
       newPassword.value &&
       confirmPassword.value &&
       newPassword.value === confirmPassword.value &&
-      newPassword.value.length >= 8;
-  });
+      newPassword.value.length >= 8
+    )
+  })
 
-  async function handleSubmit () {
-    if (!canSubmit.value) return;
+  async function handleSubmit() {
+    if (!canSubmit.value) return
 
-    error.value = '';
-    success.value = '';
-    isLoading.value = true;
-    snackbar.value = false;
-    snackbarMessage.value = '';
-    snackbarColor.value = 'error';
+    error.value = ''
+    success.value = ''
+    isLoading.value = true
+    snackbar.value = false
+    snackbarMessage.value = ''
+    snackbarColor.value = 'error'
 
     try {
-      await authStore.changePassword(currentPassword.value, newPassword.value);
+      await authStore.changePassword(currentPassword.value, newPassword.value)
       // Show success and reset form
-      success.value = 'Password updated successfully.';
-      snackbarMessage.value = success.value;
-      snackbarColor.value = 'success';
-      snackbar.value = true;
-      currentPassword.value = '';
-      newPassword.value = '';
-      confirmPassword.value = '';
+      success.value = 'Password updated successfully.'
+      snackbarMessage.value = success.value
+      snackbarColor.value = 'success'
+      snackbar.value = true
+      currentPassword.value = ''
+      newPassword.value = ''
+      confirmPassword.value = ''
       setTimeout(() => {
-        emit('update:modelValue', false);
-      }, 1200);
+        emit('update:modelValue', false)
+      }, 1200)
     } catch (err) {
-      error.value = `Failed to change password (error message: ${err.message}).`;
-      snackbarMessage.value = error.value;
-      snackbarColor.value = 'error';
-      snackbar.value = true;
+      error.value = `Failed to change password (error message: ${err.message}).`
+      snackbarMessage.value = error.value
+      snackbarColor.value = 'error'
+      snackbar.value = true
     } finally {
-      isLoading.value = false;
+      isLoading.value = false
     }
   }
 </script>

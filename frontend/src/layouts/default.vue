@@ -23,26 +23,25 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue';
-  import { useTheme } from 'vuetify';
-  import AppFooter from '../components/AppFooter.vue';
-  import AppHeader from '../components/AppHeader.vue';
-  import SideBar from '../components/SideBar.vue';
+  import { ref } from 'vue'
+  import { useTheme } from 'vuetify'
+  import AppFooter from '../components/AppFooter.vue'
+  import AppHeader from '../components/AppHeader.vue'
+  import SideBar from '../components/SideBar.vue'
 
-
-  const drawer = ref(true); // Start with drawer open
-  const theme = useTheme();
-  const isDark = ref(false); // Start in light mode
+  const drawer = ref(true) // Start with drawer open
+  const theme = useTheme()
+  const isDark = ref(false) // Start in light mode
 
   // Ensure theme is set to light on app start
-  theme.global.name.value = 'light';
+  theme.global.name.value = 'light'
 
-  function toggleDrawer () {
-    drawer.value = !drawer.value;
+  function toggleDrawer() {
+    drawer.value = !drawer.value
   }
 
-  function toggleTheme () {
-    theme.global.name.value = isDark.value ? 'light' : 'dark';
-    isDark.value = !isDark.value;
+  function toggleTheme() {
+    theme.global.name.value = isDark.value ? 'light' : 'dark'
+    isDark.value = !isDark.value
   }
 </script>

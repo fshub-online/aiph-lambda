@@ -60,11 +60,14 @@
 
   const dialogOpen = ref(false)
 
-  watch(() => props.open, val => {
-    dialogOpen.value = val
-  })
+  watch(
+    () => props.open,
+    (val) => {
+      dialogOpen.value = val
+    }
+  )
 
-  watch(dialogOpen, val => {
+  watch(dialogOpen, (val) => {
     if (!val) emit('close')
   })
 
@@ -86,73 +89,102 @@
   const loadingSupervisors = ref(false)
   const loadingUsers = ref(false)
 
-  watch(() => props.open, async val => {
-    if (val) {
-      loadingSupervisors.value = true
-      loadingUsers.value = true
-      try {
-        // Load supervisors (members)
-        const res = await api.get('/members')
-        supervisorOptions.value = res.data.items
-          ? res.data.items.map(m => ({ id: m.id, label: `${m.first_name} ${m.last_name}` }))
-          : res.data.map(m => ({ id: m.id, label: `${m.first_name} ${m.last_name}` }))
-      } catch {
-        supervisorOptions.value = []
-      } finally {
-        loadingSupervisors.value = false
-      }
-      try {
-        // Load users
-        const res = await api.get('/users')
-        userOptions.value = res.data.items
-          ? res.data.items.map(u => ({
-            id: u.id,
-            label: `${u.first_name || ''} ${u.last_name || ''} (${u.username || u.email || u.id})`.trim(),
-          }))
-          : res.data.map(u => ({
-            id: u.id,
-            label: `${u.first_name || ''} ${u.last_name || ''} (${u.username || u.email || u.id})`.trim(),
-          }))
-      } catch {
-        userOptions.value = []
-      } finally {
-        loadingUsers.value = false
-      }
-      if (props.memberId) {
-        await loadMember()
-      } else {
-        resetForm()
+  watch(
+    () => props.open,
+    async (val) => {
+      if (val) {
+        loadingSupervisors.value = true
+        loadingUsers.value = true
+        try {
+          // Load supervisors (members)
+          const res = await api.get('/members')
+          supervisorOptions.value = res.data.items
+            ? res.data.items.map((m) => ({
+                id: m.id,
+                label: `${m.first_name} ${m.last_name}`,
+              }))
+            : res.data.map((m) => ({
+                id: m.id,
+                label: `${m.first_name} ${m.last_name}`,
+              }))
+        } catch {
+          supervisorOptions.value = []
+        } finally {
+          loadingSupervisors.value = false
+        }
+        try {
+          // Load users
+          const res = await api.get('/users')
+          userOptions.value = res.data.items
+            ? res.data.items.map((u) => ({
+                id: u.id,
+                label: `${u.first_name || ''} ${u.last_name || ''} (${
+                  u.username || u.email || u.id
+                })`.trim(),
+              }))
+            : res.data.map((u) => ({
+                id: u.id,
+                label: `${u.first_name || ''} ${u.last_name || ''} (${
+                  u.username || u.email || u.id
+                })`.trim(),
+              }))
+        } catch {
+          userOptions.value = []
+        } finally {
+          loadingUsers.value = false
+        }
+        if (props.memberId) {
+          await loadMember()
+        } else {
+          resetForm()
+        }
       }
     }
-  })
+  )
 
-  async function loadMember () {
+  async function loadMember() {
     try {
       const res = await api.get(`/members/${props.memberId}`)
       Object.assign(form.value, res.data)
     } catch (e) {
-      snackbar.value = { show: true, text: 'Failed to load member: ' + (e?.response?.data?.detail || e.message || String(e)), color: 'error' }
+      snackbar.value = {
+        show: true,
+        text:
+          'Failed to load member: ' +
+          (e?.response?.data?.detail || e.message || String(e)),
+        color: 'error',
+      }
     }
   }
 
-  function resetForm () {
-    form.value = { first_name: '', last_name: '', position: '', email: '', phone: '', note: '', supervisor_id: '', user_id: '' }
+  function resetForm() {
+    form.value = {
+      first_name: '',
+      last_name: '',
+      position: '',
+      email: '',
+      phone: '',
+      note: '',
+      supervisor_id: '',
+      user_id: '',
+    }
   }
 
-  async function onSave () {
+  async function onSave() {
     try {
       // Patch: ensure supervisor_id and user_id are always numbers or null
-      let supervisor_id = form.value.supervisor_id;
-      let user_id = form.value.user_id;
-      if (typeof supervisor_id === 'object' && supervisor_id !== null) supervisor_id = supervisor_id.id;
-      if (typeof user_id === 'object' && user_id !== null) user_id = user_id.id;
-      supervisor_id = supervisor_id ? Number(supervisor_id) : null;
-      user_id = user_id ? Number(user_id) : null;
+      let supervisor_id = form.value.supervisor_id
+      let user_id = form.value.user_id
+      if (typeof supervisor_id === 'object' && supervisor_id !== null)
+        supervisor_id = supervisor_id.id
+      if (typeof user_id === 'object' && user_id !== null) user_id = user_id.id
+      supervisor_id = supervisor_id ? Number(supervisor_id) : null
+      user_id = user_id ? Number(user_id) : null
       const payload = {
         ...form.value,
         supervisor_id,
         user_id,
-      };
+      }
       if (isEdit.value) {
         await api.put(`/members/${props.memberId}`, payload)
       } else {
@@ -161,7 +193,13 @@
       emit('saved')
       emit('close')
     } catch (e) {
-      snackbar.value = { show: true, text: 'Save failed: ' + (e?.response?.data?.detail || e.message || String(e)), color: 'error' }
+      snackbar.value = {
+        show: true,
+        text:
+          'Save failed: ' +
+          (e?.response?.data?.detail || e.message || String(e)),
+        color: 'error',
+      }
     }
   }
 </script>

@@ -1,5 +1,9 @@
 <template>
-  <v-dialog max-width="600px" :model-value="modelValue" @update:model-value="emit('update:modelValue', $event)">
+  <v-dialog
+    max-width="600px"
+    :model-value="modelValue"
+    @update:model-value="emit('update:modelValue', $event)"
+  >
     <v-card>
       <v-card-title class="text-h5">User Profile</v-card-title>
       <v-card-text>
@@ -77,71 +81,75 @@
 </template>
 
 <script setup>
-  import { ref, watch } from 'vue';
-  import { useAuthStore } from '@/stores/auth';
+  import { ref, watch } from 'vue'
+  import { useAuthStore } from '@/stores/auth'
 
   const props = defineProps({
     modelValue: Boolean,
     user: Object,
-  });
+  })
 
-  const emit = defineEmits(['update:modelValue']);
+  const emit = defineEmits(['update:modelValue'])
 
   // Setup store and form refs
-  const authStore = useAuthStore();
-  const form = ref(null);
+  const authStore = useAuthStore()
+  const form = ref(null)
   const userData = ref({
     first_name: '',
     last_name: '',
     email: '',
     notes: '',
     phone: '',
-  });
-  const error = ref('');
-  const success = ref('');
-  const isLoading = ref(false);
-  const snackbar = ref(false);
-  const snackbarMessage = ref('');
-  const snackbarColor = ref('error');
+  })
+  const error = ref('')
+  const success = ref('')
+  const isLoading = ref(false)
+  const snackbar = ref(false)
+  const snackbarMessage = ref('')
+  const snackbarColor = ref('error')
 
   // Watch for user changes to populate form
-  watch(() => props.user, newUser => {
-    if (newUser) {
-      userData.value = {
-        first_name: newUser.first_name || '',
-        last_name: newUser.last_name || '',
-        email: newUser.email || '',
-        notes: newUser.notes || '',
-        phone: newUser.phone || '',
-      };
-    }
-  }, { immediate: true });
+  watch(
+    () => props.user,
+    (newUser) => {
+      if (newUser) {
+        userData.value = {
+          first_name: newUser.first_name || '',
+          last_name: newUser.last_name || '',
+          email: newUser.email || '',
+          notes: newUser.notes || '',
+          phone: newUser.phone || '',
+        }
+      }
+    },
+    { immediate: true }
+  )
 
-  async function handleSubmit () {
-    error.value = '';
-    success.value = '';
-    isLoading.value = true;
-    snackbar.value = false;
-    snackbarMessage.value = '';
-    snackbarColor.value = 'error';
+  async function handleSubmit() {
+    error.value = ''
+    success.value = ''
+    isLoading.value = true
+    snackbar.value = false
+    snackbarMessage.value = ''
+    snackbarColor.value = 'error'
 
     try {
-      await authStore.updateProfile(userData.value);
+      await authStore.updateProfile(userData.value)
       // Update user in store (already done in store)
-      success.value = 'Profile updated successfully.';
-      snackbarMessage.value = success.value;
-      snackbarColor.value = 'success';
-      snackbar.value = true;
+      success.value = 'Profile updated successfully.'
+      snackbarMessage.value = success.value
+      snackbarColor.value = 'success'
+      snackbar.value = true
       setTimeout(() => {
-        emit('update:modelValue', false);
-      }, 1200);
+        emit('update:modelValue', false)
+      }, 1200)
     } catch (err) {
-      error.value = `Failed to update profile (error message: ${err.message}).`;
-      snackbarMessage.value = error.value;
-      snackbarColor.value = 'error';
-      snackbar.value = true;
+      error.value = `Failed to update profile (error message: ${err.message}).`
+      snackbarMessage.value = error.value
+      snackbarColor.value = 'error'
+      snackbar.value = true
     } finally {
-      isLoading.value = false;
+      isLoading.value = false
     }
   }
 </script>

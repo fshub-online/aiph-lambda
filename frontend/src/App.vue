@@ -3,5 +3,5 @@
 </template>
 
 <script setup>
-// No logic needed here, layout is handled in default.vue
+  // No logic needed here, layout is handled in default.vue
 </script>

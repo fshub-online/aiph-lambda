@@ -10,9 +10,16 @@
         >
           <div class="text-h6">{{ msg.title }}</div>
           <div>{{ msg.message }}</div>
-          <div class="text-caption grey--text">From: {{ msg.display_start }} To: {{ msg.display_end }}</div>
+          <div class="text-caption grey--text">
+            From: {{ msg.display_start }} To: {{ msg.display_end }}
+          </div>
         </v-alert>
-        <div v-if="filteredSortedMessages.length === 0" class="text-center text-grey">No messages to display.</div>
+        <div
+          v-if="filteredSortedMessages.length === 0"
+          class="text-center text-grey"
+        >
+          No messages to display.
+        </div>
       </v-col>
     </v-row>
   </v-container>
@@ -31,26 +38,28 @@
 
   const snackbar = ref({ show: false, text: '', color: 'error' })
 
-  function priorityType (priority) {
+  function priorityType(priority) {
     // Map backend priorities to Vuetify VAlert types
     switch (priority) {
-      case priorities.value[0]: return 'success' // Top
-      case priorities.value[1]: return 'warning' // High
-      case priorities.value[2]: return 'info' // Medium
-      case priorities.value[3]: return 'error' // Low
-      default: return 'info'
+      case priorities.value[0]:
+        return 'success' // Top
+      case priorities.value[1]:
+        return 'warning' // High
+      case priorities.value[2]:
+        return 'info' // Medium
+      case priorities.value[3]:
+        return 'error' // Low
+      default:
+        return 'info'
     }
   }
 
   const filteredSortedMessages = computed(() => {
     return messages.value
-      .filter(msg => {
+      .filter((msg) => {
         const start = msg.display_start ? new Date(msg.display_start) : null
         const end = msg.display_end ? new Date(msg.display_end) : null
-        return (
-          (!start || today >= start) &&
-          (!end || today <= end)
-        )
+        return (!start || today >= start) && (!end || today <= end)
       })
       .sort((a, b) => {
         // Sort by priority order from backend
@@ -72,7 +81,8 @@
     } catch (e) {
       snackbar.value = {
         show: true,
-        text: e?.response?.data?.detail || e.message || 'Failed to load priorities',
+        text:
+          e?.response?.data?.detail || e.message || 'Failed to load priorities',
         color: 'error',
       }
       priorities.value = []
@@ -83,7 +93,8 @@
     } catch (e) {
       snackbar.value = {
         show: true,
-        text: e?.response?.data?.detail || e.message || 'Failed to load messages',
+        text:
+          e?.response?.data?.detail || e.message || 'Failed to load messages',
         color: 'error',
       }
       messages.value = []

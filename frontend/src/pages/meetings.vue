@@ -6,5 +6,5 @@
 </template>
 
 <script setup>
-// Add logic here as needed
+  // Add logic here as needed
 </script>

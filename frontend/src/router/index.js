@@ -47,7 +47,7 @@ router.beforeEach((to, from, next) => {
 })
 
 // Show warning snackbar on index if redirected due to auth
-router.afterEach(to => {
+router.afterEach((to) => {
   if (to.path === '/' && to.query.authRequired === '1') {
     // Use a global event or store to trigger snackbar
     setTimeout(() => {

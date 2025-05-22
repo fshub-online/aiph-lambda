@@ -6,10 +6,20 @@
       </v-card-title>
       <v-card-text>
         <v-form ref="form" @submit.prevent="saveUser">
-          <v-text-field v-model="formData.user_name" :disabled="isEdit" label="Username" required />
+          <v-text-field
+            v-model="formData.user_name"
+            :disabled="isEdit"
+            label="Username"
+            required
+          />
           <v-text-field v-model="formData.first_name" label="First Name" />
           <v-text-field v-model="formData.last_name" label="Last Name" />
-          <v-text-field v-model="formData.email" label="Email" required type="email" />
+          <v-text-field
+            v-model="formData.email"
+            label="Email"
+            required
+            type="email"
+          />
           <v-text-field v-model="formData.phone" label="Phone" />
           <v-textarea v-model="formData.notes" label="Notes" rows="2" />
           <v-text-field
@@ -25,7 +35,12 @@
       <v-card-actions>
         <v-spacer />
         <v-btn :disabled="loading" text @click="closeDialog">Cancel</v-btn>
-        <v-btn color="primary" :disabled="loading" :loading="loading" @click="saveUser">
+        <v-btn
+          color="primary"
+          :disabled="loading"
+          :loading="loading"
+          @click="saveUser"
+        >
           {{ isEdit ? 'Save' : 'Create' }}
         </v-btn>
       </v-card-actions>
@@ -34,21 +49,21 @@
 </template>
 
 <script setup>
-  import { computed, ref, watch } from 'vue';
-  import api from '@/api';
+  import { computed, ref, watch } from 'vue'
+  import api from '@/api'
 
   const props = defineProps({
     userId: { type: [String, Number], default: null },
     open: { type: Boolean, default: false },
-  });
-  const emit = defineEmits(['close', 'saved']);
+  })
+  const emit = defineEmits(['close', 'saved'])
 
-  const internalOpen = ref(false);
-  const loading = ref(false);
-  const error = ref('');
-  const form = ref(null);
+  const internalOpen = ref(false)
+  const loading = ref(false)
+  const error = ref('')
+  const form = ref(null)
 
-  const isEdit = computed(() => !!props.userId);
+  const isEdit = computed(() => !!props.userId)
   const formData = ref({
     user_name: '',
     first_name: '',
@@ -57,61 +72,73 @@
     phone: '',
     notes: '',
     password: '', // Only for new user
-  });
+  })
 
-  watch(() => props.open, val => {
-    internalOpen.value = val;
-    if (val) {
-      loadUser();
+  watch(
+    () => props.open,
+    (val) => {
+      internalOpen.value = val
+      if (val) {
+        loadUser()
+      }
     }
-  });
+  )
 
-  watch(() => internalOpen.value, val => {
-    if (!val) emit('close');
-  });
+  watch(
+    () => internalOpen.value,
+    (val) => {
+      if (!val) emit('close')
+    }
+  )
 
-  async function loadUser () {
-    error.value = '';
+  async function loadUser() {
+    error.value = ''
     if (isEdit.value) {
-      loading.value = true;
+      loading.value = true
       try {
-        const res = await api.get(`/users/${props.userId}`);
-        Object.assign(formData.value, res.data);
+        const res = await api.get(`/users/${props.userId}`)
+        Object.assign(formData.value, res.data)
       } catch (e) {
-        error.value = e?.response?.data?.detail || 'Failed to load user.';
+        error.value = e?.response?.data?.detail || 'Failed to load user.'
       } finally {
-        loading.value = false;
+        loading.value = false
       }
     } else {
       // Reset for new user
       Object.assign(formData.value, {
-        user_name: '', first_name: '', last_name: '', email: '', phone: '', notes: '', password: '',
-      });
+        user_name: '',
+        first_name: '',
+        last_name: '',
+        email: '',
+        phone: '',
+        notes: '',
+        password: '',
+      })
     }
   }
 
-  async function saveUser () {
-    error.value = '';
-    loading.value = true;
+  async function saveUser() {
+    error.value = ''
+    loading.value = true
     try {
-      let res;
+      let res
       if (isEdit.value) {
-        const data = { ...formData.value };
-        delete data.password;
-        res = await api.put(`/users/${props.userId}`, data);
+        const data = { ...formData.value }
+        delete data.password
+        res = await api.put(`/users/${props.userId}`, data)
       } else {
-        res = await api.post('/users', formData.value);
+        res = await api.post('/users', formData.value)
       }
-      emit('saved', res.data);
-      internalOpen.value = false;
+      emit('saved', res.data)
+      internalOpen.value = false
     } catch (e) {
-      error.value = e?.response?.data?.detail || 'Failed to save user.';
+      error.value = e?.response?.data?.detail || 'Failed to save user.'
     } finally {
-      loading.value = false;
+      loading.value = false
     }
   }
 
-  function closeDialog () {
-    internalOpen.value = false;
+  function closeDialog() {
+    internalOpen.value = false
   }
 </script>

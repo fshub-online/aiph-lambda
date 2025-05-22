@@ -2,7 +2,9 @@
   <v-dialog v-model="dialogOpen" max-width="500px">
     <v-card>
       <v-card-title>
-        <span class="text-h6">{{ isEdit ? 'Edit Message' : 'Add Message' }}</span>
+        <span class="text-h6">{{
+          isEdit ? 'Edit Message' : 'Add Message'
+        }}</span>
       </v-card-title>
       <v-card-text>
         <v-form ref="formRef" @submit.prevent="onSave">
@@ -50,11 +52,14 @@
 
   const dialogOpen = ref(false)
 
-  watch(() => props.open, val => {
-    dialogOpen.value = val
-  })
+  watch(
+    () => props.open,
+    (val) => {
+      dialogOpen.value = val
+    }
+  )
 
-  watch(dialogOpen, val => {
+  watch(dialogOpen, (val) => {
     if (!val) emit('close')
   })
 
@@ -69,40 +74,65 @@
   const snackbar = ref({ show: false, text: '', color: 'error' })
   const isEdit = computed(() => !!props.messageId)
 
-  watch(() => props.open, async val => {
-    if (val) {
-      await fetchPriorities()
-      if (props.messageId) {
-        await loadMessage()
-      } else {
-        resetForm()
+  watch(
+    () => props.open,
+    async (val) => {
+      if (val) {
+        await fetchPriorities()
+        if (props.messageId) {
+          await loadMessage()
+        } else {
+          resetForm()
+        }
       }
     }
-  })
+  )
 
-  async function fetchPriorities () {
+  async function fetchPriorities() {
     try {
       const res = await api.get('/message-enums/priorities')
       priorities.value = res.data
     } catch (e) {
-      snackbar.value = { show: true, text: e?.response?.data?.detail || e.message || String(e) || 'Failed to load priorities', color: 'error' }
+      snackbar.value = {
+        show: true,
+        text:
+          e?.response?.data?.detail ||
+          e.message ||
+          String(e) ||
+          'Failed to load priorities',
+        color: 'error',
+      }
     }
   }
 
-  async function loadMessage () {
+  async function loadMessage() {
     try {
       const res = await api.get(`/messages/${props.messageId}`)
       Object.assign(form.value, res.data)
     } catch (e) {
-      snackbar.value = { show: true, text: e?.response?.data?.detail || e.message || String(e) || 'Failed to load message', color: 'error' }
+      snackbar.value = {
+        show: true,
+        text:
+          e?.response?.data?.detail ||
+          e.message ||
+          String(e) ||
+          'Failed to load message',
+        color: 'error',
+      }
     }
   }
 
-  function resetForm () {
-    form.value = { title: '', message: '', priority: '', display_start: '', display_end: '' }
+  function resetForm() {
+    form.value = {
+      title: '',
+      message: '',
+      priority: '',
+      display_start: '',
+      display_end: '',
+    }
   }
 
-  async function onSave () {
+  async function onSave() {
     try {
       if (isEdit.value) {
         await api.put(`/messages/${props.messageId}`, form.value)
@@ -112,7 +142,12 @@
       emit('saved')
       emit('close')
     } catch (e) {
-      snackbar.value = { show: true, text: e?.response?.data?.detail || e.message || String(e) || 'Save failed', color: 'error' }
+      snackbar.value = {
+        show: true,
+        text:
+          e?.response?.data?.detail || e.message || String(e) || 'Save failed',
+        color: 'error',
+      }
     }
   }
 </script>

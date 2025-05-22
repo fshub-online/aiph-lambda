@@ -1,12 +1,7 @@
 <template>
   <v-navigation-drawer v-model="drawer" app>
     <v-list>
-      <v-list-item
-        prepend-icon="mdi-home"
-        router
-        title="Home"
-        to="/"
-      />
+      <v-list-item prepend-icon="mdi-home" router title="Home" to="/" />
 
       <v-divider class="my-2" />
 
@@ -62,6 +57,6 @@
 
   const drawer = computed({
     get: () => props.modelValue,
-    set: val => emit('update:modelValue', val),
+    set: (val) => emit('update:modelValue', val),
   })
 </script>

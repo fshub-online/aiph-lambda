@@ -1,11 +1,7 @@
 <template>
   <v-container class="py-8">
     <h1>Team Members</h1>
-    <MemberTable
-      ref="memberTableRef"
-      @add="onAddMember"
-      @edit="onEditMember"
-    />
+    <MemberTable ref="memberTableRef" @add="onAddMember" @edit="onEditMember" />
     <MemberEditDialog
       :member-id="editMemberId"
       :open="editDialogOpen"
@@ -24,17 +20,17 @@
   const editMemberId = ref(null)
   const memberTableRef = ref(null)
 
-  function onEditMember (member) {
+  function onEditMember(member) {
     editMemberId.value = member.id
     editDialogOpen.value = true
   }
 
-  function onAddMember () {
+  function onAddMember() {
     editMemberId.value = null
     editDialogOpen.value = true
   }
 
-  function onMemberSaved () {
+  function onMemberSaved() {
     editDialogOpen.value = false
     memberTableRef.value?.fetchMembers?.()
   }

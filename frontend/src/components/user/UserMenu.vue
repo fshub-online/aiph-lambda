@@ -8,7 +8,9 @@
     <v-card>
       <v-card-text class="pa-4">
         <div class="text-h6">{{ user.first_name }} {{ user.last_name }}</div>
-        <div class="text-subtitle-1 text-medium-emphasis">@{{ user.user_name }}</div>
+        <div class="text-subtitle-1 text-medium-emphasis">
+          @{{ user.user_name }}
+        </div>
       </v-card-text>
       <v-divider />
       <v-list>
@@ -34,23 +36,23 @@
 </template>
 
 <script setup>
-  import { defineEmits, defineProps } from 'vue';
+  import { defineEmits, defineProps } from 'vue'
 
   defineProps({
     user: Object,
-  });
+  })
 
-  const emit = defineEmits(['logout', 'edit-profile', 'change-password']);
+  const emit = defineEmits(['logout', 'edit-profile', 'change-password'])
 
-  function onLogout () {
-    emit('logout');
+  function onLogout() {
+    emit('logout')
   }
 
-  function onEditProfile () {
-    emit('edit-profile');
+  function onEditProfile() {
+    emit('edit-profile')
   }
 
-  function onChangePassword () {
-    emit('change-password');
+  function onChangePassword() {
+    emit('change-password')
   }
 </script>

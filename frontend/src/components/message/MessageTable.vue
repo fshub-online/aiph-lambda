@@ -1,18 +1,16 @@
 <template>
   <v-card class="elevation-8">
-    <v-card-title>
-      Messages
-    </v-card-title>
+    <v-card-title> Messages </v-card-title>
     <v-card-subtitle>
       Manage system messages displayed on the home page.
     </v-card-subtitle>
     <v-divider class="ml-4 mr-4 mb-4 mt-4" thickness="2" />
-    <div class="d-flex align-center ml-4 mr-4 mb-2" style="gap: 12px;">
+    <div class="d-flex align-center ml-4 mr-4 mb-2" style="gap: 12px">
       <v-btn
         class="elevation-2"
         color="primary"
         prepend-icon="mdi-message-plus"
-        style="height: 40px; min-width: 120px;"
+        style="height: 40px; min-width: 120px"
         @click="emit('add')"
       >
         Add Message
@@ -24,7 +22,7 @@
         density="compact"
         label="Search messages"
         prepend-inner-icon="mdi-magnify"
-        style="height: 40px;"
+        style="height: 40px"
       />
     </div>
     <div class="d-flex">
@@ -36,7 +34,7 @@
         loading-text="Loading messages..."
         multi-sort
         :search="search"
-        @update:sort-by="val => sortBy.value = val"
+        @update:sort-by="(val) => (sortBy.value = val)"
       >
         <template #item.actions="{ item }">
           <v-icon
@@ -45,13 +43,15 @@
             size="small"
             title="Edit message"
             @click="onEdit(item)"
-          >mdi-pencil</v-icon>
+            >mdi-pencil</v-icon
+          >
           <v-icon
             color="error"
             size="small"
             title="Delete message"
             @click="confirmDelete(item)"
-          >mdi-delete</v-icon>
+            >mdi-delete</v-icon
+          >
         </template>
       </v-data-table>
     </div>
@@ -59,16 +59,19 @@
       <v-card>
         <v-card-title class="text-h6">Confirm Deletion</v-card-title>
         <v-card-text>
-          Are you sure you want to delete message <b>{{ messageToDelete?.title || messageToDelete?.id }}</b>?
+          Are you sure you want to delete message
+          <b>{{ messageToDelete?.title || messageToDelete?.id }}</b
+          >?
         </v-card-text>
         <v-card-actions>
           <v-spacer />
           <v-btn text @click="deleteDialog = false">Cancel</v-btn>
-          <v-btn color="error" :loading="deleteLoading" @click="deleteMessage">Delete</v-btn>
+          <v-btn color="error" :loading="deleteLoading" @click="deleteMessage"
+            >Delete</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
-
   </v-card>
 </template>
 
@@ -95,55 +98,65 @@
   const filteredMessages = computed(() => {
     if (!search.value) return messages.value
     const s = search.value.toLowerCase()
-    return messages.value.filter(m =>
-      (m.title && m.title.toLowerCase().includes(s)) ||
-      (m.message && m.message.toLowerCase().includes(s)) ||
-      (m.priority && m.priority.toLowerCase().includes(s))
+    return messages.value.filter(
+      (m) =>
+        (m.title && m.title.toLowerCase().includes(s)) ||
+        (m.message && m.message.toLowerCase().includes(s)) ||
+        (m.priority && m.priority.toLowerCase().includes(s))
     )
   })
 
-  function fetchMessages () {
+  function fetchMessages() {
     loading.value = true
-    api.get('/messages')
-      .then(res => { messages.value = res.data })
-      .catch(e => {
+    api
+      .get('/messages')
+      .then((res) => {
+        messages.value = res.data
+      })
+      .catch((e) => {
         snackbar.value = {
           show: true,
-          text: 'Failed to load messages: ' + (e?.response?.data?.detail || e.message || String(e)),
+          text:
+            'Failed to load messages: ' +
+            (e?.response?.data?.detail || e.message || String(e)),
           color: 'error',
         }
       })
-      .finally(() => { loading.value = false })
+      .finally(() => {
+        loading.value = false
+      })
   }
 
-  function onEdit (message) {
+  function onEdit(message) {
     emit('edit', message)
   }
 
   const deleteDialog = ref(false)
   const messageToDelete = ref(null)
 
-  function confirmDelete (item) {
+  function confirmDelete(item) {
     messageToDelete.value = item
     deleteDialog.value = true
   }
 
-  async function deleteMessage () {
-    if (!messageToDelete.value) return;
-    deleteLoading.value = true;
+  async function deleteMessage() {
+    if (!messageToDelete.value) return
+    deleteLoading.value = true
     try {
-      await api.delete(`/messages/${messageToDelete.value.id}`);
-      fetchMessages();
+      await api.delete(`/messages/${messageToDelete.value.id}`)
+      fetchMessages()
     } catch (e) {
       snackbar.value = {
         show: true,
-        text: 'Delete failed: ' + (e?.response?.data?.detail || e.message || String(e)),
+        text:
+          'Delete failed: ' +
+          (e?.response?.data?.detail || e.message || String(e)),
         color: 'error',
-      };
+      }
     } finally {
-      deleteLoading.value = false;
-      deleteDialog.value = false;
-      messageToDelete.value = null;
+      deleteLoading.value = false
+      deleteDialog.value = false
+      messageToDelete.value = null
     }
   }
 

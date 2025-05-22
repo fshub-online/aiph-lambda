@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { useAuthStore } from '@/stores/auth';
+import axios from 'axios'
+import { useAuthStore } from '@/stores/auth'
 
 const api = axios.create({
   baseURL: 'http://localhost:8000/api/v1',
@@ -7,37 +7,37 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-});
+})
 
-let isRefreshing = false;
-let refreshSubscribers = [];
+let isRefreshing = false
+let refreshSubscribers = []
 
-function onRefreshed (newToken) {
-  refreshSubscribers.forEach(cb => cb(newToken));
-  refreshSubscribers = [];
+function onRefreshed(newToken) {
+  refreshSubscribers.forEach((cb) => cb(newToken))
+  refreshSubscribers = []
 }
 
-function addRefreshSubscriber (cb) {
-  refreshSubscribers.push(cb);
+function addRefreshSubscriber(cb) {
+  refreshSubscribers.push(cb)
 }
 
 api.interceptors.request.use(
-  config => {
+  (config) => {
     // Use Pinia store for token
-    const authStore = useAuthStore();
+    const authStore = useAuthStore()
     if (authStore.token && !config.headers.Authorization) {
-      config.headers.Authorization = `Bearer ${authStore.token}`;
+      config.headers.Authorization = `Bearer ${authStore.token}`
     }
-    return config;
+    return config
   },
-  error => Promise.reject(error)
-);
+  (error) => Promise.reject(error)
+)
 
 api.interceptors.response.use(
-  response => response,
-  async error => {
-    const originalRequest = error.config;
-    const authStore = useAuthStore();
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config
+    const authStore = useAuthStore()
     if (
       error.response &&
       error.response.status === 401 &&
@@ -45,37 +45,39 @@ api.interceptors.response.use(
       !originalRequest.url.includes('/oauth/token') &&
       !originalRequest.url.includes('/oauth/refresh')
     ) {
-      originalRequest._retry = true;
+      originalRequest._retry = true
       if (!isRefreshing) {
-        isRefreshing = true;
+        isRefreshing = true
         try {
-          const refreshResponse = await api.post('/oauth/refresh', null, { withCredentials: true });
-          const newAccessToken = refreshResponse.data.access_token;
-          authStore.setToken(newAccessToken);
-          onRefreshed(newAccessToken);
-          isRefreshing = false;
+          const refreshResponse = await api.post('/oauth/refresh', null, {
+            withCredentials: true,
+          })
+          const newAccessToken = refreshResponse.data.access_token
+          authStore.setToken(newAccessToken)
+          onRefreshed(newAccessToken)
+          isRefreshing = false
         } catch (refreshError) {
-          isRefreshing = false;
-          authStore.logout();
+          isRefreshing = false
+          authStore.logout()
           if (refreshError.response && refreshError.response.status === 401) {
-            window.location.replace('/');
+            window.location.replace('/')
           }
-          return Promise.reject(refreshError);
+          return Promise.reject(refreshError)
         }
       }
       return new Promise((resolve, reject) => {
-        addRefreshSubscriber(token => {
+        addRefreshSubscriber((token) => {
           if (token) {
-            originalRequest.headers.Authorization = `Bearer ${token}`;
-            resolve(api(originalRequest));
+            originalRequest.headers.Authorization = `Bearer ${token}`
+            resolve(api(originalRequest))
           } else {
-            reject(error);
+            reject(error)
           }
-        });
-      });
+        })
+      })
     }
-    return Promise.reject(error);
+    return Promise.reject(error)
   }
-);
+)
 
-export default api;
+export default api
