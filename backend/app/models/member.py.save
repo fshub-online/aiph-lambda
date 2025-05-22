@@ -1,0 +1,21 @@
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy import String, Text
+from app.db.base import Base
+
+
+class Member(Base):
+    __tablename__ = "member"
+
+    first_name: Mapped[str] = mapped_column(String, nullable=False)
+    last_name: Mapped[str] = mapped_column(String, nullable=False)
+    position: Mapped[str] = mapped_column(String, nullable=False)
+    notes: Mapped[str | None] = mapped_column(Text, nullable=True)
+    email: Mapped[str] = mapped_column(String, nullable=True)
+    phone: Mapped[str | None] = mapped_column(String, nullable=True)
+    supervisor_id: Mapped[int | None] = mapped_column(nullable=True)
+    supervisor: Mapped["Member"] = relationship(
+        "Member",
+        remote_side="Member.id",
+        backref="subordinates",
+        foreign_keys=[supervisor_id],
+    )
