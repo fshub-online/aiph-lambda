@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional
-from datetime import date
+from datetime import datetime, date
 from app.models.key_result import KeyResultStatus, KeyResultPriority, KeyResultComplexity
 
 class KeyResultBase(BaseModel):
@@ -40,11 +40,13 @@ class KeyResultUpdate(BaseModel):
 
 class KeyResultInDBBase(KeyResultBase):
     id: int
-    created_at: date
-    updated_at: date
-    
+    created_at: datetime
+    updated_at: datetime
+
     class Config:
         from_attributes = True
-
+        json_encoders = {
+            datetime: lambda v: v.isoformat(),
+        }
 class KeyResult(KeyResultInDBBase):
     pass

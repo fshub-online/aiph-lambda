@@ -87,7 +87,7 @@
       <v-card-actions>
         <v-spacer />
         <v-btn text @click="$emit('close')">Cancel</v-btn>
-        <v-btn color="primary" @click="onSave">Save</v-btn>
+        <v-btn color="primary" :disabled="saving" @click="onSave">Save</v-btn>
       </v-card-actions>
     </v-card>
     <v-snackbar v-model="snackbar.show" :color="snackbar.color" timeout="5000">
@@ -145,6 +145,7 @@
   const loadingEnums = ref(false)
   const loadingMembers = ref(false)
   const loadingObjectives = ref(false)
+  const saving = ref(false)
 
   watch(
     () => props.open,
@@ -156,9 +157,9 @@
         try {
           const [statuses, priorities, complexities, members, objectives] =
             await Promise.all([
-              api.get('/key-result-statuses'),
-              api.get('/key-result-priorities'),
-              api.get('/key-result-complexities'),
+              api.get('/key-result-enums/statuses'),
+              api.get('/key-result-enums/priorities'),
+              api.get('/key-result-enums/complexities'),
               api.get('/members'),
               api.get('/objectives'),
             ])
@@ -227,14 +228,63 @@
     }
   }
 
+  function validateForm() {
+    if (
+      !form.value.title ||
+      !form.value.value_definition ||
+      !form.value.unit ||
+      !form.value.status ||
+      !form.value.priority ||
+      !form.value.complexity
+    ) {
+      snackbar.value = {
+        show: true,
+        text: 'Please fill in all required fields.',
+        color: 'error',
+      }
+      return false
+    }
+    return true
+  }
+
   async function onSave() {
+    if (!validateForm()) return
+    saving.value = true
     try {
+      let member_id = form.value.member_id
+      if (typeof member_id === 'object' && member_id !== null) {
+        member_id = member_id.id
+      }
+      member_id =
+        member_id !== '' && member_id !== null && member_id !== undefined
+          ? Number(member_id)
+          : null
+      let objective_id = form.value.objective_id
+      if (typeof objective_id === 'object' && objective_id !== null) {
+        objective_id = objective_id.id
+      }
+      objective_id =
+        objective_id !== '' &&
+        objective_id !== null &&
+        objective_id !== undefined
+          ? Number(objective_id)
+          : null
+      // Ensure date fields are in YYYY-MM-DD
+      const start_date = form.value.start_date
+        ? String(form.value.start_date).slice(0, 10)
+        : ''
+      const end_date = form.value.end_date
+        ? String(form.value.end_date).slice(0, 10)
+        : ''
       const payload = {
         ...form.value,
-        member_id: form.value.member_id ? Number(form.value.member_id) : null,
-        objective_id: form.value.objective_id
-          ? Number(form.value.objective_id)
-          : null,
+        member_id,
+        objective_id,
+        start_date,
+        end_date,
+        start_value: Number(form.value.start_value) || 0,
+        current_value: Number(form.value.current_value) || 0,
+        target_value: Number(form.value.target_value) || 0,
       }
       if (isEdit.value) {
         await api.put(`/key-results/${props.keyResultId}`, payload)
@@ -251,6 +301,8 @@
           (e?.response?.data?.detail || e.message || String(e)),
         color: 'error',
       }
+    } finally {
+      saving.value = false
     }
   }
 </script>

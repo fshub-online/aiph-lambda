@@ -1,7 +1,8 @@
 from pydantic import BaseModel
 from typing import Optional
-from datetime import date
+from datetime import date, datetime
 from app.models.objective import ObjectivePriority, ObjectiveStatus
+
 
 class ObjectiveBase(BaseModel):
     title: str
@@ -15,8 +16,10 @@ class ObjectiveBase(BaseModel):
     measurable_target: Optional[str] = None
     progress: int = 0
 
+
 class ObjectiveCreate(ObjectiveBase):
     pass
+
 
 class ObjectiveUpdate(BaseModel):
     title: Optional[str] = None
@@ -30,17 +33,18 @@ class ObjectiveUpdate(BaseModel):
     measurable_target: Optional[str] = None
     progress: Optional[int] = None
 
+
 class ObjectiveInDBBase(ObjectiveBase):
     id: int
-    created_at: date
-    updated_at: date
+    created_at: datetime
+    updated_at: datetime
 
     class Config:
         from_attributes = True
         json_encoders = {
-            date: lambda v: v.isoformat(),
+            datetime: lambda v: v.isoformat(),
         }
+
 
 class Objective(ObjectiveInDBBase):
     pass
-

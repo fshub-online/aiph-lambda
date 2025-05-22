@@ -31,6 +31,9 @@ class MessageInDBBase(MessageBase):
 
     class Config:
         from_attributes = True
+        json_encoders = {
+            datetime: lambda v: v.isoformat(),
+        }
 
 
 class Message(MessageInDBBase):

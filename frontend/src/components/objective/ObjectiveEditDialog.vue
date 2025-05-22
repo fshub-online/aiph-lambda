@@ -11,6 +11,17 @@
           <v-text-field v-model="form.title" label="Title" required />
           <v-textarea v-model="form.description" label="Description" />
           <v-select
+            v-model="form.member_id"
+            clearable
+            item-title="label"
+            item-value="id"
+            :items="memberOptions"
+            label="Member"
+            :loading="loadingMembers"
+            required
+            return-object="false"
+          />
+          <v-select
             v-model="form.priority"
             :items="priorityOptions"
             label="Priority"
@@ -62,7 +73,7 @@
       <v-card-actions>
         <v-spacer />
         <v-btn text @click="$emit('close')">Cancel</v-btn>
-        <v-btn color="primary" @click="onSave">Save</v-btn>
+        <v-btn color="primary" :disabled="saving" @click="onSave">Save</v-btn>
       </v-card-actions>
     </v-card>
     <v-snackbar v-model="snackbar.show" :color="snackbar.color" timeout="5000">
@@ -103,6 +114,7 @@
     start_date: '',
     end_date: '',
     parent_id: '',
+    member_id: '',
   })
   const snackbar = ref({ show: false, text: '', color: 'error' })
   const isEdit = computed(() => !!props.objectiveId)
@@ -110,8 +122,11 @@
   const priorityOptions = ref([])
   const statusOptions = ref([])
   const parentOptions = ref([])
+  const memberOptions = ref([])
   const loadingEnums = ref(false)
   const loadingParents = ref(false)
+  const loadingMembers = ref(false)
+  const saving = ref(false)
 
   watch(
     () => props.open,
@@ -119,11 +134,13 @@
       if (val) {
         loadingEnums.value = true
         loadingParents.value = true
+        loadingMembers.value = true
         try {
-          const [priorities, statuses, parents] = await Promise.all([
-            api.get('/objective-priorities'),
-            api.get('/objective-statuses'),
+          const [priorities, statuses, parents, members] = await Promise.all([
+            api.get('/objective-enums/priorities'),
+            api.get('/objective-enums/statuses'),
             api.get('/objectives'),
+            api.get('/members'),
           ])
           priorityOptions.value = priorities.data
           statusOptions.value = statuses.data
@@ -131,13 +148,19 @@
             id: o.id,
             label: o.title,
           }))
+          memberOptions.value = members.data.map((m) => ({
+            id: m.id,
+            label: `${m.first_name} ${m.last_name}`,
+          }))
         } catch {
           priorityOptions.value = []
           statusOptions.value = []
           parentOptions.value = []
+          memberOptions.value = []
         } finally {
           loadingEnums.value = false
           loadingParents.value = false
+          loadingMembers.value = false
         }
         if (props.objectiveId) {
           await loadObjective()
@@ -174,14 +197,65 @@
       start_date: '',
       end_date: '',
       parent_id: '',
+      member_id: '',
     }
   }
 
+  function validateForm() {
+    if (
+      !form.value.title ||
+      !form.value.priority ||
+      !form.value.status ||
+      !form.value.start_date ||
+      !form.value.end_date
+    ) {
+      snackbar.value = {
+        show: true,
+        text: 'Please fill in all required fields.',
+        color: 'error',
+      }
+      return false
+    }
+    // Clamp progress
+    if (form.value.progress < 0) form.value.progress = 0
+    if (form.value.progress > 100) form.value.progress = 100
+    return true
+  }
+
   async function onSave() {
+    if (!validateForm()) return
+    saving.value = true
     try {
+      let member_id = form.value.member_id
+      if (typeof member_id === 'object' && member_id !== null) {
+        member_id = member_id.id
+      }
+      member_id =
+        member_id !== '' && member_id !== null && member_id !== undefined
+          ? Number(member_id)
+          : null
+      let parent_id = form.value.parent_id
+      if (typeof parent_id === 'object' && parent_id !== null) {
+        parent_id = parent_id.id
+      }
+      parent_id =
+        parent_id !== '' && parent_id !== null && parent_id !== undefined
+          ? Number(parent_id)
+          : null
+      // Ensure date fields are in YYYY-MM-DD
+      const start_date = form.value.start_date
+        ? String(form.value.start_date).slice(0, 10)
+        : ''
+      const end_date = form.value.end_date
+        ? String(form.value.end_date).slice(0, 10)
+        : ''
       const payload = {
         ...form.value,
-        parent_id: form.value.parent_id ? Number(form.value.parent_id) : null,
+        parent_id,
+        member_id,
+        start_date,
+        end_date,
+        progress: Number(form.value.progress) || 0,
       }
       if (isEdit.value) {
         await api.put(`/objectives/${props.objectiveId}`, payload)
@@ -198,6 +272,8 @@
           (e?.response?.data?.detail || e.message || String(e)),
         color: 'error',
       }
+    } finally {
+      saving.value = false
     }
   }
 </script>
