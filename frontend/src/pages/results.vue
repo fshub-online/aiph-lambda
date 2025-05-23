@@ -1,6 +1,5 @@
 <template>
   <v-container class="py-8">
-    <h1>Key Results</h1>
     <KeyResultTable
       ref="keyResultTableRef"
       @add="onAddKeyResult"

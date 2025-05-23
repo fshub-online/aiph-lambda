@@ -22,7 +22,7 @@
                 label="Lead Member"
                 :loading="loadingMembers"
                 required
-                return-object="false"
+                :return-object="false"
               />
             </v-col>
           </v-row>

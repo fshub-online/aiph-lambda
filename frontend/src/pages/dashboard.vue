@@ -1,6 +1,6 @@
 <template>
   <v-container class="py-8">
-    <h1>Evaluations</h1>
+    <h1>Dashboard</h1>
     <p>Page under construction.</p>
   </v-container>
 </template>

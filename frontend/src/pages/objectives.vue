@@ -1,6 +1,5 @@
 <template>
   <v-container class="py-8">
-    <h1>Objectives</h1>
     <ObjectiveTable
       ref="objectiveTableRef"
       @add="onAddObjective"

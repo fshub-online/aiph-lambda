@@ -1,6 +1,5 @@
 <template>
   <v-container class="py-8">
-    <h1>Team Members</h1>
     <MemberTable ref="memberTableRef" @add="onAddMember" @edit="onEditMember" />
     <MemberEditDialog
       :member-id="editMemberId"

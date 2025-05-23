@@ -27,6 +27,7 @@
       <v-data-table
         class="elevation-2 ml-4 mr-4 mt-4 mb-4"
         :headers="headers"
+        item-value="id"
         :items="filteredMeetings"
         :loading="loading"
         loading-text="Loading meetings..."

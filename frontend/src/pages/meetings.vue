@@ -1,6 +1,5 @@
 <template>
   <v-container class="py-8">
-    <h1>Meetings</h1>
     <MeetingTable
       ref="meetingTableRef"
       @add="onAddMeeting"
