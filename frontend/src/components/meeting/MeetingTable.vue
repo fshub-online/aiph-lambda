@@ -57,6 +57,14 @@
             >mdi-pencil</v-icon
           >
           <v-icon
+            class="mr-2"
+            color="secondary"
+            size="small"
+            title="Chair meeting"
+            @click="onChair(item)"
+            >mdi-chair-rolling</v-icon
+          >
+          <v-icon
             color="error"
             size="small"
             title="Delete meeting"
@@ -86,14 +94,26 @@
     <v-snackbar v-model="snackbar.show" :color="snackbar.color" timeout="5000">
       {{ snackbar.text }}
     </v-snackbar>
+
+    <MeetingChairedDetails
+      v-if="chairedMeeting"
+      :meeting="chairedMeeting"
+      :member-map="memberMap"
+      @minutes-saved="
+        (val) => {
+          chairedMeeting.minutes = val
+        }
+      "
+    />
   </v-card>
 </template>
 
 <script setup>
   import { computed, defineEmits, onMounted, ref } from 'vue'
   import api from '@/api'
+  import MeetingChairedDetails from './MeetingChairedDetails.vue'
 
-  const emit = defineEmits(['edit', 'delete', 'add'])
+  const emit = defineEmits(['edit', 'delete', 'add', 'chair'])
   const meetings = ref([])
   const loading = ref(false)
   const search = ref('')
@@ -200,6 +220,12 @@
     } finally {
       deleteLoading.value = false
     }
+  }
+
+  const chairedMeeting = ref(null)
+
+  function onChair(meeting) {
+    chairedMeeting.value = meeting
   }
 
   onMounted(fetchMeetings)
