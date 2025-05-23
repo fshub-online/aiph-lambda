@@ -59,6 +59,7 @@
           <v-icon
             class="mr-2"
             color="secondary"
+            :disabled="isChairDisabled"
             size="small"
             title="Chair meeting"
             @click="onChair(item)"
@@ -97,6 +98,7 @@
 
     <MeetingChairedDetails
       v-if="chairedMeeting"
+      ref="chairedMeetingRef"
       :meeting="chairedMeeting"
       :member-map="memberMap"
       @minutes-saved="
@@ -223,8 +225,17 @@
   }
 
   const chairedMeeting = ref(null)
+  const chairedMeetingRef = ref(null)
+
+  // Computed property for disabling the chair icon (robust version)
+  const isChairDisabled = computed(() => {
+    if (!chairedMeeting.value || !chairedMeetingRef.value) return false
+    const dirty = chairedMeetingRef.value.dirty
+    return !!(dirty && (dirty.value === undefined ? dirty : dirty.value))
+  })
 
   function onChair(meeting) {
+    if (isChairDisabled.value) return
     chairedMeeting.value = meeting
   }
 

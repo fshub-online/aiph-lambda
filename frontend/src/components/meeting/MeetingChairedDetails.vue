@@ -1,9 +1,15 @@
 <template>
-  <div v-if="meeting" class="mt-4 mb-4 ml-4 mr-4">
-    <v-card class="pa-4" elevation="4">
+  <div v-if="meeting" class="mb-4 ml-4 mr-4">
+    <v-card class="pa-4" :class="{ 'unsaved-warning': dirty }" elevation="4">
       <v-card-title class="text-h6 d-flex align-center">
         <v-icon class="mr-2" color="secondary">mdi-chair-rolling</v-icon>
         Chaired Meeting Details
+        <v-badge
+          v-if="dirty"
+          class="ml-4"
+          color="orange"
+          content="Unsaved changes"
+        />
       </v-card-title>
       <v-card-text>
         <div
@@ -16,36 +22,37 @@
           <div><b>Time:</b> {{ meeting.time }}</div>
           <div><b>Duration:</b> {{ meeting.duration }} min</div>
         </div>
-        <div>
+        <div class="d-flex flex-row align-start" style="gap: 24px">
           <v-textarea
             v-model="minutesEdit"
             auto-grow
             class="w-100"
+            :class="{ 'unsaved-warning': dirty }"
             :disabled="saving"
             label="Minutes"
-            rows="5"
+            :rows="undefined"
           />
-        </div>
-        <div class="d-flex flex-row mt-2" style="gap: 12px">
-          <v-btn
-            color="primary"
-            :disabled="!dirty || saving"
-            :loading="saving"
-            @click="saveMinutes"
-            >Save</v-btn
-          >
-          <v-btn
-            color="secondary"
-            :disabled="!dirty || saving"
-            @click="undoMinutes"
-            >Undo</v-btn
-          >
-          <v-btn
-            color="error"
-            :disabled="!minutesEdit || saving"
-            @click="clearMinutes"
-            >Clear</v-btn
-          >
+          <div class="d-flex flex-column" style="gap: 12px; min-width: 110px">
+            <v-btn
+              color="primary"
+              :disabled="!dirty || saving"
+              :loading="saving"
+              @click="saveMinutes"
+              >Save</v-btn
+            >
+            <v-btn
+              color="secondary"
+              :disabled="!dirty || saving"
+              @click="undoMinutes"
+              >Undo</v-btn
+            >
+            <v-btn
+              color="error"
+              :disabled="!minutesEdit || saving"
+              @click="clearMinutes"
+              >Clear</v-btn
+            >
+          </div>
         </div>
         <v-snackbar
           v-model="snackbar.show"
@@ -54,6 +61,7 @@
         >
           {{ snackbar.text }}
         </v-snackbar>
+        <!-- Warning dialog removed: no longer needed since chair icon is disabled when dirty -->
       </v-card-text>
     </v-card>
   </div>
@@ -74,6 +82,7 @@
   const originalMinutes = ref(meeting.value?.minutes || '')
   const saving = ref(false)
   const snackbar = ref({ show: false, text: '', color: 'success' })
+  // warnSwitchDialog removed
 
   const leadName = computed(() => {
     const m = memberMap.value[meeting.value.lead_member_id]
@@ -83,6 +92,8 @@
   })
 
   const dirty = computed(() => minutesEdit.value !== originalMinutes.value)
+
+  defineExpose({ dirty })
 
   watch(
     () => meeting.value.id,
