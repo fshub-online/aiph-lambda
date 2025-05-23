@@ -6,6 +6,12 @@
       <v-divider class="my-2" />
 
       <v-list-item
+        prepend-icon="mdi-monitor-dashboard"
+        router
+        title="Dashboard"
+        to="/dashboard"
+      />
+      <v-list-item
         prepend-icon="mdi-account-group"
         router
         title="Team Members"

@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional, List
-from datetime import date, time, datetime
+from datetime import date as _date, time as _time, datetime
 
 
 class MeetingParticipantBase(BaseModel):
@@ -52,8 +52,8 @@ class MeetingKeyResult(MeetingKeyResultBase):
 
 class MeetingBase(BaseModel):
     title: str
-    date: date
-    time: time
+    date: _date
+    time: _time
     duration: int
     minutes: Optional[str] = None
     lead_member_id: int
@@ -65,8 +65,8 @@ class MeetingCreate(MeetingBase):
 
 class MeetingUpdate(BaseModel):
     title: Optional[str] = None
-    date: Optional["date"] = None
-    time: Optional["time"] = None
+    date: Optional[_date] = None
+    time: Optional[_time] = None
     duration: Optional[int] = None
     minutes: Optional[str] = None
     lead_member_id: Optional[int] = None
