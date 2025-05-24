@@ -20,7 +20,6 @@ class Member(Base):
 
 # Set key_results relationship after KeyResult is defined to avoid circular import
 try:
-    from app.models.key_result import KeyResult
     Member.key_results = relationship("KeyResult", back_populates="member", lazy="selectin")
 except ImportError:
     pass

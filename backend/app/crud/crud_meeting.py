@@ -97,3 +97,35 @@ def remove_key_result(db: Session, meeting_id: int, key_result_id: int) -> None:
         meeting_id=meeting_id, key_result_id=key_result_id
     ).delete()
     db.commit()
+
+
+def get_meeting_with_related_ids(db: Session, meeting_id: int):
+    meeting = get_meeting(db, meeting_id)
+    if not meeting:
+        return None
+    participant_ids = [
+        row.member_id
+        for row in db.query(MeetingParticipant.member_id).filter_by(
+            meeting_id=meeting_id
+        )
+    ]
+    objective_ids = [
+        row.objective_id
+        for row in db.query(MeetingObjective.objective_id).filter_by(
+            meeting_id=meeting_id
+        )
+    ]
+    key_result_ids = [
+        row.key_result_id
+        for row in db.query(MeetingKeyResult.key_result_id).filter_by(
+            meeting_id=meeting_id
+        )
+    ]
+    # Return a dict with meeting fields and related IDs
+    meeting_dict = meeting.__dict__.copy()
+    # Remove SQLAlchemy internal state if present
+    meeting_dict.pop("_sa_instance_state", None)
+    meeting_dict["participant_ids"] = participant_ids
+    meeting_dict["objective_ids"] = objective_ids
+    meeting_dict["key_result_ids"] = key_result_ids
+    return meeting_dict

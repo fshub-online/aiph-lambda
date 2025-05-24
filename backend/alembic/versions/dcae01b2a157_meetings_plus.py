@@ -1,8 +1,8 @@
-"""added meeting
+"""meetings plus
 
-Revision ID: 798bbb11ca68
+Revision ID: dcae01b2a157
 Revises: 636c0f9abf01
-Create Date: 2025-05-23 17:52:52.918272
+Create Date: 2025-05-24 19:34:55.885527
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '798bbb11ca68'
+revision: str = 'dcae01b2a157'
 down_revision: Union[str, None] = '636c0f9abf01'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -44,7 +44,7 @@ def upgrade() -> None:
     sa.Column('updated_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
     sa.ForeignKeyConstraint(['meeting_id'], ['meeting.id'], ),
     sa.ForeignKeyConstraint(['objective_id'], ['objective.id'], ),
-    sa.PrimaryKeyConstraint('meeting_id', 'objective_id', 'id')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_meeting_objective_id'), 'meeting_objective', ['id'], unique=False)
     op.create_table('meeting_participant',
@@ -55,7 +55,7 @@ def upgrade() -> None:
     sa.Column('updated_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
     sa.ForeignKeyConstraint(['meeting_id'], ['meeting.id'], ),
     sa.ForeignKeyConstraint(['member_id'], ['member.id'], ),
-    sa.PrimaryKeyConstraint('meeting_id', 'member_id', 'id')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_meeting_participant_id'), 'meeting_participant', ['id'], unique=False)
     op.create_table('meeting_key_result',
@@ -67,7 +67,7 @@ def upgrade() -> None:
     sa.Column('updated_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
     sa.ForeignKeyConstraint(['key_result_id'], ['key_result.id'], ),
     sa.ForeignKeyConstraint(['meeting_id'], ['meeting.id'], ),
-    sa.PrimaryKeyConstraint('meeting_id', 'key_result_id', 'id')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_meeting_key_result_id'), 'meeting_key_result', ['id'], unique=False)
     # ### end Alembic commands ###

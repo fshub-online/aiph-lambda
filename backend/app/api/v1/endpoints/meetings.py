@@ -5,13 +5,15 @@ from app import schemas
 from app.api.v1.deps import get_db
 from app.crud import crud_meeting
 from app.api.v1.endpoints.oauth import read_users_me
+from app.schemas.meeting import MeetingWithIDs
+from app.crud.crud_meeting import MeetingParticipant, MeetingObjective, MeetingKeyResult
 
 router = APIRouter()
 
 
 @router.get(
     "/meetings",
-    response_model=List[schemas.meeting.Meeting],
+    response_model=List[MeetingWithIDs],
     summary="List meetings",
     tags=["Meetings"],
 )
@@ -21,12 +23,13 @@ def read_meetings(
     db: Session = Depends(get_db),
     current_user: schemas.user.User = Depends(read_users_me),
 ):
-    return crud_meeting.get_meetings(db, skip=skip, limit=limit)
+    meetings = crud_meeting.get_meetings(db, skip=skip, limit=limit)
+    return [crud_meeting.get_meeting_with_related_ids(db, m.id) for m in meetings]
 
 
 @router.get(
     "/meetings/{meeting_id}",
-    response_model=schemas.meeting.Meeting,
+    response_model=MeetingWithIDs,
     summary="Get meeting by ID",
     tags=["Meetings"],
 )
@@ -35,10 +38,10 @@ def read_meeting(
     db: Session = Depends(get_db),
     current_user: schemas.user.User = Depends(read_users_me),
 ):
-    db_meeting = crud_meeting.get_meeting(db, meeting_id=meeting_id)
-    if not db_meeting:
+    meeting = crud_meeting.get_meeting_with_related_ids(db, meeting_id=meeting_id)
+    if not meeting:
         raise HTTPException(status_code=404, detail="Meeting not found")
-    return db_meeting
+    return meeting
 
 
 @router.post(
@@ -160,10 +163,8 @@ def get_meeting_participants(
     meeting = crud_meeting.get_meeting(db, meeting_id=meeting_id)
     if not meeting:
         raise HTTPException(status_code=404, detail="Meeting not found")
-    return [
-        schemas.meeting.MeetingParticipant.model_validate(p)
-        for p in meeting.participants
-    ]
+    participants = db.query(MeetingParticipant).filter_by(meeting_id=meeting_id).all()
+    return [schemas.meeting.MeetingParticipant.model_validate(p) for p in participants]
 
 
 @router.get(
@@ -181,10 +182,14 @@ def get_meeting_participant(
     meeting = crud_meeting.get_meeting(db, meeting_id=meeting_id)
     if not meeting:
         raise HTTPException(status_code=404, detail="Meeting not found")
-    for p in meeting.participants:
-        if getattr(p, "member_id", None) == member_id:
-            return schemas.meeting.MeetingParticipant.model_validate(p)
-    raise HTTPException(status_code=404, detail="Participant not found")
+    participant = (
+        db.query(MeetingParticipant)
+        .filter_by(meeting_id=meeting_id, member_id=member_id)
+        .first()
+    )
+    if not participant:
+        raise HTTPException(status_code=404, detail="Participant not found")
+    return schemas.meeting.MeetingParticipant.model_validate(participant)
 
 
 # Objectives
@@ -262,9 +267,8 @@ def get_meeting_objectives(
     meeting = crud_meeting.get_meeting(db, meeting_id=meeting_id)
     if not meeting:
         raise HTTPException(status_code=404, detail="Meeting not found")
-    return [
-        schemas.meeting.MeetingObjective.model_validate(o) for o in meeting.objectives
-    ]
+    objectives = db.query(MeetingObjective).filter_by(meeting_id=meeting_id).all()
+    return [schemas.meeting.MeetingObjective.model_validate(o) for o in objectives]
 
 
 @router.get(
@@ -282,10 +286,14 @@ def get_meeting_objective(
     meeting = crud_meeting.get_meeting(db, meeting_id=meeting_id)
     if not meeting:
         raise HTTPException(status_code=404, detail="Meeting not found")
-    for o in meeting.objectives:
-        if getattr(o, "objective_id", None) == objective_id:
-            return schemas.meeting.MeetingObjective.model_validate(o)
-    raise HTTPException(status_code=404, detail="Objective association not found")
+    objective = (
+        db.query(MeetingObjective)
+        .filter_by(meeting_id=meeting_id, objective_id=objective_id)
+        .first()
+    )
+    if not objective:
+        raise HTTPException(status_code=404, detail="Objective association not found")
+    return schemas.meeting.MeetingObjective.model_validate(objective)
 
 
 # Key Results
@@ -365,10 +373,8 @@ def get_meeting_key_results(
     meeting = crud_meeting.get_meeting(db, meeting_id=meeting_id)
     if not meeting:
         raise HTTPException(status_code=404, detail="Meeting not found")
-    return [
-        schemas.meeting.MeetingKeyResult.model_validate(kr)
-        for kr in meeting.key_results
-    ]
+    key_results = db.query(MeetingKeyResult).filter_by(meeting_id=meeting_id).all()
+    return [schemas.meeting.MeetingKeyResult.model_validate(kr) for kr in key_results]
 
 
 @router.get(
@@ -386,10 +392,14 @@ def get_meeting_key_result(
     meeting = crud_meeting.get_meeting(db, meeting_id=meeting_id)
     if not meeting:
         raise HTTPException(status_code=404, detail="Meeting not found")
-    for kr in meeting.key_results:
-        if getattr(kr, "key_result_id", None) == key_result_id:
-            return schemas.meeting.MeetingKeyResult.model_validate(kr)
-    raise HTTPException(status_code=404, detail="Key result association not found")
+    key_result = (
+        db.query(MeetingKeyResult)
+        .filter_by(meeting_id=meeting_id, key_result_id=key_result_id)
+        .first()
+    )
+    if not key_result:
+        raise HTTPException(status_code=404, detail="Key result association not found")
+    return schemas.meeting.MeetingKeyResult.model_validate(key_result)
 
 
 @router.get(
@@ -406,19 +416,17 @@ def get_meeting_associations(
     meeting = crud_meeting.get_meeting(db, meeting_id=meeting_id)
     if not meeting:
         raise HTTPException(status_code=404, detail="Meeting not found")
-    participants = [
-        schemas.meeting.MeetingParticipant.model_validate(p)
-        for p in meeting.participants
-    ]
-    objectives = [
-        schemas.meeting.MeetingObjective.model_validate(o) for o in meeting.objectives
-    ]
-    key_results = [
-        schemas.meeting.MeetingKeyResult.model_validate(kr)
-        for kr in meeting.key_results
-    ]
+    participants = db.query(MeetingParticipant).filter_by(meeting_id=meeting_id).all()
+    objectives = db.query(MeetingObjective).filter_by(meeting_id=meeting_id).all()
+    key_results = db.query(MeetingKeyResult).filter_by(meeting_id=meeting_id).all()
     return {
-        "participants": participants,
-        "objectives": objectives,
-        "key_results": key_results,
+        "participants": [
+            schemas.meeting.MeetingParticipant.model_validate(p) for p in participants
+        ],
+        "objectives": [
+            schemas.meeting.MeetingObjective.model_validate(o) for o in objectives
+        ],
+        "key_results": [
+            schemas.meeting.MeetingKeyResult.model_validate(kr) for kr in key_results
+        ],
     }
