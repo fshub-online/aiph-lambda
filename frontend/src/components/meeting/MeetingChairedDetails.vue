@@ -55,13 +55,41 @@
           </div>
         </div>
         <!-- Three columns for participants, objectives, key results -->
-        <div class="d-flex flex-row mt-6" style="gap: 32px">
+        <div class="d-flex flex-row mt-0" style="gap: 32px">
           <!-- Participants column -->
           <div style="flex: 1; min-width: 220px">
             <h4 class="mb-2">Participants</h4>
+            <!-- List of participants as comma-separated, with remove icon -->
+            <div v-if="participants.length">
+              <span
+                v-for="(p, idx) in participants"
+                :key="p.member_id"
+                class="mr-2"
+              >
+                <span>
+                  {{ memberMap[p.member_id]?.first_name }}
+                  {{ memberMap[p.member_id]?.last_name }}
+                </span>
+                <v-btn
+                  class="ml-1 mr-1"
+                  color="error"
+                  :disabled="saving"
+                  icon
+                  size="xx-small"
+                  style="vertical-align: middle"
+                  title="Remove participant"
+                  @click="removeParticipant(p.member_id)"
+                >
+                  <v-icon small>mdi-close</v-icon>
+                </v-btn>
+                <span v-if="idx < participants.length - 1">,</span>
+              </span>
+            </div>
+            <div v-else class="text-grey">No participants</div>
+            <!-- Dropdown to add participant -->
             <v-select
               v-model="selectedParticipantToAdd"
-              class="mb-2"
+              class="mb-2 mt-2"
               dense
               :disabled="saving || !availableMembers.length"
               hide-details
@@ -71,35 +99,12 @@
               label="Add participant"
             />
             <v-btn
-              class="mb-4"
+              class="mb-2"
               color="primary"
               :disabled="!selectedParticipantToAdd || saving"
               @click="addParticipant"
               >Add</v-btn
             >
-            <v-list v-if="participants.length" density="compact">
-              <v-list-item
-                v-for="p in participants"
-                :key="p.member_id"
-                class="d-flex align-center"
-              >
-                <span>
-                  {{ memberMap[p.member_id]?.first_name }}
-                  {{ memberMap[p.member_id]?.last_name }}
-                </span>
-                <v-spacer />
-                <v-btn
-                  color="error"
-                  :disabled="saving"
-                  size="x-small"
-                  title="Remove participant"
-                  @click="removeParticipant(p.member_id)"
-                >
-                  <v-icon>mdi-close</v-icon>
-                </v-btn>
-              </v-list-item>
-            </v-list>
-            <div v-else class="text-grey">No participants</div>
           </div>
           <!-- Objectives column -->
           <div style="flex: 1; min-width: 220px">
@@ -159,10 +164,11 @@
   async function fetchAvailableMembers() {
     try {
       const res = await api.get('/members')
-      // Exclude already-participating members
+      // Exclude already-participating members and the lead member
       const participantIds = new Set(participants.value.map((p) => p.member_id))
+      const leadId = meeting.value.lead_member_id
       availableMembers.value = res.data
-        .filter((m) => !participantIds.has(m.id))
+        .filter((m) => !participantIds.has(m.id) && m.id !== leadId)
         .map((m) => ({ id: m.id, label: `${m.first_name} ${m.last_name}` }))
     } catch {
       availableMembers.value = []
