@@ -39,8 +39,9 @@ class MeetingObjectiveBase(BaseModel):
     note: Optional[str] = None
 
 
-class MeetingObjectiveCreate(MeetingObjectiveBase):
-    pass
+class MeetingObjectiveCreate(BaseModel):
+    objective_id: int
+    note: Optional[str] = None
 
 
 class MeetingObjectiveUpdate(BaseModel):
@@ -71,8 +72,9 @@ class MeetingKeyResultBase(BaseModel):
     note: Optional[str] = None
 
 
-class MeetingKeyResultCreate(MeetingKeyResultBase):
-    pass
+class MeetingKeyResultCreate(BaseModel):
+    key_result_id: int
+    note: Optional[str] = None
 
 
 class MeetingKeyResultUpdate(BaseModel):
