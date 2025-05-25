@@ -14,7 +14,7 @@
       <v-card-text>
         <div
           class="d-flex flex-row flex-wrap align-center mb-4"
-          style="gap: 32px"
+          style="gap: 12px"
         >
           <div><b>Title:</b> {{ meeting.title }}</div>
           <div><b>Lead:</b> {{ leadName }}</div>
@@ -22,15 +22,15 @@
           <div><b>Time:</b> {{ meeting.time }}</div>
           <div><b>Duration:</b> {{ meeting.duration }} min</div>
         </div>
-        <div class="d-flex flex-row align-start" style="gap: 24px">
+        <div class="d-flex flex-row align-start" style="gap: 8px">
           <v-textarea
             v-model="minutesEdit"
             auto-grow
-            class="w-100"
             :class="{ 'unsaved-warning': dirty }"
+            density="compact"
             :disabled="saving"
             label="Minutes"
-            :rows="undefined"
+            rows="7"
           />
           <div class="d-flex flex-column" style="gap: 12px; min-width: 110px">
             <v-btn
@@ -61,11 +61,7 @@
             <h4 class="mb-2">Participants</h4>
             <!-- List of participants as comma-separated, with remove icon -->
             <div v-if="participants.length">
-              <span
-                v-for="(p, idx) in participants"
-                :key="p.member_id"
-                class="mr-2"
-              >
+              <span v-for="p in participants" :key="p.member_id" class="mr-2">
                 <span>
                   {{ memberMap[p.member_id]?.first_name }}
                   {{ memberMap[p.member_id]?.last_name }}
@@ -82,29 +78,33 @@
                 >
                   <v-icon small>mdi-close</v-icon>
                 </v-btn>
-                <span v-if="idx < participants.length - 1">,</span>
               </span>
             </div>
             <div v-else class="text-grey">No participants</div>
             <!-- Dropdown to add participant -->
-            <v-select
-              v-model="selectedParticipantToAdd"
-              class="mb-2 mt-2"
-              dense
-              :disabled="saving || !availableMembers.length"
-              hide-details
-              item-title="label"
-              item-value="id"
-              :items="availableMembers"
-              label="Add participant"
-            />
-            <v-btn
-              class="mb-2"
-              color="primary"
-              :disabled="!selectedParticipantToAdd || saving"
-              @click="addParticipant"
-              >Add</v-btn
+            <div
+              class="d-flex flex-row align-center mb-2 mt-2"
+              style="gap: 8px"
             >
+              <v-select
+                v-model="selectedParticipantToAdd"
+                dense
+                :disabled="saving || !availableMembers.length"
+                hide-details
+                item-title="label"
+                item-value="id"
+                :items="availableMembers"
+                label="Add participant"
+                style="flex: 1"
+              />
+              <v-btn
+                color="primary"
+                :disabled="!selectedParticipantToAdd || saving"
+                @click="addParticipant"
+              >
+                Add
+              </v-btn>
+            </div>
           </div>
           <!-- Objectives column -->
           <div style="flex: 1; min-width: 220px">
@@ -118,11 +118,11 @@
                 style=""
               >
                 <div class="d-flex align-center mb-1">
-                  <span class="font-weight-bold">
+                  <span class="">
                     {{ objectiveMap[obj.objective_id]?.title }}
                   </span>
                   <v-btn
-                    class="ml-2"
+                    class="ml-1"
                     color="error"
                     icon
                     size="xx-small"
@@ -132,64 +132,73 @@
                     <v-icon small>mdi-close</v-icon>
                   </v-btn>
                 </div>
-                <v-textarea
-                  v-model="obj._noteEdit"
-                  auto-grow
-                  dense
-                  :disabled="saving"
-                  label="Note"
-                />
-                <div class="d-flex flex-row mt-1" style="gap: 8px">
-                  <v-btn
-                    color="primary"
-                    :disabled="saving || !objectiveNoteDirty(obj)"
-                    :loading="obj._noteSaving"
-                    size="x-small"
-                    @click="saveObjectiveNote(obj)"
-                  >
-                    Save
-                  </v-btn>
-                  <v-btn
-                    color="secondary"
-                    :disabled="saving || !objectiveNoteDirty(obj)"
-                    size="x-small"
-                    @click="undoObjectiveNote(obj)"
-                  >
-                    Undo
-                  </v-btn>
-                  <v-btn
-                    color="error"
-                    :disabled="
-                      saving || !(obj._noteEdit && obj._noteEdit.length)
-                    "
-                    size="x-small"
-                    @click="clearObjectiveNote(obj)"
-                  >
-                    Clear
-                  </v-btn>
+                <div class="d-flex flex-row align-start" style="gap: 8px">
+                  <v-textarea
+                    v-model="obj._noteEdit"
+                    auto-grow
+                    class="mb-1"
+                    dense
+                    :disabled="saving"
+                    label="Note"
+                    style="flex: 1"
+                  />
+                  <div class="d-flex flex-column align-start button-group-top">
+                    <v-btn
+                      class="note-action-btn"
+                      color="primary"
+                      :disabled="saving || !objectiveNoteDirty(obj)"
+                      :loading="obj._noteSaving"
+                      @click="saveObjectiveNote(obj)"
+                    >
+                      Save
+                    </v-btn>
+                    <v-btn
+                      class="note-action-btn"
+                      color="secondary"
+                      :disabled="saving || !objectiveNoteDirty(obj)"
+                      @click="undoObjectiveNote(obj)"
+                    >
+                      Undo
+                    </v-btn>
+                    <v-btn
+                      class="note-action-btn"
+                      color="error"
+                      :disabled="
+                        saving || !(obj._noteEdit && obj._noteEdit.length)
+                      "
+                      @click="clearObjectiveNote(obj)"
+                    >
+                      Clear
+                    </v-btn>
+                  </div>
                 </div>
               </div>
             </div>
             <div v-else class="text-grey">No objectives</div>
             <!-- Dropdown to add objective -->
-            <v-select
-              v-model="selectedObjectiveToAdd"
-              class="mb-2 mt-2"
-              dense
-              :disabled="saving || !availableObjectives.length"
-              hide-details
-              item-title="label"
-              item-value="id"
-              :items="availableObjectives"
-              label="Add objective"
-            />
-            <v-btn
-              class="mb-2"
-              color="primary"
-              :disabled="!selectedObjectiveToAdd || saving"
-              @click="addObjective"
-              >Add</v-btn
+            <div
+              class="d-flex flex-row align-center mb-2 mt-2"
+              style="gap: 8px"
             >
+              <v-select
+                v-model="selectedObjectiveToAdd"
+                dense
+                :disabled="saving || !availableObjectives.length"
+                hide-details
+                item-title="label"
+                item-value="id"
+                :items="availableObjectives"
+                label="Add objective"
+                style="flex: 1"
+              />
+              <v-btn
+                color="primary"
+                :disabled="!selectedObjectiveToAdd || saving"
+                @click="addObjective"
+              >
+                Add
+              </v-btn>
+            </div>
           </div>
           <!-- Key Results column -->
           <div style="flex: 1; min-width: 220px">
@@ -202,7 +211,7 @@
                 class="mb-3"
               >
                 <div class="d-flex align-center mb-1">
-                  <span class="font-weight-bold">
+                  <span class="">
                     {{ keyResultMap[kr.key_result_id]?.title }}
                   </span>
                   <v-btn
@@ -216,62 +225,72 @@
                     <v-icon small>mdi-close</v-icon>
                   </v-btn>
                 </div>
-                <v-textarea
-                  v-model="kr._noteEdit"
-                  auto-grow
-                  dense
-                  :disabled="saving"
-                  label="Note"
-                />
-                <div class="d-flex flex-row mt-1" style="gap: 8px">
-                  <v-btn
-                    color="primary"
-                    :disabled="saving || !keyResultNoteDirty(kr)"
-                    :loading="kr._noteSaving"
-                    size="x-small"
-                    @click="saveKeyResultNote(kr)"
-                  >
-                    Save
-                  </v-btn>
-                  <v-btn
-                    color="secondary"
-                    :disabled="saving || !keyResultNoteDirty(kr)"
-                    size="x-small"
-                    @click="undoKeyResultNote(kr)"
-                  >
-                    Undo
-                  </v-btn>
-                  <v-btn
-                    color="error"
-                    :disabled="saving || !(kr._noteEdit && kr._noteEdit.length)"
-                    size="x-small"
-                    @click="clearKeyResultNote(kr)"
-                  >
-                    Clear
-                  </v-btn>
+                <div class="d-flex flex-row align-start" style="gap: 8px">
+                  <v-textarea
+                    v-model="kr._noteEdit"
+                    auto-grow
+                    dense
+                    :disabled="saving"
+                    label="Note"
+                    style="flex: 1"
+                  />
+                  <div class="d-flex flex-column align-start button-group-top">
+                    <v-btn
+                      class="note-action-btn"
+                      color="primary"
+                      :disabled="saving || !keyResultNoteDirty(kr)"
+                      :loading="kr._noteSaving"
+                      @click="saveKeyResultNote(kr)"
+                    >
+                      Save
+                    </v-btn>
+                    <v-btn
+                      class="note-action-btn"
+                      color="secondary"
+                      :disabled="saving || !keyResultNoteDirty(kr)"
+                      @click="undoKeyResultNote(kr)"
+                    >
+                      Undo
+                    </v-btn>
+                    <v-btn
+                      class="note-action-btn"
+                      color="error"
+                      :disabled="
+                        saving || !(kr._noteEdit && kr._noteEdit.length)
+                      "
+                      @click="clearKeyResultNote(kr)"
+                    >
+                      Clear
+                    </v-btn>
+                  </div>
                 </div>
               </div>
             </div>
             <div v-else class="text-grey">No key results</div>
             <!-- Dropdown to add key result -->
-            <v-select
-              v-model="selectedKeyResultToAdd"
-              class="mb-2 mt-2"
-              dense
-              :disabled="saving || !availableKeyResults.length"
-              hide-details
-              item-title="label"
-              item-value="id"
-              :items="availableKeyResults"
-              label="Add key result"
-            />
-            <v-btn
-              class="mb-2"
-              color="primary"
-              :disabled="!selectedKeyResultToAdd || saving"
-              @click="addKeyResult"
-              >Add</v-btn
+            <div
+              class="d-flex flex-row align-center mb-2 mt-2"
+              style="gap: 8px"
             >
+              <v-select
+                v-model="selectedKeyResultToAdd"
+                dense
+                :disabled="saving || !availableKeyResults.length"
+                hide-details
+                item-title="label"
+                item-value="id"
+                :items="availableKeyResults"
+                label="Add key result"
+                style="flex: 1"
+              />
+              <v-btn
+                color="primary"
+                :disabled="!selectedKeyResultToAdd || saving"
+                @click="addKeyResult"
+              >
+                Add
+              </v-btn>
+            </div>
           </div>
         </div>
         <v-snackbar
@@ -700,5 +719,29 @@
 <style scoped>
   .w-100 {
     width: 100%;
+  }
+  .note-btn {
+    min-width: 80px;
+    height: 40px;
+    font-size: 1rem;
+    padding: 0 12px;
+    box-sizing: border-box;
+  }
+  .objective-btn-col,
+  .keyresult-btn-col {
+    align-items: stretch !important;
+    align-self: flex-start !important;
+    height: 100%;
+  }
+  .button-group-top {
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .note-action-btn {
+    min-width: 80px;
+    height: 36px;
+    font-size: 0.875rem;
+    padding: 0 8px;
+    box-sizing: border-box;
   }
 </style>
