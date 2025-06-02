@@ -1,0 +1,11 @@
+name: aiph-lambda-test
+
+services:
+  backend:
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload --proxy-headers --forwarded-allow-ips '*'
+    volumes:
+      - ./backend/app:/app/app # Mount local code for hot-reloading
+
+  nginx:
+    ports:
+      - "8080:80" # Use a different host port for testing
