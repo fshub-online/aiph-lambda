@@ -1,4 +1,7 @@
 import logfire
+import logging
+import os
+import logging.config
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
@@ -7,8 +10,23 @@ from app.api.v1 import api_v1_router
 from app.db.session import engine, SessionLocal
 import secrets
 from app.schemas.user import UserCreate
-from app.core.logfire_instance import instrument_all
 from app.core.config import settings
+
+# Configure logfire and logging as early as possible
+logfire.configure(token=settings.LOGFIRE_WRITE_TOKEN, environment=settings.LOGFIRE_ENVIRONMENT)
+
+LOGGING_CONFIG_FILE = "logging.conf"
+if os.path.exists(LOGGING_CONFIG_FILE):
+    logging.config.fileConfig(LOGGING_CONFIG_FILE, disable_existing_loggers=False)
+else:
+    logging.basicConfig(level=logging.INFO)
+    logging.getLogger().warning(
+        f"Logging config file '{LOGGING_CONFIG_FILE}' not found. Using basicConfig."
+    )
+
+logfire.instrument_sqlalchemy(engine)
+logfire.instrument_psycopg()
+
 
 app = FastAPI(
     title="FastAPI backend for project Lambda",
@@ -31,6 +49,7 @@ app = FastAPI(
     },
 )
 
+logfire.instrument_fastapi(app, capture_headers=True)
 
 
 # CORS middleware
@@ -43,7 +62,7 @@ app.add_middleware(
 )
 
 # configure logfire
-instrument_all(app=app, engine=engine)
+#instrument_all(app=app, engine=engine)
 
 # connect to database and test if it works
 @app.on_event("startup")

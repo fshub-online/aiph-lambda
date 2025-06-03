@@ -1,6 +1,10 @@
 from pydantic import BaseModel, EmailStr
 from typing import Optional
 from datetime import datetime
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 
 class UserBase(BaseModel):

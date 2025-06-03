@@ -7,6 +7,10 @@ from app.crud import crud_meeting
 from app.api.v1.endpoints.oauth import read_users_me
 from app.schemas.meeting import MeetingWithIDs
 from app.crud.crud_meeting import MeetingParticipant, MeetingObjective, MeetingKeyResult
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 router = APIRouter()
 

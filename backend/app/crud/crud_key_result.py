@@ -2,6 +2,11 @@ from sqlalchemy.orm import Session
 from app.models.key_result import KeyResult
 from app.schemas.key_result import KeyResultCreate, KeyResultUpdate
 from typing import List, Optional
+import logging
+
+logger = logging.getLogger(__name__)
+
+
 
 def get_key_result(db: Session, key_result_id: int) -> Optional[KeyResult]:
     return db.query(KeyResult).filter(KeyResult.id == key_result_id).first()

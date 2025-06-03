@@ -71,6 +71,15 @@ export default defineConfig({
   },
   server: {
     port: 3000,
+    // ===== PROXY CONFIGURATION START =====
+    proxy: {
+      // Proxying requests starting with /api to your backend server
+      '/api': {
+        target: 'http://localhost:8000',
+        changeOrigin: true, // Necessary for virtual hosted sites
+      },
+    },
+    // ===== PROXY CONFIGURATION END =====
   },
   css: {
     preprocessorOptions: {

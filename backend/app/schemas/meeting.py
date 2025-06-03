@@ -1,6 +1,10 @@
 from pydantic import BaseModel
 from typing import Optional, List
 from datetime import date as _date, time as _time, datetime
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 
 class MeetingParticipantBase(BaseModel):

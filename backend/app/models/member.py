@@ -1,6 +1,10 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import Integer, String, Text, ForeignKey
 from app.db.base import Base
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 class Member(Base):
     __tablename__ = "member"

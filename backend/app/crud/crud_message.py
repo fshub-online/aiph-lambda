@@ -2,6 +2,10 @@ from sqlalchemy.orm import Session
 from app.models.message import Message
 from app.schemas.message import MessageCreate, MessageUpdate
 from typing import List, Optional
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 
 def get_message(db: Session, message_id: int) -> Optional[Message]:

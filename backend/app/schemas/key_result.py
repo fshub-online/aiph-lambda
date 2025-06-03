@@ -2,6 +2,10 @@ from pydantic import BaseModel
 from typing import Optional
 from datetime import datetime, date
 from app.models.key_result import KeyResultStatus, KeyResultPriority, KeyResultComplexity
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 class KeyResultBase(BaseModel):
     member_id: int

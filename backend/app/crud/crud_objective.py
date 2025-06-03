@@ -2,6 +2,10 @@ from sqlalchemy.orm import Session
 from app.models.objective import Objective
 from app.schemas.objective import ObjectiveCreate, ObjectiveUpdate
 from typing import List, Optional
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 def get_objective(db: Session, objective_id: int) -> Optional[Objective]:
     return db.query(Objective).filter(Objective.id == objective_id).first()

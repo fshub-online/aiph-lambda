@@ -8,6 +8,10 @@ from app.schemas.user import User as UserSchema, UserPasswordChange
 from app.core.config import settings
 from jose import JWTError, jwt
 from passlib.context import CryptContext
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 router = APIRouter()
 

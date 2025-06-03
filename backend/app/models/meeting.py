@@ -1,6 +1,10 @@
 from sqlalchemy import String, Text, Date, Time, ForeignKey, Integer
 from sqlalchemy.orm import Mapped, mapped_column
 from app.db.base import Base
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 
 # Association table for meeting participants

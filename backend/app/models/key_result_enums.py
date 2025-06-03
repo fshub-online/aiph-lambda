@@ -1,4 +1,8 @@
 import enum
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 class KeyResultStatus(enum.Enum):
     not_started = "not_started"

@@ -5,6 +5,10 @@ from app import schemas
 from app.crud import crud_member
 from app.api.v1.deps import get_db
 from app.api.v1.endpoints.oauth import read_users_me
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 router = APIRouter()
 

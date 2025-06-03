@@ -13,6 +13,10 @@ from app.schemas.meeting import (
     MeetingKeyResultCreate,
 )
 from typing import List, Optional
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 
 def get_meeting(db: Session, meeting_id: int) -> Optional[Meeting]:

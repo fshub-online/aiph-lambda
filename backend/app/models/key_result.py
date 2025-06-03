@@ -2,6 +2,10 @@ from sqlalchemy import String, Text, Date, Float, ForeignKey, Enum
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.db.base import Base
 from app.models.key_result_enums import KeyResultStatus, KeyResultPriority, KeyResultComplexity
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 class KeyResult(Base):
     __tablename__ = "key_result"

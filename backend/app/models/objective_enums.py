@@ -1,4 +1,8 @@
 import enum
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 class ObjectivePriority(enum.Enum):
     low = "low"

@@ -2,6 +2,10 @@ from pydantic import BaseModel
 from typing import Optional
 from datetime import date, datetime
 from app.models.objective import ObjectivePriority, ObjectiveStatus
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 
 class ObjectiveBase(BaseModel):

@@ -2,6 +2,10 @@ from sqlalchemy import Integer, String, Text, Date, ForeignKey, Enum
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.db.base import Base
 from app.models.objective_enums import ObjectivePriority, ObjectiveStatus
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 class Objective(Base):
     __tablename__ = "objective"

@@ -1,6 +1,10 @@
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import String, Text
 from app.db.base import Base
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 
 class User(Base):

@@ -1,5 +1,8 @@
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, DateTime, func
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class Base(DeclarativeBase):

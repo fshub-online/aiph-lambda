@@ -2,6 +2,10 @@ from pydantic import BaseModel
 from datetime import date, datetime
 from typing import Optional
 from app.models.message_enums import MessagePriority
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 
 class MessageBase(BaseModel):

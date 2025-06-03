@@ -2,6 +2,10 @@ from sqlalchemy.orm import Session
 from app.models.member import Member
 from app.schemas.member import MemberCreate, MemberUpdate
 from typing import List, Optional
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 def get_member(db: Session, member_id: int) -> Optional[Member]:
     return db.query(Member).filter(Member.id == member_id).first()

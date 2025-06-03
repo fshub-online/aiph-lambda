@@ -6,6 +6,10 @@ from app.api.v1.deps import get_db
 from app.crud import crud_key_result
 from app.api.v1.endpoints.oauth import read_users_me
 from app.models.key_result import KeyResultStatus, KeyResultPriority, KeyResultComplexity
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 router = APIRouter()
 

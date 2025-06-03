@@ -4,6 +4,10 @@ from datetime import date
 from app.db.base import Base
 from sqlalchemy import Enum
 from app.models.message_enums import MessagePriority
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 
 class Message(Base):

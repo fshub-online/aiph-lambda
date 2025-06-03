@@ -1,6 +1,9 @@
 from pydantic import EmailStr, field_validator
 from pydantic_settings import BaseSettings
 from typing import Optional, List, Union
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class Settings(BaseSettings):
@@ -12,25 +15,26 @@ class Settings(BaseSettings):
     OAUTH2_JWT_URL: str = "/api/v1/oauth/jwt"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60  # 60 minutes
     REFRESH_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 30  # 30 days
-    SERVER_NAME: Optional[str] = None
-    SERVER_HOST: str = "localhost"
-    SERVER_PORT: int = 8000
+    #SERVER_NAME: Optional[str] = None
+    #SERVER_HOST: str = "localhost"
+    #SERVER_PORT: int = 8000
     BACKEND_CORS_ORIGINS: Union[str, List[str]] = "*"
 
-    PG_HOST: str = "localhost"
-    PG_PORT: int = 5432
-    PG_USER: str = "postgres"
-    PG_PASSWORD: str = "postgres"
-    PG_DB: str = "db"
+    POSTGRES_HOST: str = "localhost"
+    POSTGRES_PORT: int = 5432
+    POSTGRES_USER: str = "postgres"
+    POSTGRES_PASSWORD: str = "postgres"
+    POSTGRES_DB: str = "db"
     SQLALCHEMY_DATABASE_URI: Optional[str] = None
 
     PGADMIN_DEFAULT_EMAIL: Optional[EmailStr] = None
     PGADMIN_DEFAULT_PASSWORD: Optional[str] = None
 
-    LOGFIRE_WRITE_TOKEN: Optional[str] = None
+    LOGFIRE_WRITE_TOKEN: str
 
     class Config:
         case_sensitive = True
+        extra = "allow"
         env_file = ".env"
 
     @field_validator("BACKEND_CORS_ORIGINS", mode="before")
@@ -45,7 +49,7 @@ class Settings(BaseSettings):
     def assemble_db_connection(self) -> str:
         if self.SQLALCHEMY_DATABASE_URI:
             return self.SQLALCHEMY_DATABASE_URI
-        return f"postgresql://{self.PG_USER}:{self.PG_PASSWORD}@{self.PG_HOST}:{self.PG_PORT}/{self.PG_DB}"
+        return f"postgresql://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
 
     # Parse BACKEND_CORS_ORIGINS env var (comma-separated string)
 

@@ -1,0 +1,45 @@
+services:
+  db:
+    image: postgres:17
+    container_name: stag-aiph-lambda-db-postgres
+    env_file:
+      - ./.env
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data_stag:/var/lib/postgresql/data/
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile.stag
+    container_name: stag-aiph-lambda-backend
+    env_file:
+      - ./.env
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./backend/logs/stag:/app/logs
+
+  # Nginx service builds the frontend and serves it
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile.stag
+    container_name: stag-aiph-lambda-frontend-nginx
+    ports:
+      - "8080:80" # Exposes the app on http://localhost:8080
+    depends_on:
+      - backend # Ensures backend starts before nginx
+
+volumes:
+  postgres_data_stag:
+    name: stag-aiph-lambda-db-data

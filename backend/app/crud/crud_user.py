@@ -3,6 +3,10 @@ from app.models.user import User
 from app.schemas.user import UserCreate, UserUpdate
 from typing import Optional, List
 from passlib.context import CryptContext
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 

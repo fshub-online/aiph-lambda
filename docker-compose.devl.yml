@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:17
+    # Use a specific container name for easy reference
+    container_name: devl-aiph-lambda-db-postgres
+    # Pulls variables from .env.development like POSTGRES_USER, POSTGRES_PASSWORD, etc.
+    env_file:
+      - ./.env
+    ports:
+      # Expose the DB port to your host machine (localhost)
+      - "5432:5432"
+    volumes:
+      # Persist data between container restarts
+      - postgres_data_devl:/var/lib/postgresql/data/
+    restart: unless-stopped
+
+volumes:
+  postgres_data_devl:
+    # Use an external volume to make data management easier
+    name: devl-aiph-lambda-db-data
