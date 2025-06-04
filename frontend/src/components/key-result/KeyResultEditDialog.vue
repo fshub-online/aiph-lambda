@@ -10,57 +10,83 @@
         <v-form ref="formRef" @submit.prevent="onSave">
           <v-text-field v-model="form.title" label="Title" required />
           <v-textarea v-model="form.description" label="Description" />
-          <v-text-field
-            v-model="form.value_definition"
-            label="Value Definition"
-            required
-          />
-          <v-text-field v-model="form.unit" label="Unit" required />
-          <v-text-field
-            v-model="form.start_value"
-            label="Start Value"
-            required
-            type="number"
-          />
-          <v-text-field
-            v-model="form.current_value"
-            label="Current Value"
-            required
-            type="number"
-          />
-          <v-text-field
-            v-model="form.target_value"
-            label="Target Value"
-            required
-            type="number"
-          />
-          <v-select
-            v-model="form.status"
-            :items="statusOptions"
-            label="Status"
-            :loading="loadingEnums"
-            required
-          />
-          <v-select
-            v-model="form.priority"
-            :items="priorityOptions"
-            label="Priority"
-            :loading="loadingEnums"
-            required
-          />
-          <v-select
-            v-model="form.complexity"
-            :items="complexityOptions"
-            label="Complexity"
-            :loading="loadingEnums"
-            required
-          />
-          <v-text-field
-            v-model="form.start_date"
-            label="Start Date"
-            type="date"
-          />
-          <v-text-field v-model="form.end_date" label="End Date" type="date" />
+          <div class="d-flex" style="gap: 16px">
+            <v-text-field
+              v-model="form.value_definition"
+              class="flex-grow-1"
+              label="Value Definition"
+              required
+            />
+            <v-text-field
+              v-model="form.unit"
+              label="Unit"
+              required
+              style="max-width: 150px"
+            />
+          </div>
+          <div class="d-flex" style="gap: 16px">
+            <v-text-field
+              v-model="form.start_value"
+              class="flex-grow-1"
+              label="Start Value"
+              required
+              type="number"
+            />
+            <v-text-field
+              v-model="form.current_value"
+              class="flex-grow-1"
+              label="Current Value"
+              required
+              type="number"
+            />
+            <v-text-field
+              v-model="form.target_value"
+              class="flex-grow-1"
+              label="Target Value"
+              required
+              type="number"
+            />
+          </div>
+          <div class="d-flex" style="gap: 16px">
+            <v-select
+              v-model="form.status"
+              class="flex-grow-1"
+              :items="statusOptions"
+              label="Status"
+              :loading="loadingEnums"
+              required
+            />
+            <v-select
+              v-model="form.priority"
+              class="flex-grow-1"
+              :items="priorityOptions"
+              label="Priority"
+              :loading="loadingEnums"
+              required
+            />
+            <v-select
+              v-model="form.complexity"
+              class="flex-grow-1"
+              :items="complexityOptions"
+              label="Complexity"
+              :loading="loadingEnums"
+              required
+            />
+          </div>
+          <div class="d-flex" style="gap: 16px">
+            <v-text-field
+              v-model="form.start_date"
+              class="flex-grow-1"
+              label="Start Date"
+              type="date"
+            />
+            <v-text-field
+              v-model="form.end_date"
+              class="flex-grow-1"
+              label="End Date"
+              type="date"
+            />
+          </div>
           <v-select
             v-model="form.member_id"
             clearable

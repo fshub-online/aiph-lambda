@@ -13,6 +13,10 @@ from app.schemas.user import UserCreate
 from app.core.config import settings
 
 # Configure logfire and logging as early as possible
+#print("Configuring logfire and logging...")
+#print(f"Logfire write token: {settings.LOGFIRE_WRITE_TOKEN}")
+#print(f"Logfire environment: {settings.LOGFIRE_ENVIRONMENT}")
+
 logfire.configure(token=settings.LOGFIRE_WRITE_TOKEN, environment=settings.LOGFIRE_ENVIRONMENT)
 
 LOGGING_CONFIG_FILE = "logging.conf"
@@ -60,6 +64,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 # configure logfire
 #instrument_all(app=app, engine=engine)

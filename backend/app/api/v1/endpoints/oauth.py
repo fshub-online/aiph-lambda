@@ -92,7 +92,7 @@ def login_for_access_token(
         value=refresh_token,
         httponly=True,
         secure=False,
-        samesite="none",
+        samesite="lax",
         max_age=REFRESH_TOKEN_EXPIRE_MINUTES,
         path="/",
     )
