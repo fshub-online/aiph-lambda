@@ -11,8 +11,8 @@
   const props = defineProps({
     members: Array, // flat array of members
     rootId: Number,
-    width: { type: Number, default: 1200 },
-    height: { type: Number, default: 600 },
+    width: { type: Number, default: 2200 }, // larger default width
+    height: { type: Number, default: 1600 }, // larger default height
   })
 
   const svg = ref(null)
@@ -63,22 +63,22 @@
       }
       d.data._posLines = posLines
       // Measure width for each line
-      const nameWidth = measureText(name, 15, 600)
-      const posLineWidths = posLines.map((line) => measureText(line, 13, 400))
+      const nameWidth = measureText(name, 22, 700) // larger font
+      const posLineWidths = posLines.map((line) => measureText(line, 18, 400))
       const maxPosWidth = posLineWidths.length ? Math.max(...posLineWidths) : 0
-      d.data.boxWidth = Math.max(120, nameWidth, maxPosWidth) + 32 // padding
+      d.data.boxWidth = Math.max(180, nameWidth, maxPosWidth) + 48 // more padding
       // Calculate boxHeight and store for later use
-      d.data._nameY = -((posLines.length * 16) / 2) + 7 // name y offset so name is always near the top
-      d.data._firstPosY = d.data._nameY + 20 // first position line y offset
-      d.data.boxHeight = 24 + posLines.length * 16 + 16 // 24 for name+padding, 16 per line, 16 bottom padding
+      d.data._nameY = -((posLines.length * 22) / 2) + 7 // name y offset so name is always near the top
+      d.data._firstPosY = d.data._nameY + 28 // first position line y offset
+      d.data.boxHeight = 36 + posLines.length * 22 + 24 // 36 for name+padding, 22 per line, 24 bottom padding
     })
   }
 
   // Custom horizontal layout to prevent overlap
   function layoutTree(root) {
     // Assign x = depth, y = breadth
-    const nodeHeight = 100
-    const nodeWSpacing = 80 // horizontal gap between nodes (increased for connectors)
+    const nodeHeight = 20
+    const nodeWSpacing = 60 // horizontal gap between nodes (increased for connectors)
     let maxDepth = 0
     root.each((d) => {
       d.x = d.depth * (220 + nodeWSpacing) // increased horizontal spacing
@@ -160,15 +160,15 @@
       .attr('y', (d) => -d.data.boxHeight / 2)
       .attr('fill', '#fff')
       .attr('stroke', '#1976d2')
-      .attr('rx', 8)
-      .attr('ry', 8)
+      .attr('rx', 12)
+      .attr('ry', 12)
 
     node
       .append('text')
       .attr('text-anchor', 'middle')
       .attr('y', (d) => d.data._nameY)
-      .attr('font-size', 15)
-      .attr('font-weight', 600)
+      .attr('font-size', 22)
+      .attr('font-weight', 700)
       .text((d) => d.data.first_name + ' ' + d.data.last_name)
 
     // Word wrap position text to 20 chars per line and render tspans
@@ -176,14 +176,14 @@
       .append('text')
       .attr('text-anchor', 'middle')
       .attr('y', (d) => d.data._firstPosY)
-      .attr('font-size', 13)
+      .attr('font-size', 18)
       .attr('fill', '#888')
       .selectAll('tspan')
       .data((d) => d.data._posLines || [])
       .enter()
       .append('tspan')
       .attr('x', 0)
-      .attr('dy', (d, i) => (i === 0 ? 0 : 16))
+      .attr('dy', (d, i) => (i === 0 ? 0 : 22))
       .text((d) => d)
   }
 
@@ -194,9 +194,17 @@
 <style scoped>
   .org-d3-tree-container {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+    align-items: flex-start;
     margin-top: 32px;
     overflow-x: auto;
+    overflow-y: auto;
+    max-width: 100vw;
+    max-height: 90vh;
+    background: #f8f9fa;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px #0001;
+    padding: 16px;
   }
   .link {
     stroke: #1976d2;
