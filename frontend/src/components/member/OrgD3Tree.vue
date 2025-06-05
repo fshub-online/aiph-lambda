@@ -1,6 +1,6 @@
 <template>
   <div ref="container" class="org-d3-tree-container">
-    <svg ref="svg" :height="height" :width="width"></svg>
+    <svg ref="svg" :preserveAspectRatio="'xMidYMid meet'"></svg>
   </div>
 </template>
 
@@ -12,7 +12,7 @@
     members: Array, // flat array of members
     rootId: Number,
     width: { type: Number, default: 2200 }, // larger default width
-    height: { type: Number, default: 1600 }, // larger default height
+    height: { type: Number, default: 2000 }, // larger default height
   })
 
   const svg = ref(null)
@@ -56,8 +56,8 @@
           posLines.push(str)
           break
         }
-        let idx = str.lastIndexOf(' ', 20)
-        if (idx === -1) idx = 20
+        let idx = str.lastIndexOf(' ', 25)
+        if (idx === -1) idx = 25
         posLines.push(str.slice(0, idx))
         str = str.slice(idx).trim()
       }
@@ -66,7 +66,7 @@
       const nameWidth = measureText(name, 22, 700) // larger font
       const posLineWidths = posLines.map((line) => measureText(line, 18, 400))
       const maxPosWidth = posLineWidths.length ? Math.max(...posLineWidths) : 0
-      d.data.boxWidth = Math.max(180, nameWidth, maxPosWidth) + 48 // more padding
+      d.data.boxWidth = Math.max(200, nameWidth, maxPosWidth) + 28 // more padding
       // Calculate boxHeight and store for later use
       d.data._nameY = -((posLines.length * 22) / 2) + 7 // name y offset so name is always near the top
       d.data._firstPosY = d.data._nameY + 28 // first position line y offset
@@ -74,26 +74,28 @@
     })
   }
 
-  // Custom horizontal layout to prevent overlap
+  // Custom vertical layout to prevent overlap
   function layoutTree(root) {
-    // Assign x = depth, y = breadth
-    const nodeHeight = 20
-    const nodeWSpacing = 60 // horizontal gap between nodes (increased for connectors)
+    // Assign x = depth (vertical), y = breadth (horizontal)
+    const nodeHeight = 120
+    const nodeVSpacing = 80 // vertical gap between levels
+    const nodeHSpacing = 80 // horizontal gap between siblings
     let maxDepth = 0
+    // First, compute x (vertical) by depth
     root.each((d) => {
-      d.x = d.depth * (220 + nodeWSpacing) // increased horizontal spacing
+      d.x = d.depth * (nodeHeight + nodeVSpacing)
       maxDepth = Math.max(maxDepth, d.depth)
     })
     // Recursively set y positions to avoid overlap
     let nextY = 0
     function setY(d) {
       if (!d.children || d.children.length === 0) {
-        d.y = nextY + d.data.boxHeight / 2
-        nextY += d.data.boxHeight + nodeHeight / 2
+        d.y = nextY + d.data.boxWidth / 2
+        nextY += d.data.boxWidth + nodeHSpacing / 2
       } else {
         d.children.forEach((c) => setY(c))
-        const minY = d3.min(d.children, (c) => c.y - c.data.boxHeight / 2)
-        const maxY = d3.max(d.children, (c) => c.y + c.data.boxHeight / 2)
+        const minY = d3.min(d.children, (c) => c.y - c.data.boxWidth / 2)
+        const maxY = d3.max(d.children, (c) => c.y + c.data.boxWidth / 2)
         d.y = (minY + maxY) / 2
       }
     }
@@ -113,44 +115,56 @@
     const svgEl = d3.select(svg.value)
     svgEl.selectAll('*').remove()
 
-    // Draw links
-    svgEl
-      .selectAll('path.link')
+    // Calculate min/max x/y to fit all nodes
+    const nodes = root.descendants()
+    const minX = Math.min(...nodes.map((d) => d.x - d.data.boxHeight / 2))
+    const maxX = Math.max(...nodes.map((d) => d.x + d.data.boxHeight / 2))
+    const minY = Math.min(...nodes.map((d) => d.y - d.data.boxWidth / 2))
+    const maxY = Math.max(...nodes.map((d) => d.y + d.data.boxWidth / 2))
+    const treeWidth = maxY - minY + 80
+    const treeHeight = maxX - minX + 80
+
+    // Set viewBox to fit the tree bounding box
+    svgEl.attr(
+      'viewBox',
+      `${minY - 40} ${minX - 40} ${treeWidth} ${treeHeight}`
+    )
+
+    // Responsive horizontal scaling
+    const containerEl = container.value
+    const containerWidth = containerEl ? containerEl.clientWidth : treeWidth
+    let scaleX = 1
+    if (treeWidth > containerWidth) {
+      scaleX = containerWidth / treeWidth
+    }
+
+    // Create a group for scaling
+    const g = svgEl.append('g').attr('transform', `scale(${scaleX},1)`)
+    g.selectAll('path.link')
       .data(root.links())
       .enter()
       .append('path')
       .attr('class', 'link')
       .attr('d', (d) => {
-        // Horizontal elbow connector
-        const startX = d.source.x + d.source.data.boxWidth / 2
-        const startY = d.source.y
-        const endX = d.target.x - d.target.data.boxWidth / 2
-        const endY = d.target.y
-        return `M${startX},${startY}C${(startX + endX) / 2},${startY} ${(startX + endX) / 2},${endY} ${endX},${endY}`
+        // Vertical elbow connector (top-to-bottom)
+        const startX = d.source.y
+        const startY = d.source.x + d.source.data.boxHeight / 2
+        const endX = d.target.y
+        const endY = d.target.x - d.target.data.boxHeight / 2
+        return `M${startX},${startY}C${startX},${(startY + endY) / 2} ${endX},${(startY + endY) / 2} ${endX},${endY}`
       })
       .attr('stroke', '#1976d2')
-      .attr('stroke-width', 2)
+      .attr('stroke-width', 4)
       .attr('fill', 'none')
 
-    // Adjust SVG viewBox and centering for root node
-    // Calculate min/max x/y to fit all nodes
-    const nodes = root.descendants()
-    const minX = Math.min(...nodes.map((d) => d.x - d.data.boxWidth / 2))
-    const maxX = Math.max(...nodes.map((d) => d.x + d.data.boxWidth / 2))
-    const minY = Math.min(...nodes.map((d) => d.y - d.data.boxHeight / 2))
-    const maxY = Math.max(...nodes.map((d) => d.y + d.data.boxHeight / 2))
-    svgEl.attr(
-      'viewBox',
-      `${minX - 40} ${minY - 40} ${maxX - minX + 80} ${maxY - minY + 80}`
-    )
-
-    const node = svgEl
+    // Draw nodes
+    const node = g
       .selectAll('g.node')
       .data(root.descendants())
       .enter()
       .append('g')
       .attr('class', 'node')
-      .attr('transform', (d) => `translate(${d.x},${d.y})`)
+      .attr('transform', (d) => `translate(${d.y},${d.x})`)
 
     node
       .append('rect')
@@ -160,6 +174,7 @@
       .attr('y', (d) => -d.data.boxHeight / 2)
       .attr('fill', '#fff')
       .attr('stroke', '#1976d2')
+      .attr('stroke-width', 4)
       .attr('rx', 12)
       .attr('ry', 12)
 
@@ -196,19 +211,17 @@
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    margin-top: 32px;
-    overflow-x: auto;
-    overflow-y: auto;
-    max-width: 100vw;
-    max-height: 90vh;
-    background: #f8f9fa;
+    margin-top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background: #ffffff;
     border-radius: 12px;
-    box-shadow: 0 2px 12px #0001;
-    padding: 16px;
+    padding: 0;
   }
   .link {
     stroke: #1976d2;
-    stroke-width: 2;
+    stroke-width: 4;
     fill: none;
   }
 </style>
